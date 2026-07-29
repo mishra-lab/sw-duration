@@ -1,0 +1,2 @@
+main:
+	Rscript main.r
