@@ -4,7 +4,7 @@
 .old/
 .sub/
 # code+
-Rplots.pdf
+Rplots*
 code/tikz/main.pdf
 data/stan/
 # tex
