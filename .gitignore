@@ -3,10 +3,12 @@
 .coa/
 .old/
 .sub/
-# code+
+# code
 Rplots*
 code/tikz/main.pdf
+# data
 data/stan/
+*.rds
 # tex
 *.aux
 *.bbl
