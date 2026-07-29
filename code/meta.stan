@@ -40,7 +40,7 @@ transformed parameters {
 
 model {
   for (i in 1:Nm){ // mean estimates
-    m_v[i] ~ gamma(1/CVz^2, 1/CVz^2/Ez);
+    m_v[i] ~ gamma(m_n[i]/CVz^2, m_n[i]/CVz^2/Ez);
   }
   for (i in 1:Nq){ // quantile CDF estimates
     q_p[i] ~ beta(q_n[i]*   Fz_i[q_i[i]],
