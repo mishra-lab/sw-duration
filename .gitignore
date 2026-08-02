@@ -3,6 +3,7 @@
 .coa/
 .old/
 .sub/
+.debug/
 # code
 Rplots*
 code/tikz/main.pdf
