@@ -1,0 +1,29 @@
+\usepackage{tikz,xfp}
+% style
+\input{../../docs/style.tex}
+\usetikzlibrary{arrows.meta}
+\tikzset{
+  > = latex,
+  per/.style  = {line width=1pt},             % basic period
+  peri/.style = {per,{Circle[length=4pt]}- }, % right-censor
+  pero/.style = {per, -{Rays[length=6pt]}},   % left-censor
+  perf/.style = {per,{Circle[length=4pt]}-{Rays[length=6pt]}}, % no censor
+}
+% colors
+\definecolor{xt}{HTML}{cccccc}
+\definecolor{xa}{HTML}{33cccc}
+\definecolor{za}{HTML}{006666}
+\definecolor{ss}{HTML}{ff9900}
+% macros
+\newcommand{\defsrv}[2][0]{% survey time: [duration=0]{start}
+  \gdef\xsi{#2}\gdef\xso{#2+#1}}
+\newcommand{\period}[4][]{% [style]{start time}{duration}{y}
+  \def\xpi{#2+.01}\def\xpo{#2+#3-.01}
+  \ifnum1=\fpeval{(\xpi>\xso)|(\xpo<\xsi)}
+    \draw[perf,xt,#1] (\xpi,#4) -- (\xpo,#4); % fully unobserved
+  \else\ifnum1=\fpeval{\xpo>\xso}
+    \draw[peri,za,#1] (\xpi,#4) -- (\xso,#4); % observed part
+    \draw[pero,xa,#1] (\xso,#4) -- (\xpo,#4); % unobserved part
+  \else
+    \draw[perf,za,#1] (\xpi,#4) -- (\xpo,#4); % fully observed
+  \fi\fi}

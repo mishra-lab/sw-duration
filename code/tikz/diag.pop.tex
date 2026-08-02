@@ -1,0 +1,9 @@
+\defsrv{9.5}
+\begin{tikzpicture}[x=6mm,y=4mm]
+  \foreach \y/\dur/\n in {1/1/12,2/2/6,3/3/4,4/6/2,5/12/1}{
+    \foreach \i in {1,...,\n}{
+      \period[]{\i*\dur-\dur+\y}{\dur}{\y}
+  }}
+  \fill[ss,opacity=.1]  (\xsi,0) rectangle (\xso,6);
+  \draw[ss,per] (\xsi,0) node[below]{survey} -- (\xsi,6);
+\end{tikzpicture}
