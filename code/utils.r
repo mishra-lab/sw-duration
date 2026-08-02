@@ -20,12 +20,21 @@ ulist = function(x=list(),xu=list(),...){
   x[!duplicated(names(x),fromLast=TRUE)]
 }
 
+dfu = function(X,...){
+  as.data.frame(ulist(X,...))
+}
+
 hash.info = function(info,.len=11){
   hash = substr(digest::sha1(info),1,.len)
 }
 
 sum1 = function(x){ x/sum(x) }
 clip = function(x,eps){ pmin(1-eps,pmax(eps,x)) }
+
+int.cut = function(x,br,lo=0,hi=Inf){
+  labels = gsub('-Inf','+',str(c(lo,br),'-',c(br,hi)))
+  x.cut = cut(x,breaks=c(lo,br,hi),labels=labels)
+}
 
 # ==============================================================================
 # files + i/o
@@ -146,7 +155,7 @@ het.funs = list(
     d = function(x,m,het){ f = fit.weibull(m,het^2); dweibull(x,shape=f$shape,scale=f$scale) },
     p = function(q,m,het){ f = fit.weibull(m,het^2); pweibull(q,shape=f$shape,scale=f$scale) },
     q = function(p,m,het){ f = fit.weibull(m,het^2); qweibull(p,shape=f$shape,scale=f$scale) }),
-  lnorm = list(
+  lognormal = list(
     l = 'Log-Norm',
     r = function(n,m,het){ u = log(m/sqrt(1+het^2)); s = sqrt(log(1+het^2)); rlnorm(n,meanlog=u,sdlog=s) },
     d = function(x,m,het){ u = log(m/sqrt(1+het^2)); s = sqrt(log(1+het^2)); dlnorm(x,meanlog=u,sdlog=s) },
@@ -182,10 +191,15 @@ geom_summary = function(ps=NULL,alpha=.33){
   geom = c(geom,stat_summary(geom='line',fun='median'))
 }
 
-plot.save = function(g,...,size=NULL,ext='.pdf'){
+scale_clr_viridis = function(...,end=.85){ list(
+  viridis::scale_color_viridis(...,end=end),
+  viridis::scale_fill_viridis(...,end=end)
+)}
+
+plot.save = function(g,...,size=NULL,ext='.pdf',root='out/fig'){
   if (is.null(size)){ size = plot.size(g) }
   if (ext=='.pdf'){ dev = cairo_pdf } else { dev = NULL }
-  fname = root.path('out','fig',...,ext=ext,create=TRUE)
+  fname = root.path(root,...,ext=ext,create=TRUE)
   status(3,'save: ',fname)
   ggsave(plot=g,file=fname,w=size[1],h=size[2],device=dev)
 }
