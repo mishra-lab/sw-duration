@@ -1,5 +1,4 @@
 library('reshape2')
-library('LaplacesDemon')
 options(width=180)
 
 # ==============================================================================
@@ -123,6 +122,17 @@ grid.apply = function(x,fun,args=list(),...,.rbind=TRUE,.cbind=TRUE,.par=TRUE){
 # ==============================================================================
 # stats
 
+d.mean = function(dfun,u,...,eps=1e-7){
+  f = function(x){ x * dfun(x,u=u,...) }
+  m = integrate(f,lower=eps,upper=u-eps)$value
+}
+
+d.cv = function(dfun,u,...,m,eps=1e-7){
+  if (missing(m)){ m = d.mean(dfun,u=u,...) }
+  f = function(x){ (x-m)^2 * dfun(x,u=u,...) }
+  cv = sqrt(integrate(f,lower=eps,upper=u-eps)$value) / m
+}
+
 fit.n = function(p,p.025,p.975){
   err.fun = function(x){
     n = 10^x
@@ -132,30 +142,47 @@ fit.n = function(p,p.025,p.975){
   n = 10^optimize(err.fun,c(0,4))$minimum
 }
 
-fit.mcv = function(fam,m,cv,b=+Inf,tol=1e-6){
-  args = list(spec=fam,a=0,b=b)
-  jfun = function(x){
-    mx = do.call( extrunc,c(exp(x),args))
-    vx = do.call(vartrunc,c(exp(x),args))
-    err = (m-mx)^2 + (cv-sqrt(vx)/mx)^2 }
-  x0 = log(switch(fam,
-    gamma   = c(shape=1/cv^2,rate=m*cv^2),
-    weibull = c(shape=1/cv^2,scale=1/m/cv^2),
-    lnorm   = c(meanlog=log(m/sqrt(1+cv^2)),sdlog=sqrt(log(1+cv^2)))
-  ))
-  if (is.finite(b)|fam=='weibull'){
-    opt = optim(x0,jfun)
-    if (opt$value > tol){ cat('WARNING: fit.mcv\n'); print(opt) }
-    return(c(exp(opt$par),args))
-  } else {
-    return(c(x0,args))
-  }
-}
+rtru = LaplacesDemon::rtrunc
+dtru = LaplacesDemon::dtrunc
+ptru = LaplacesDemon::ptrunc
 
-mcv.fun = lapply(list(r=rtrunc,d=dtrunc,p=ptrunc,q=qtrunc),
-  function(fun){ function(...){ args = fit.mcv(...)
-    function(...){ do.call(fun,c(args,list(...)))
-}}})
+distrs = list(
+  gamma = list(
+    r = function(n,a,b,u){ rtru(n=n,spec='gamma',shape=a,rate=b,a=0,b=u) },
+    d = function(x,a,b,u){ dtru(x=x,spec='gamma',shape=a,rate=b,a=0,b=u) },
+    p = function(q,a,b,u){ ptru(x=q,spec='gamma',shape=a,rate=b,a=0,b=u) },
+    l = 'Gamma'),
+  weibull = list(
+    r = function(n,a,b,u){ rtru(n=n,spec='weibull',shape=a,scale=b,a=0,b=u) },
+    d = function(x,a,b,u){ dtru(x=x,spec='weibull',shape=a,scale=b,a=0,b=u) },
+    p = function(q,a,b,u){ ptru(x=q,spec='weibull',shape=a,scale=b,a=0,b=u) },
+    l = 'Weibull'),
+  lnorm = list(
+    r = function(n,a,b,u){ rtru(n=n,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
+    d = function(x,a,b,u){ dtru(x=x,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
+    p = function(q,a,b,u){ ptru(x=q,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
+    l = 'Log-Normal'),
+  sbeta = list(
+    r = function(n,a,b,u){ rbeta(n=n,  shape1=a,shape2=b) * u },
+    d = function(x,a,b,u){ dbeta(x=x/u,shape1=a,shape2=b) / u },
+    p = function(q,a,b,u){ pbeta(q=q/u,shape1=a,shape2=b) },
+    l = 'Scaled Beta'),
+  skumar = list(
+    r = function(n,a,b,u){ extraDistr::rkumar(n=n,  a=a,b=b) * u },
+    d = function(x,a,b,u){ extraDistr::dkumar(x=x/u,a=a,b=b) / u },
+    p = function(q,a,b,u){ extraDistr::pkumar(q=q/u,a=a,b=b) },
+    l = 'Scaled Kumar'))
+
+fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7){
+  if (is.character(dfun)){ dfun = distrs[[dfun]]$d }
+  jfun = function(x){
+    mx  = d.mean(dfun,a=exp(x[1]),b=exp(x[2]),u=u,eps=eps)
+    cvx = d.cv  (dfun,a=exp(x[1]),b=exp(x[2]),u=u,eps=eps,m=m)
+    err = (m-mx)^2 + (cv-cvx)^2 }
+  opt = optim(c(a=0,b=0),jfun)
+  if (opt$value > tol){ print(opt) }
+  return(c(as.list(exp(opt$par)),u=u))
+}
 
 # ==============================================================================
 # ggplot2

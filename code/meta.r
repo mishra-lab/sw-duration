@@ -7,26 +7,24 @@ l = list()
 l$dur = 'Duration (years)'
 l$prop = 'Population proportion'
 fl = list()
+fl$fams = lapply(distrs,`[[`,'l')
 fl$pars = list(
-  Eu   = 'E[u]',
-  CVu  = 'CV[u]',
-  Ex   = 'E[x]',
-  CVx  = 'CV[x]',
-  Ez   = 'E[z|s]',
-  CVz  = 'CV[z|s]',
-  sp0  = 'p0',
-  st95 = 't95')
+  a   = 'α',      la   = 'log(α)',
+  b   = 'β',      lb   = 'log(β)',
+  Ex  = 'E[x]',   CVx  = 'CV[x]',
+  Ez  = 'E[z|s]', CVz  = 'CV[z|s]',
+  sp0 = 'p0',     st95 = 't95')
 
 gen.makevars = function(opt){ cat(file='~/.R/Makevars',sep='',
   '\nCXX17=g++',
   '\nCXX17FLAGS=-march=native -mtune=native -fPIC -O',opt) }
 
-d.vec  = function(dd,dmax){ seq(dd/2,dmax,dd) }
-p.x    = function(x,...){ mcv.fun$d(...)(x) }
-p.za   = function(z,...){ 1 - mcv.fun$p(...)(z) }
+dmax   = 50
+d.vec  = function(dd){ seq(dd/2,dmax,dd) }
+p.x    = function(x,fam,a,b){     distrs[[fam]]$d(x=x,a=a,b=b,u=dmax) }
+p.za   = function(z,fam,a,b){ 1 - distrs[[fam]]$p(q=z,a=a,b=b,u=dmax) }
 p.sz   = function(z,sp0,st95){ 1+(sp0-1)*exp(z*log(.05/(1-sp0))/st95) }
 i.near = function(x,ref){ which.min(abs(x-ref)) }
-
 
 # ==============================================================================
 # data
@@ -49,20 +47,27 @@ prop.diff = function(Y){
 # ==============================================================================
 # model
 
-model.data = function(Y,fam='gamma',gps=0,dd=.1,dmax=50,eps=1e-6){
-  d_i = d.vec(dd,dmax)
+model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
+  d_i = d.vec(dd)
   Ym  = subset(Y,meas=='mean')
   Yq  = subset(Y,meas=='q')
   q_i = sapply(Yq$value,i.near,ref=d_i)
+  U = switch(fam, # bounds
+    gamma   = list(la=c( -1,3),lb=c(-1,3)),
+    weibull = list(la=c( -1,3),lb=c(-1,3)),
+    lnorm   = list(la=c(-20,1),lb=c(-2,3)),
+    sbeta   = list(la=c( -3,3),lb=c(0,3)),
+    skumar  = list(la=c( -3,3),lb=c(0,3)))
   data = list(
-    BEu   = c(1,15),  # bounds: full* duration mean
-    BCVu  = c(.5,2),  # bounds: full* duration CV
-    Bsp0  = c(.5,1),  # bounds: proportion sampled immediately
-    Bst95 = c(.02,3), # bounds: time to 95% sampled
+    Ula = U$la,       # bounds: full* duration log(a) param
+    Ulb = U$lb,       # bounds: full* duration log(b) param
+    Usp0  = c(.5,1),  # bounds: proportion sampled immediately
+    Ust95 = c(.02,3), # bounds: time to 95% sampled
     Ni = len(d_i),  # num integration steps
     Nm = nrow(Ym),  # num empiric means
     Nq = nrow(Yq),  # num empiric quantiles
     d_i = d_i,      # integration values
+    dmax = dmax,    # maximum duration
     m_n = Ym$n,     # mean sample size
     m_v = Ym$value, # mean estimate
     q_n = Yq$n,     # quantile sample sizes
@@ -70,12 +75,12 @@ model.data = function(Y,fam='gamma',gps=0,dd=.1,dmax=50,eps=1e-6){
     q_i = q_i,      # quantile value index
     eps = eps,      # a small number
     gps = gps,      # generate posterior samples
-    fam = switch(fam,gamma=1,lnorm=2))
+    fam = switch(fam,gamma=1,weibull=2,lnorm=3,sbeta=4,skumar=5))
 }
 
-get.sample = function(Y,...,do='load',gps=0){
+get.sample = function(Y,fam,...,do='load',gps=0){
   model = load.txt('code','meta',ext='.stan')
-  args = list(data=model.data(Y,...,gps=gps),pars=names(fl$pars),
+  args = list(data=model.data(Y,...,fam=fam,gps=gps),pars=names(fl$pars),
     chains=7,iter=1000,warm=500,seed=666)
   if (gps){ args$pars = c(args$pars,'m_vs','q_ps') }
   hash = hash.info(ulist(args,model=model))
@@ -90,7 +95,7 @@ get.sample = function(Y,...,do='load',gps=0){
       plot.save(g,'data','stan',hash,'trace',root='')
   }}
   S = expand.grid(i=args$warm+1:args$iter,chain=factor(1:args$chains))
-  S = cbind(S,g=1:nrow(S),as.data.frame(fit))
+  S = cbind(S,g=1:nrow(S),fam=fam,as.data.frame(fit))
 }
 
 run.stan = function(args){
@@ -99,23 +104,24 @@ run.stan = function(args){
   fit = do.call(rstan::sampling,args)
 }
 
-plot.par = function(S){
-  S = melt(S,id=c('g','chain'),var='par',m=names(fl$pars))
+plot.par = function(S,...){
+  fl$pars$lp__ = 'log(L)'
+  S = melt(S,id=c('i','chain','fam'),var='par',m=names(fl$pars))
   S$par = factor(S$par,names(fl$pars),fl$pars)
-  g = ggplot(S,aes(x=par,y=value)) +
-    facet_wrap('par',scales='free',space='free_x') +
-    geom_viola(aes(color=chain),fill=NA,position='identity') +
-    coord_cartesian(ylim=c(0,NA)) +
-    labs(x='Parameter',y='Value',color='Chain')
+  S$fam = factor(S$fam,names(fl$fams),fl$fams)
+  g = ggplot(S,aes(x='',y=value,color=fam)) +
+    facet_wrap('par',scales='free',ncol=4) +
+    geom_viola() +
+    labs(x='Parameter',y='Value',fill='Family')
 }
 
 # ==============================================================================
 # demo
 
-plot.demo = function(S,Y,fam='gamma',dd=.01,dmax=25){
-  d = d.vec(dd,dmax)
+plot.demo = function(S,Y,dd=.01){
+  d = d.vec(dd)
   D = df(d=d,strat=int.cut(d,Y$value),value=sum1(
-    p.za(d,fam=fam,m=mean(S$Ex),cv=mean(S$CVx),b=50) *
+    p.za(d,fam=S$fam[1],a=mean(S$a),b=mean(S$b)) *
     p.sz(d,sp0=mean(S$sp0),st95=mean(S$st95)) )/dd )
   cols = str('q_ps[',1:nrow(Y),']')
   P = rbind.lapply(1:nrow(S),function(k){
@@ -128,7 +134,7 @@ plot.demo = function(S,Y,fam='gamma',dd=.01,dmax=25){
     geom_line(aes(x=d,y=value)) +
     geom_viola(data=P,aes(x=strat,y=p),color=NA,show.legend=0) +
     geom_estimate(data=prop.diff(Y),aes(x=strat,y=p,ymin=plo,ymax=phi),width=.5) +
-    ggh4x::scale_x_facet(ff==f[1],breaks=c(0,Y$value,dmax),minor=0) +
+    ggh4x::scale_x_facet(ff==f[1],breaks=c(0,Y$value,25),minor=0,lim=c(0,25)) +
     ggh4x::scale_x_facet(ff==f[2],type='discrete') +
     scale_clr_viridis(discrete=TRUE,option='plasma') +
     labs(x=l$dur,y=l$prop)
@@ -137,9 +143,10 @@ plot.demo = function(S,Y,fam='gamma',dd=.01,dmax=25){
 main.demo = function(do='load'){
   Y = prop.ci(load.csv('data','Baral2014'))
   Y = subset(Y,ref=='rds')
-  S = get.sample(Y,do=do,gps=1)
-  g = plot.par(S);    plot.save(g,'stan','demo.par',size=c(5,3))
-  g = plot.demo(S,Y); plot.save(g,'stan','demo.prop',size=c(8,3))
+  S = rbind.lapply(names(distrs),get.sample,Y=Y,do=do,gps=1)
+  g = plot.par(S); plot.save(g,'stan','demo','par',size=c(7,5))
+  S = subset(S,fam=='skumar') # best fit
+  g = plot.demo(S,Y); plot.save(g,'stan','demo','prop',size=c(7,3))
 }
 
 # ==============================================================================
