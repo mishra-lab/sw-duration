@@ -1,4 +1,5 @@
 library('reshape2')
+library('LaplacesDemon')
 options(width=180)
 
 # ==============================================================================
@@ -20,14 +21,7 @@ ulist = function(x=list(),xu=list(),...){
   x[!duplicated(names(x),fromLast=TRUE)]
 }
 
-dfu = function(X,...){
-  as.data.frame(ulist(X,...))
-}
-
-hash.info = function(info,.len=11){
-  hash = substr(digest::sha1(info),1,.len)
-}
-
+dfu = function(X,...){ as.data.frame(ulist(X,...)) }
 sum1 = function(x){ x/sum(x) }
 clip = function(x,eps){ pmin(1-eps,pmax(eps,x)) }
 
@@ -96,6 +90,10 @@ save.json = function(X,...,ext='.json',indent=2){
   write(rjson::toJSON(X,indent=indent),file=fname)
 }
 
+hash.info = function(info,.len=11){
+  hash = substr(digest::sha1(info),1,.len)
+}
+
 # ==============================================================================
 # lapply
 
@@ -126,7 +124,6 @@ grid.apply = function(x,fun,args=list(),...,.rbind=TRUE,.cbind=TRUE,.par=TRUE){
 # stats
 
 fit.n = function(p,p.025,p.975){
-  # X$n.eff = mapply(fit.n,X$p.adj,X$p.025,X$p.975)
   err.fun = function(x){
     n = 10^x
     q2 = qbeta(c(.025,.975),n*p,n*(1-p))
@@ -135,39 +132,30 @@ fit.n = function(p,p.025,p.975){
   n = 10^optimize(err.fun,c(0,4))$minimum
 }
 
-fit.weibull = function(m,cv2,...){
-  efun = function(k){ s = gamma(1+1/k)^2; e = ((gamma(1+2/k)-s)/s-cv2)^2 }
-  k = optimize(efun,c(1e-6,1e+6))$minimum
-  par = list(shape=k,scale=m/gamma(1+1/k),...)
+fit.mcv = function(fam,m,cv,b=+Inf,tol=1e-6){
+  args = list(spec=fam,a=0,b=b)
+  jfun = function(x){
+    mx = do.call( extrunc,c(exp(x),args))
+    vx = do.call(vartrunc,c(exp(x),args))
+    err = (m-mx)^2 + (cv-sqrt(vx)/mx)^2 }
+  x0 = log(switch(fam,
+    gamma   = c(shape=1/cv^2,rate=m*cv^2),
+    weibull = c(shape=1/cv^2,scale=1/m/cv^2),
+    lnorm   = c(meanlog=log(m/sqrt(1+cv^2)),sdlog=sqrt(log(1+cv^2)))
+  ))
+  if (is.finite(b)|fam=='weibull'){
+    opt = optim(x0,jfun)
+    if (opt$value > tol){ cat('WARNING: fit.mcv\n'); print(opt) }
+    return(c(exp(opt$par),args))
+  } else {
+    return(c(x0,args))
+  }
 }
 
-het.funs = list(
-  # m = mean; het = CV (sd / mean)
-  gamma = list(
-    l = 'Gamma',
-    r = function(n,m,het){ cv2 = max(het^2,1e-9); rgamma(n,shape=1/cv2,scale=m*cv2) },
-    d = function(x,m,het){ cv2 = max(het^2,1e-9); dgamma(x,shape=1/cv2,scale=m*cv2) },
-    p = function(q,m,het){ cv2 = max(het^2,1e-9); pgamma(q,shape=1/cv2,scale=m*cv2) },
-    q = function(p,m,het){ cv2 = max(het^2,1e-9); qgamma(p,shape=1/cv2,scale=m*cv2) }),
-  weibull = list(
-    l = 'Weibull',
-    r = function(n,m,het){ f = fit.weibull(m,het^2); rweibull(n,shape=f$shape,scale=f$scale) },
-    d = function(x,m,het){ f = fit.weibull(m,het^2); dweibull(x,shape=f$shape,scale=f$scale) },
-    p = function(q,m,het){ f = fit.weibull(m,het^2); pweibull(q,shape=f$shape,scale=f$scale) },
-    q = function(p,m,het){ f = fit.weibull(m,het^2); qweibull(p,shape=f$shape,scale=f$scale) }),
-  lognormal = list(
-    l = 'Log-Norm',
-    r = function(n,m,het){ u = log(m/sqrt(1+het^2)); s = sqrt(log(1+het^2)); rlnorm(n,meanlog=u,sdlog=s) },
-    d = function(x,m,het){ u = log(m/sqrt(1+het^2)); s = sqrt(log(1+het^2)); dlnorm(x,meanlog=u,sdlog=s) },
-    p = function(q,m,het){ u = log(m/sqrt(1+het^2)); s = sqrt(log(1+het^2)); plnorm(q,meanlog=u,sdlog=s) },
-    q = function(p,m,het){ u = log(m/sqrt(1+het^2)); s = sqrt(log(1+het^2)); qlnorm(p,meanlog=u,sdlog=s) })
-  )
-
-gen.makevars = function(opt=0){
-  cat('\nCXX17=g++',
-      '\nCXX17FLAGS=-march=native -mtune=native -fPIC -O',opt,
-  sep='',file='~/.R/Makevars')
-}
+mcv.fun = lapply(list(r=rtrunc,d=dtrunc,p=ptrunc,q=qtrunc),
+  function(fun){ function(...){ args = fit.mcv(...)
+    function(...){ do.call(fun,c(args,list(...)))
+}}})
 
 # ==============================================================================
 # ggplot2
@@ -182,14 +170,21 @@ theme_update(
   strip.text.y=element_text(color='black'),
   legend.spacing.y=unit(-1,'mm'))
 
-geom_summary = function(ps=NULL,alpha=.33){
-  geom = lapply(ps,function(p){
-    stat_summary(geom='ribbon',color=NA,alpha=alpha,
-      fun.min=function(x){ quantile(x,  (1-p)/2) },
-      fun.max=function(x){ quantile(x,1-(1-p)/2) })
-  })
-  geom = c(geom,stat_summary(geom='line',fun='median'))
+geom_viola = function(...){
+  geom_violin(...,alpha=.5,scale='width')
 }
+
+geom_estimate = function(...,shape=18,width=1){
+  suppressWarnings(list(
+    geom_point(...,size=1,shape=shape),
+    geom_errorbar(...,lwd=1/3,width=width)
+))}
+
+scale_clr_manual = function(...){ list(
+  # TODO: combine w viridis
+  scale_color_manual(...),
+  scale_fill_manual(...)
+)}
 
 scale_clr_viridis = function(...,end=.85){ list(
   viridis::scale_color_viridis(...,end=end),

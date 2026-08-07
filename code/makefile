@@ -1,7 +1,7 @@
-main:
-	Rscript main.r
-debug:
-	Rscript sam.distr.r
+meta:
+	Rscript meta.r
+toy:
+	Rscript toy.r
 tikz:
 	cd tikz && make all
 .PHONY: tikz
