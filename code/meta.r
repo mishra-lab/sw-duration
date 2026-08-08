@@ -180,7 +180,7 @@ meta.classic = function(Y){
     df(ns=nrow(Ym),method='2 × m',   meta='wtd.avg',boot.mci(2*Ym$value,Ym$n)))
 }
 
-plot.distr = function(S,Y,sub=100,dd=.05,zoom=10){
+plot.distr = function(S,Y,sub=10,dd=.05,zoom=8){
   d = d.vec(dd)
   D = rbind.lapply(seq(1,nrow(S),sub),function(g){
     fam = S$fam[g]
@@ -191,28 +191,36 @@ plot.distr = function(S,Y,sub=100,dd=.05,zoom=10){
       df(d=d,data='total (source) p[x]',  type='PDF',value=px),
       df(d=d,data='trunc (active) p[z|a]',type='PDF',value=pz),
       df(d=d,data='total (source) p[x]',  type='CDF',value=cumsum(px)*dd),
-      df(d=d,data='trunc (active) p[z|a]',type='CDF',value=cumsum(pz)*dd)))
+      df(d=d,data='trunc (active) p[z|a]',type='CDF',value=cumsum(pz)*dd),
+      df(d=0,data='total (source) p[x]',  type='mean',value=xp.mean(d,px)),
+      df(d=0,data='trunc (active) p[z|a]',type='mean',value=xp.mean(d,pz))))
   })
+  types = c('CDF','PDF','mean')
+  D$type = factor(D$type,types,types)
   D$fam = factor(D$fam,names(fl$fams),fl$fams)
+  E = subset(D,type=='mean'); D = subset(D,type!='mean');
   g = ggplot(D,aes(x=d,y=value,color=fam,fill=fam)) +
-    facet_grid('type ~ data') +
+    facet_grid('type ~ data',scales='free',space='free') +
     stat_summary(geom='ribbon',color=NA,alpha=.5,
       fun.min=function(x){ quantile(x,.025) },
       fun.max=function(x){ quantile(x,.975) }) +
     stat_summary(geom='line',fun='mean') +
     scale_colorfill(v=cmap$fams) +
-    coord_cartesian(ylim=0:1) +
+    ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
+    ggh4x::scale_y_facet(type=='mean',breaks=0,labels='') +
     labs(x=l$dur,y=l$prop,color='Durations',fill='Durations')
   # TODO: add means below & quantiles
-  gg = list(full=g,zoom=g+subset(D,d<=zoom))
+  gg = list(full=g,zoom=g + subset(D,d<=zoom) +
+    geom_viola(data=E,aes(x=value,y=0),
+      show.legend=0,position=position_dodge(width=.5)))
 }
 
 main.meta = function(do='load',pop='fsw'){
   Y = prop.ci(load.csv('data','Fazito2012'))
-  for (reg in c('Africa','Europe','LatAm')){
+  for (reg in c('Africa','Europe','LatAm')[1]){
     Yi = subset(Y,kp==pop & region==reg)
-    S = rbind.lapply(fams,get.sample,Y=subset(Yi,K26==1),do=do,gps=1,.par=0)
-    g = plot.par(S);      plot.save(g,'stan','meta',pop,str('par.',reg),size=c(7,5))
+    S = rbind.lapply(fams,get.sample,Y=subset(Yi,K26==1),do=do,gps=1,.par=1)
+    g = plot.par(S); plot.save(g,'stan','meta',pop,str('par.',reg),size=c(7,5))
     gg = plot.distr(S,Yi)
     plot.save(gg$full,'stan','meta',pop,str('distr.full.',reg),size=c(7,5))
     plot.save(gg$zoom,'stan','meta',pop,str('distr.zoom.',reg),size=c(7,5))

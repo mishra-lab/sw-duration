@@ -134,6 +134,15 @@ d.cv = function(dfun,u,...,m,eps=1e-7){
   cv = sqrt(integrate(f,lower=eps,upper=u-eps)$value) / m
 }
 
+xp.mean = function(x,p){
+  m = sum(p*x) / sum(p)
+}
+
+xp.cv = function(x,p,m){
+  if (missing(m)){ m = xp.mean(x,p) }
+  cv = sqrt(sum(p*(x-m)^2)/sum(p)) / m
+}
+
 fit.n = function(p,p.025,p.975){
   err.fun = function(x){
     n = 10^x
