@@ -23,6 +23,7 @@ ulist = function(x=list(),xu=list(),...){
 dfu = function(X,...){ as.data.frame(ulist(X,...)) }
 sum1 = function(x){ x/sum(x) }
 clip = function(x,eps){ pmin(1-eps,pmax(eps,x)) }
+ulen = function(x){ len(unique(x)) }
 
 int.cut = function(x,br,lo=0,hi=Inf){
   labels = gsub('-Inf','+',str(c(lo,br),'-',c(br,hi)))
@@ -147,31 +148,36 @@ dtru = LaplacesDemon::dtrunc
 ptru = LaplacesDemon::ptrunc
 
 distrs = list(
+  exp = list(
+    r = function(n,a,b,u){ rtru(n=n,spec='exp',rate=1/a,a=0,b=u) },
+    d = function(x,a,b,u){ dtru(x=x,spec='exp',rate=1/a,a=0,b=u) },
+    p = function(q,a,b,u){ ptru(x=q,spec='exp',rate=1/a,a=0,b=u) },
+    c = '#cc0033', l = 'Exponential'),
   gamma = list(
     r = function(n,a,b,u){ rtru(n=n,spec='gamma',shape=a,rate=b,a=0,b=u) },
     d = function(x,a,b,u){ dtru(x=x,spec='gamma',shape=a,rate=b,a=0,b=u) },
     p = function(q,a,b,u){ ptru(x=q,spec='gamma',shape=a,rate=b,a=0,b=u) },
-    l = 'Gamma'),
+    c = '#990099', l = 'Gamma'),
   weibull = list(
     r = function(n,a,b,u){ rtru(n=n,spec='weibull',shape=a,scale=b,a=0,b=u) },
     d = function(x,a,b,u){ dtru(x=x,spec='weibull',shape=a,scale=b,a=0,b=u) },
     p = function(q,a,b,u){ ptru(x=q,spec='weibull',shape=a,scale=b,a=0,b=u) },
-    l = 'Weibull'),
+    c = '#0099cc', l = 'Weibull'),
   lnorm = list(
     r = function(n,a,b,u){ rtru(n=n,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
     d = function(x,a,b,u){ dtru(x=x,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
     p = function(q,a,b,u){ ptru(x=q,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
-    l = 'Log-Normal'),
+    c = '#00cc66', l = 'Log-Normal'),
   sbeta = list(
     r = function(n,a,b,u){ rbeta(n=n,  shape1=a,shape2=b) * u },
     d = function(x,a,b,u){ dbeta(x=x/u,shape1=a,shape2=b) / u },
     p = function(q,a,b,u){ pbeta(q=q/u,shape1=a,shape2=b) },
-    l = 'Scaled Beta'),
+    c = '#ffcc00', l = 'Scaled Beta'),
   skumar = list(
     r = function(n,a,b,u){ extraDistr::rkumar(n=n,  a=a,b=b) * u },
     d = function(x,a,b,u){ extraDistr::dkumar(x=x/u,a=a,b=b) / u },
     p = function(q,a,b,u){ extraDistr::pkumar(q=q/u,a=a,b=b) },
-    l = 'Scaled Kumar'))
+    c = '#ff6600', l = 'Scaled Kumar'))
 
 fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7){
   if (is.character(dfun)){ dfun = distrs[[dfun]]$d }
@@ -207,16 +213,18 @@ geom_estimate = function(...,shape=18,width=1){
     geom_errorbar(...,lwd=1/3,width=width)
 ))}
 
-scale_clr_manual = function(...){ list(
-  # TODO: combine w viridis
-  scale_color_manual(...),
-  scale_fill_manual(...)
-)}
-
-scale_clr_viridis = function(...,end=.85){ list(
-  viridis::scale_color_viridis(...,end=end),
-  viridis::scale_fill_viridis(...,end=end)
-)}
+scale_colorfill = function(v='plasma',...,d=1,end=.85){
+  require('viridis')
+  if (len(v) > 1){ return(list(
+    scale_color_manual(values=v,...),
+    scale_fill_manual (values=v,...) ))}
+  if (v %in% ls('package:viridis')){ return(list(
+    scale_color_viridis(option=v,...,discrete=d,end=end),
+    scale_fill_viridis (option=v,...,discrete=d,end=end) ))}
+  if (v %in% names(RColorBrewer::brewer.pal.info)){ return(ifelse(d,
+    scale_color_brewer   (pal=v,aes=c('color','fill'),...),
+    scale_color_distiller(pal=v,aes=c('color','fill'),...) ))}
+}
 
 plot.save = function(g,...,size=NULL,ext='.pdf',root='out/fig'){
   if (is.null(size)){ size = plot.size(g) }

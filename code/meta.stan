@@ -33,8 +33,8 @@ data {
   vector[Ni] d_i; // integral steps
   real dmax; // maximum duration
   real eps; // a small number
-  int gps;  // generate posterior samples
-  int fam;  // family: {1: gamma, 2: lognormal}
+  int gps; // generate posterior samples
+  int fam; // family {1:5} -> see below
 }
 
 parameters {
@@ -51,27 +51,31 @@ transformed parameters {
   real Ez, CVz; // obs  duration E[z|s], CV[z|s]
   vector[Ni] fx_i, fz_i, Fz_i; // PDF[x],PDF[z|s],CDF[z|s]
   // numeric integration
-  if (fam==1){ # gamma
+  if (fam==1){ # exp
+    fx_i = exp( -d_i/b ) / b;
+    fz_i = exp( -d_i/b );
+  }
+  if (fam==2){ # gamma
     for (i in 1:Ni){
       fx_i[i] = exp(gamma_lpdf(d_i[i] | a, b));
       fz_i[i] = 1 - gamma_cdf (d_i[i] | a, b);
   }}
-  if (fam==2){ # weibull
+  if (fam==3){ # weibull
     for (i in 1:Ni){
       fx_i[i] = exp(weibull_lpdf(d_i[i] | a, b));
       fz_i[i] = 1 - weibull_cdf (d_i[i] | a, b);
   }}
-  if (fam==3){ # lnormal
+  if (fam==4){ # lnormal
     for (i in 1:Ni){
       fx_i[i] = exp(lognormal_lpdf(d_i[i] | a, b));
       fz_i[i] = 1 - lognormal_cdf (d_i[i] | a, b);
   }}
-  if (fam==4){ # sbeta
+  if (fam==5){ # sbeta
     for (i in 1:Ni){
       fx_i[i] = exp(beta_lpdf(d_i[i]/dmax | a, b)) / dmax;
       fz_i[i] = 1 - beta_cdf (d_i[i]/dmax | a, b);
   }}
-  if (fam==5){ # skumar
+  if (fam==6){ # skumar
     fx_i = a * b * (d_i/dmax)^(a-1) .* (1 - (d_i/dmax)^a)^(b-1) / dmax;
     fz_i = (1 - (d_i/dmax)^a)^b;
   }

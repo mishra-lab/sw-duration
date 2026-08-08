@@ -15,11 +15,16 @@ fl$pars = list(
   Ez  = 'E[z|s]', CVz  = 'CV[z|s]',
   sp0 = 'p0',     st95 = 't95')
 
+cmap = list()
+cmap$fams = unlist(lapply(distrs,`[[`,'c'))
+names(cmap$fams) = fl$fams
+
 gen.makevars = function(opt){ cat(file='~/.R/Makevars',sep='',
   '\nCXX17=g++',
   '\nCXX17FLAGS=-march=native -mtune=native -fPIC -O',opt) }
 
-dmax   = 50
+dmax = 50
+fams = names(distrs)
 d.vec  = function(dd){ seq(dd/2,dmax,dd) }
 p.x    = function(x,fam,a,b){     distrs[[fam]]$d(x=x,a=a,b=b,u=dmax) }
 p.za   = function(z,fam,a,b){ 1 - distrs[[fam]]$p(q=z,a=a,b=b,u=dmax) }
@@ -53,11 +58,12 @@ model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
   Yq  = subset(Y,meas=='q')
   q_i = sapply(Yq$value,i.near,ref=d_i)
   U = switch(fam, # bounds
-    gamma   = list(la=c( -1,3),lb=c(-1,3)),
-    weibull = list(la=c( -1,3),lb=c(-1,3)),
-    lnorm   = list(la=c(-20,1),lb=c(-2,3)),
-    sbeta   = list(la=c( -3,3),lb=c(0,3)),
-    skumar  = list(la=c( -3,3),lb=c(0,3)))
+    exp     = list(la=c(-eps,eps),lb=c(-1,3)),
+    gamma   = list(la=c(-2,2),    lb=c(-3,3)),
+    weibull = list(la=c(-1,2),    lb=c(-1,2)),
+    lnorm   = list(la=c(-9,1),    lb=c(-2,3)),
+    sbeta   = list(la=c(-3,3),    lb=c( 0,3)),
+    skumar  = list(la=c(-2,3),    lb=c( 0,3)))
   data = list(
     Ula = U$la,       # bounds: full* duration log(a) param
     Ulb = U$lb,       # bounds: full* duration log(b) param
@@ -75,12 +81,13 @@ model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
     q_i = q_i,      # quantile value index
     eps = eps,      # a small number
     gps = gps,      # generate posterior samples
-    fam = switch(fam,gamma=1,weibull=2,lnorm=3,sbeta=4,skumar=5))
+    fam = which(fams==fam)) # distr family
 }
 
 get.sample = function(Y,fam,...,do='load',gps=0){
   model = load.txt('code','meta',ext='.stan')
-  args = list(data=model.data(Y,...,fam=fam,gps=gps),pars=names(fl$pars),
+  data = model.data(Y,...,fam=fam,gps=gps)
+  args = list(data=data,pars=names(fl$pars),
     chains=7,iter=1000,warm=500,seed=666)
   if (gps){ args$pars = c(args$pars,'m_vs','q_ps') }
   hash = hash.info(ulist(args,model=model))
@@ -89,9 +96,10 @@ get.sample = function(Y,fam,...,do='load',gps=0){
   } else {
     fit = run.stan(args)
     if (do=='save'){
+      args$data$fam = fams[args$data$fam] # HACK
       save.rds (fit, 'data','stan',hash,'fit')
       save.json(args,'data','stan',hash,'info')
-      g = rstan::stan_trace(fit,inc_w=1)
+      g = rstan::stan_trace(fit,inc_w=1,pars=names(fl$pars))
       plot.save(g,'data','stan',hash,'trace',root='')
   }}
   S = expand.grid(i=args$warm+1:args$iter,chain=factor(1:args$chains))
@@ -99,6 +107,7 @@ get.sample = function(Y,fam,...,do='load',gps=0){
 }
 
 run.stan = function(args){
+  status(1,'run.stan: ',fams[args$data$fam])
   model = rstan::stan_model('meta.stan',auto_write=TRUE)
   args = ulist(args,object=model,cores=args$chains)
   fit = do.call(rstan::sampling,args)
@@ -111,8 +120,9 @@ plot.par = function(S,...){
   S$fam = factor(S$fam,names(fl$fams),fl$fams)
   g = ggplot(S,aes(x='',y=value,color=fam)) +
     facet_wrap('par',scales='free',ncol=4) +
+    scale_colorfill(v=cmap$fams) +
     geom_viola() +
-    labs(x='Parameter',y='Value',fill='Family')
+    labs(x='Parameter',y='Value',color='Family')
 }
 
 # ==============================================================================
@@ -143,7 +153,7 @@ plot.demo = function(S,Y,dd=.01){
 main.demo = function(do='load'){
   Y = prop.ci(load.csv('data','Baral2014'))
   Y = subset(Y,ref=='rds')
-  S = rbind.lapply(names(distrs),get.sample,Y=Y,do=do,gps=1)
+  S = rbind.lapply(fams,get.sample,Y=Y,do=do,gps=1,.par=0)
   g = plot.par(S); plot.save(g,'stan','demo','par',size=c(7,5))
   S = subset(S,fam=='skumar') # best fit
   g = plot.demo(S,Y); plot.save(g,'stan','demo','prop',size=c(7,3))
@@ -153,15 +163,16 @@ main.demo = function(do='load'){
 # meta
 
 boot.mci = function(x,w=NULL,nb=1e5,seed=666){
+  if (len(x)==0){ return(list(value=NA,lo=NA,hi=NA)) }
   set.seed(seed)
   xb = unlist(par.lapply(1:nb,function(i){ mean(sample(x,rep=1,p=w)) }))
-  mci = list(value=mean(x),lo=quantile(x,.025,names=0),hi=quantile(x,.975,names=0))
+  mci = list(value=mean(xb),lo=quantile(xb,.025,names=0),hi=quantile(xb,.975,names=0))
 }
 
 meta.classic = function(Y){
   Yt = subset(Y,F12=='turnover')
   Ym = subset(Y,F12=='median'|F12=='mean')
-  # Yr = subset(Y,F12=='retired') # TODO
+  # print(ulen(str(Ym$id,Ym$n))/nrow(Ym)) # DEBUG == 1
   M = rbind(
     df(ns=nrow(Yt),method='turnover',meta='raw.avg',boot.mci(1/Yt$p)),
     df(ns=nrow(Yt),method='turnover',meta='wtd.avg',boot.mci(1/Yt$p,Yt$n)),
@@ -169,41 +180,44 @@ meta.classic = function(Y){
     df(ns=nrow(Ym),method='2 × m',   meta='wtd.avg',boot.mci(2*Ym$value,Ym$n)))
 }
 
-plot.distr = function(S,Y,sub=100,fam='gamma',dd=.05,dmax=50){
-  d = d.vec(dd,dmax)
+plot.distr = function(S,Y,sub=100,dd=.05,zoom=10){
+  d = d.vec(dd)
   D = rbind.lapply(seq(1,nrow(S),sub),function(g){
-    px = p.x (d,fam=fam,m=S$Eu[g],cv=S$CVu[g],b=50)
-    pz = sum1(p.za(d,fam=fam,m=S$Eu[g],cv=S$CVu[g],b=50)
+    fam = S$fam[g]
+    px = sum1(p.x (d,fam=fam,a=S$a[g],b=S$b[g])) / dd # TODO: why need sum1?
+    pz = sum1(p.za(d,fam=fam,a=S$a[g],b=S$b[g])
             * p.sz(d,sp0=S$sp0[g],st95=S$st95[g]) ) / dd
-    # print(c(Ex=S$Ex[g],eEx=sum(d*px)/sum(px), # DEBUG
-    #         Ez=S$Ez[g],eEz=sum(d*pz)/sum(pz)))
-    Di = rbind(
+    Di = cbind(fam=fam,rbind(
       df(d=d,data='total (source) p[x]',  type='PDF',value=px),
       df(d=d,data='trunc (active) p[z|a]',type='PDF',value=pz),
       df(d=d,data='total (source) p[x]',  type='CDF',value=cumsum(px)*dd),
-      df(d=d,data='trunc (active) p[z|a]',type='CDF',value=cumsum(pz)*dd))
+      df(d=d,data='trunc (active) p[z|a]',type='CDF',value=cumsum(pz)*dd)))
   })
-  # TODO: fix fam
-  g = ggplot(D,aes(x=d,y=value,color=data,fill=data)) +
-    facet_wrap('type',scales='free') +
+  D$fam = factor(D$fam,names(fl$fams),fl$fams)
+  g = ggplot(D,aes(x=d,y=value,color=fam,fill=fam)) +
+    facet_grid('type ~ data') +
     stat_summary(geom='ribbon',color=NA,alpha=.5,
       fun.min=function(x){ quantile(x,.025) },
       fun.max=function(x){ quantile(x,.975) }) +
     stat_summary(geom='line',fun='mean') +
-    scale_clr_manual(values=c('#999','#066')) +
-    ggh4x::scale_x_facet(type=='PDF',limits=c(0,25)) +
-    ggh4x::scale_y_facet(type=='PDF',limits=c(0,.5)) +
+    scale_colorfill(v=cmap$fams) +
+    coord_cartesian(ylim=0:1) +
     labs(x=l$dur,y=l$prop,color='Durations',fill='Durations')
+  # TODO: add means below & quantiles
+  gg = list(full=g,zoom=g+subset(D,d<=zoom))
 }
 
-main.meta = function(do='load'){
+main.meta = function(do='load',pop='fsw'){
   Y = prop.ci(load.csv('data','Fazito2012'))
-  Yi = subset(Y,kp=='fsw' & region=='Africa')
-  M  = meta.classic(Yi)
-  Yi = subset(Yi,K26==1) # TODO: clean-up
-  S = get.sample(Yi,do=do)
-  g = plot.par(S);      plot.save(g,'stan','meta.par',size=c(5,3))
-  g = plot.distr(S,Yi); plot.save(g,'stan','meta.distr',size=c(7,3))
+  for (reg in c('Africa','Europe','LatAm')){
+    Yi = subset(Y,kp==pop & region==reg)
+    S = rbind.lapply(fams,get.sample,Y=subset(Yi,K26==1),do=do,gps=1,.par=0)
+    g = plot.par(S);      plot.save(g,'stan','meta',pop,str('par.',reg),size=c(7,5))
+    gg = plot.distr(S,Yi)
+    plot.save(gg$full,'stan','meta',pop,str('distr.full.',reg),size=c(7,5))
+    plot.save(gg$zoom,'stan','meta',pop,str('distr.zoom.',reg),size=c(7,5))
+    M = meta.classic(Yi) # TODO: incorporate above?
+  }
 }
 
 # ==============================================================================
