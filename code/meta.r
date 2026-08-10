@@ -6,6 +6,7 @@ source('utils.r')
 l = list()
 l$dur = 'Duration (years)'
 l$prop = 'Population proportion'
+l$fam = 'Family'
 fl = list()
 fl$fams = lapply(distrs,`[[`,'l')
 fl$pars = list(
@@ -122,7 +123,7 @@ plot.par = function(S,...){
     facet_wrap('par',scales='free',ncol=4) +
     scale_colorfill(v=cmap$fams) +
     geom_viola() +
-    labs(x='Parameter',y='Value',color='Family')
+    labs(x='Parameter',y='Value',color=l$fam)
 }
 
 # ==============================================================================
@@ -180,7 +181,7 @@ meta.classic = function(Y){
     df(ns=nrow(Ym),method='2 × m',   meta='wtd.avg',boot.mci(2*Ym$value,Ym$n)))
 }
 
-plot.distr = function(S,Y,sub=10,dd=.05,zoom=8){
+plot.distr = function(S,Y,sub=500,dd=.05,zoom=15){
   d = d.vec(dd)
   D = rbind.lapply(seq(1,nrow(S),sub),function(g){
     fam = S$fam[g]
@@ -208,11 +209,15 @@ plot.distr = function(S,Y,sub=10,dd=.05,zoom=8){
     scale_colorfill(v=cmap$fams) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
     ggh4x::scale_y_facet(type=='mean',breaks=0,labels='') +
-    labs(x=l$dur,y=l$prop,color='Durations',fill='Durations')
-  # TODO: add means below & quantiles
-  gg = list(full=g,zoom=g + subset(D,d<=zoom) +
-    geom_viola(data=E,aes(x=value,y=0),
-      show.legend=0,position=position_dodge(width=.5)))
+    labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam)
+  geom_data = function(Yi,type,...){ geom_estimate(
+    data=cbind(Yi,type=type,data=E$data[2]),
+    pos='jitter',width=.25,inherit.aes=0,...) }
+  gg = list(full=g,zoom=g + scale_x_continuous(lim=c(0,zoom)) +
+    geom_data(subset(Y,meas=='q'),   'CDF', map=aes(x=value,y=p,ymin=plo,ymax=phi)) +
+    geom_data(subset(Y,meas=='mean'),'mean',map=aes(y=0,x=value,xmin=NA, xmax=NA )) +
+    geom_viola(data=E,aes(x=value,y=0),show.legend=0,pos=dodge(w=.5)))
+    # TODO: CI for data means
 }
 
 main.meta = function(do='load',pop='fsw'){
