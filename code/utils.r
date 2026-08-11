@@ -143,6 +143,10 @@ xp.cv = function(x,p,m){
   cv = sqrt(sum(p*(x-m)^2)/sum(p)) / m
 }
 
+xp.quant = function(x,p,po=.5){
+  spline(x=cumsum(sum1(p)),y=x,xout=po)$y
+}
+
 fit.n = function(p,p.025,p.975){
   err.fun = function(x){
     n = 10^x
@@ -194,9 +198,15 @@ fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7){
     mx  = d.mean(dfun,a=exp(x[1]),b=exp(x[2]),u=u,eps=eps)
     cvx = d.cv  (dfun,a=exp(x[1]),b=exp(x[2]),u=u,eps=eps,m=m)
     err = (m-mx)^2 + (cv-cvx)^2 }
-  opt = optim(c(a=0,b=0),jfun)
+  fail = function(...){ failed <<- 1 }; failed <<- 0
+  opt = tryCatch(optim(c(a=0,b=0),jfun),warning=fail,error=fail)
+  if (failed){ return(list(a=NA,b=NA,u=NA)) }
   if (opt$value > tol){ print(opt) }
   return(c(as.list(exp(opt$par)),u=u))
+}
+
+distr.call = function(fun,args,...){
+  do.call(fun,c(args,list(...)))
 }
 
 # ==============================================================================
@@ -211,6 +221,8 @@ theme_update(
   strip.text.x=element_text(color='black'),
   strip.text.y=element_text(color='black'),
   legend.spacing.y=unit(-1,'mm'))
+
+dodge = function(...,w=.5){ position_dodge(...,width=w) }
 
 geom_viola = function(...){
   geom_violin(...,alpha=.5,scale='width')
