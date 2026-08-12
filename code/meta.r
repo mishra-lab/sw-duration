@@ -8,8 +8,8 @@ l$dur = 'Duration (years)'
 l$prop = 'Population proportion'
 l$fam = 'Family'
 fl = list()
-fl$fams = lapply(distrs,`[[`,'l')
-fl$pars = list(
+fl$fam = lapply(distrs,`[[`,'l')
+fl$par = list(
   a   = 'α',      la   = 'log(α)',
   b   = 'β',      lb   = 'log(β)',
   Ex  = 'E[x]',   CVx  = 'CV[x]',
@@ -17,8 +17,8 @@ fl$pars = list(
   sp0 = 'p0',     st95 = 't95')
 
 cmap = list()
-cmap$fams = unlist(lapply(distrs,`[[`,'c'))
-names(cmap$fams) = fl$fams
+cmap$fam = unlist(lapply(distrs,`[[`,'c'))
+names(cmap$fam) = fl$fam
 
 gen.makevars = function(opt){ cat(file='~/.R/Makevars',sep='',
   '\nCXX17=g++',
@@ -88,7 +88,7 @@ model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
 get.sample = function(Y,fam,...,do='load',gps=0){
   model = load.txt('code','meta',ext='.stan')
   data = model.data(Y,...,fam=fam,gps=gps)
-  args = list(data=data,pars=names(fl$pars),
+  args = list(data=data,pars=names(fl$par),
     chains=7,iter=1000,warm=500,seed=666)
   if (gps){ args$pars = c(args$pars,'m_vs','q_ps') }
   hash = hash.info(ulist(args,model=model))
@@ -100,7 +100,7 @@ get.sample = function(Y,fam,...,do='load',gps=0){
       args$data$fam = fams[args$data$fam] # HACK
       save.rds (fit, 'data','stan',hash,'fit')
       save.json(args,'data','stan',hash,'info')
-      g = rstan::stan_trace(fit,inc_w=1,pars=names(fl$pars))
+      g = rstan::stan_trace(fit,inc_w=1,pars=args$pars)
       plot.save(g,'data','stan',hash,'trace',root='')
   }}
   S = expand.grid(i=args$warm+1:args$iter,chain=factor(1:args$chains))
@@ -115,13 +115,13 @@ run.stan = function(args){
 }
 
 plot.par = function(S,...){
-  fl$pars$lp__ = 'log(L)'
-  S = melt(S,id=c('i','chain','fam'),var='par',m=names(fl$pars))
-  S$par = factor(S$par,names(fl$pars),fl$pars)
-  S$fam = factor(S$fam,names(fl$fams),fl$fams)
+  fl$par$lp__ = 'log(L)'
+  S = melt(S,id=c('i','chain','fam'),var='par',m=names(fl$par))
+  S$par = factor(S$par,names(fl$par),fl$par)
+  S$fam = factor(S$fam,names(fl$fam),fl$fam)
   g = ggplot(S,aes(x='',y=value,color=fam)) +
     facet_wrap('par',scales='free',ncol=4) +
-    scale_colorfill(v=cmap$fams) +
+    scale_colorfill(v=cmap$fam) +
     geom_viola() +
     labs(x='Parameter',y='Value',color=l$fam)
 }
@@ -198,7 +198,7 @@ plot.distr = function(S,Y,sub=500,dd=.05,zoom=15){
   })
   types = c('CDF','PDF','mean')
   D$type = factor(D$type,types,types)
-  D$fam = factor(D$fam,names(fl$fams),fl$fams)
+  D$fam = factor(D$fam,names(fl$fam),fl$fam)
   E = subset(D,type=='mean'); D = subset(D,type!='mean');
   g = ggplot(D,aes(x=d,y=value,color=fam,fill=fam)) +
     facet_grid('type ~ data',scales='free',space='free') +
@@ -206,7 +206,7 @@ plot.distr = function(S,Y,sub=500,dd=.05,zoom=15){
       fun.min=function(x){ quantile(x,.025) },
       fun.max=function(x){ quantile(x,.975) }) +
     stat_summary(geom='line',fun='mean') +
-    scale_colorfill(v=cmap$fams) +
+    scale_colorfill(v=cmap$fam) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
     ggh4x::scale_y_facet(type=='mean',breaks=0,labels='') +
     labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam)
