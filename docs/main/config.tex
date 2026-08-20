@@ -1,0 +1,58 @@
+\input{../style}
+% packages
+\RequirePackage{
+  xspace,
+  xcolor,
+  booktabs,
+  graphicx,
+  subcaption,
+  csquotes,
+  tikz,
+}
+% macros
+\let\txn\textnormal
+\let\rarr\rightarrow
+\renewcommand{\sp}[1]{\,{#1}\,}
+\newcommand{\tabullet}{\par\labelitemi\hskip1ex}
+\newcommand{\eg}{e.g.\xspace}
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\M}{\mathbb{M}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\sE}{\hat{\mathbb{E}}}
+\newcommand{\sP}{\hat{\mathbb{P}}}
+\newcommand{\CV}{\mathbb{CV}\hskip1pt}
+\newcommand{\CI}[1][95]{#1\%~CI\xspace}
+\newcommand{\lzu}[2]{#1\sp{<}z\sp{<}#2}
+\newcommand{\azb}{\lzu{a}{b}}
+\newcommand{\norm}{\frac{1}{K}}
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\eqrefr}[2]{Eqs.~(\ref{#1}--\ref{#2})}
+\newcommand{\eqrefa}[2]{Eqs. (\ref{#1}) and (\ref{#2})}
+\newcommand{\tn}[1][\dag]{\rlap{\textsuperscript{\,#1}}}
+\newcommand{\tnd}[2][\dag]{\textsuperscript{#1\,}{#2}}
+\newcommand{\floatfoot}[2][1]{\par\parbox{#1\textwidth}{\footnotesize#2}}
+\renewcommand{\aa}{\alpha}
+\newcommand  {\bb}{\beta}
+\newcommand  {\pp}{\rho_s}
+\renewcommand{\tt}{\tau_{95}}
+\newcommand{\hreftt}[2][https://]{\href{#1#2}{\texttt{#2}}}
+% paths
+\def\projroot{../../}
+\graphicspath{
+  {\projroot/out/fig/tikz/}
+  {\projroot/out/fig/toy/}
+  {\projroot/out/fig/val/}
+  {\projroot/out/fig/stan/}
+}
+% bib & dwhyperref
+\RequirePackage[natbib=true]{biblatex}
+\renewcommand{\bibfont}{\footnotesize}
+\addbibresource{/home/jesse/refs/library.bib}
+\RequirePackage[
+  colorlinks,
+  citecolor=violet,
+  linkcolor=purple,
+  urlcolor=blue,
+]{hyperref}
+

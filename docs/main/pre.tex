@@ -1,0 +1,76 @@
+\section{Preliminaries}
+% ------------------------------------------------------------------------------
+\paragraph{Assumptions}
+For simplicity, we first assume that periods of sex work
+can be precisely and instantaneously delineated,
+\ie overlooking blurry boundaries between sex work and transactional sex,
+and definitions of sex work based on activity in the past 6 months, etc.
+\cite{Scorgie2012}.
+We further assume that survey participants can
+perfectly recall periods of sex work.
+Finally, we assume that all populations are at equilibrium,
+despite empiric evidence of changing sex work dynamics in several contexts
+\cite{Anderegg2024}.
+% TODO: supply/demand paper, Rebecca paper
+% ------------------------------------------------------------------------------
+\paragraph{Existing estimation methods}
+% JK: this may end up in the introduction
+In their global scoping review of HIV risk behaviour durations,
+\citet{Fazito2012} considered three methods to estimate
+mean duration selling/buying sex (Table~\ref{tab:ests}):
+1. mean total duration among those finished selling/buying sex;
+2. reciprocal of the proportion who started selling/buying sex within the past year; and
+3. double the mean/median reported duration among those actively selling/buying sex.
+Notably, among the 118 estimates of duration selling or buying sex
+identified by \citeauthor{Fazito2012}:
+the vast majority used method~3 (86\%),
+a small faction used method~2 (14\%), and
+none used method~1.
+Studies also commonly report
+the proportions of respondents selling/buying sex
+for pre-specified duration ranges,
+\eg \{0--1, 1--5, 5+\} years,
+though it's not clear if/how such data were used in \cite{Fazito2012}.
+% ------------------------------------------------------------------------------
+\paragraph{Who exactly are we talking about?}
+Before continuing, it is helpful to distinguish two populations:
+individuals who will ever sell/buy sex in their lifetime, and
+individuals who are actively selling/buying sex.
+The former "source population" is the sampling frame for method~1,
+and tends to include more individuals who sell/buy sex for shorter durations;
+the latter "active population" is the sampling frame for methods 2 and 3,
+and tends to include more individuals who sell/buy sex for longer durations
+(Figure~\ref{fig:diag.pop}).
+It is tempting to think that,
+since "sex work" strata in compartmental models reflect the active population,
+rates of exit from sex work should be derived from this population.
+However, this is not the case, because
+these rates apply to all individuals \emph{entering} sex work,
+which reflects the source population.%
+\footnote{An analogous example:
+  the mean duration of an infection should be characterized by
+  a cohort of individuals with \emph{incident} infections,
+  not a cross-section of individuals with \emph{prevalent} infections.}
+A final population worth distinguishing is
+the "sampled population" in a given cross-sectional survey,
+which we assume intends to be representative of the active population,
+but might undersample some individuals,
+\eg those in the early years of sex work,
+due to delays in self-identification as a sex worker
+\cite{Mishra2012,Cheuk2020}.
+\begin{figure}[b]
+  \centering\includegraphics[scale=1]{diag.pop}
+  \caption{Diagram of periods selling/buying sex in an open population at equilibrium}
+  \label{fig:diag.pop}
+  \floatfoot{Colours ---
+    dark green: past sex work among active population (observed);
+    light green: future sex work among active population (unobserved);
+    gray: past/future total sex work periods among inactive population (unobserved).}
+\end{figure}
+\begin{table}
+  \centering
+  \caption{Methods of estimating mean duration selling sex
+    suggested and reviewed in \cite{Fazito2012}}
+  \label{tab:ests}
+  \input{tab.ests}
+\end{table}

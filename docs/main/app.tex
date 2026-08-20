@@ -1,0 +1,114 @@
+\clearpage
+\section{Application}
+We highlight the utility of the above analytic relationships though a Bayesian model,
+which aims to infer
+the complete distribution of total durations among the source population $p(x)$
+from individual-level and/or aggregate data on
+the distribution of censored durations among the sampled population $p(z|s)$.
+Specifically, we focus on the types of aggregate estimates reviewed by \citet{Fazito2012}:
+distribution means $\sE[z|s]$, and
+proportions of durations within a given interval $[a,b]$, denoted $\sP[\azb|s]$,
+which can encompass proportions of responses falling within pre-specified ranges,
+as well as estimated medians, quartiles, etc.
+% ==============================================================================
+\subsection{Bayesian Model}
+The model assumes a parametric distribution for
+total durations among the source population $p(x)$.
+Specifically, we considered 6 distribution families:
+Exponential, Gamma, Weibull, Log-Normal, Scaled Beta, and Scaled Kumaraswamy,
+all truncated or scaled to 50 years maximum duration (Table~\ref{tab:fams}).
+For convenience, we denote the parameters of all families as: $\aa,\bb$
+(for Exponential: $\bb$ only),
+so the interpretation of and priors for each parameter depend on the family.
+\par
+We model the probability of
+being sampled for survey participation among the active population as
+increasing exponentially from $\pp \in [0.5,1]$ initially
+to 95\% by year $\tt \in [0,3]$,
+and 100\% asymptotically:%
+\footnote{Thus, if either $\pp = 1$ or $\tt = 0$,
+  then sampling will be modelled as
+  perfectly representative of the active population: $p(s|z) = 1$.}
+\begin{equation}
+  p(s|z) = 1 + \big(\pp-1\big)
+    e^{\bigg(\frac{z}{\tt}\log\bigg(\frac{0.05}{1-\pp}\bigg)\bigg)}
+  \label{eq:p(s|z)}
+\end{equation}
+We then define
+the distribution of censored durations among the sampled population
+$p(z|s;\aa,\bb,\pp,\tt)$ via \eqref{eq:p(z|s)}.
+% JK: this notation is intentional, where
+%     "conditioning" is denoted "|" while parameters are listed last after ";"
+What remains is the specify likelihood functions for
+estimates $\sE[z|s]$ and $\sP[\azb|s]$ from empirical data,
+which are defined in \eqrefa{eq:lE}{eq:lP}, respectively.
+\par
+Under this model, we infer
+posterior distributions for $\aa,\bb,\pp,\tt$ given the data.
+From $\aa,\bb$, we can then compute
+the distribution of total durations among the source population $p(x;\aa,\bb)$,
+and any characteristics thereof, \eg the mean $\E[x;\aa,\bb]$.
+We implemented and fit the model using Stan~\cite{Stan2024},
+retaining 1000 samples after 500 warm-up iterations from 7 chains
+with default random initialization and sampling algorithm~\cite{Betancourt2018}.
+We confirmed convergence visually through parameter trace plots (not shown).
+% ==============================================================================
+\subsection{Single Study}
+We first apply the model to aggregate data from a single study:
+a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
+The study reported crude and RDS-adjusted mean (95\%~CI)
+proportions of respondents who had been selling sex for
+0--3, 3--6, 6--11, and 11+ years (Table~\ref{tab:data.demo}).
+We converted these 95\%~CI to effective sample sizes per stratum ($N_i$),
+for compatibility with \eqref{eq:lP}.
+\par
+Figure~\ref{fig:demo.prop} illustrates
+(i) the posterior distributions of modelled proportions vs the RDS-adjusted data, and
+(ii) the corresponding estimated distribution $p(z|s)$
+for the best-fitting family (Gamma).
+Figure~\ref{fig:demo.pars} further illustrates the posterior distributions of
+model parameters and summary statistics for $p(x)$ and $p(z|s)$
+across all families considered.
+We find that the model can reproduce these data quite well.
+However, considerable uncertainty remains regarding
+the proportions of respondents selling sex for less than 1 year,
+mainly because the available data aggregate the first 0--3 years into one stratum.
+This issue also limits our ability to infer
+parameters of the sampling model: $\pp,\tt$,
+whose posterior distributions are effectively indistinguishable from their priors.
+% JK: Our sampling model may also be redundant with the applied RDS-adjustment...
+%     I realized we still have these individual-level data
+%     so it may be worth examining how much we can reduce uncertainty
+%     using the individual-level data (or even aggregate 1-year strata);
+%     if not for the paper, than for our own knowledge,
+%     but I need to make some code changes to support this.
+%     I also wonder whether the RDS-adjustment is doing something similar to
+%     our adjustment for undersampling early sex work,
+%     since the proportions in 0-3 years increase: 29% crude -> 38% RDS
+\par
+The posterior distribution of $\E[z|s]$ was
+reasonably precise and consistent across the families considered:
+approximately 5.0 (\CI: 4.4, 5.8),
+and likewise for $\CV[z|s]$: 0.9 (0.7, 1.2).
+By contrast, estimates of $\E[x]$ and $\CV[x]$ were more varied,
+with \CI extremes spanning (2.0, 8.8) and (0.4, 1.9), respectively,
+and best-fitting $\E[x]$ = 5.7, $\CV[x]$ = 0.9 under the Gamma family.
+% JK: this feels a bit unfinished but I'm not sure what else to comment on
+\begin{figure}
+  \centering\includegraphics[width=\textwidth]{demo.prop}
+  \caption{Posterior estimates from fitting the Bayesian model
+    to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
+    (i) proportions of respondents with durations in pre-specified ranges;
+    (ii) inferred duration density distribution $p(z|s)$}
+  \label{fig:demo.prop}
+  \floatfoot{Shaded regions denote:
+    (i) posterior of modelled proportions;
+    (ii) posterior \CI of modelled duration distribution.
+    Points and dashed line ranges denote reported \CI for proportion data.}
+\end{figure}
+% ==============================================================================
+\subsection{Evidence Synthesis}
+Noting the limitations of previously considered methods to estimate $\E[x]$,
+we additionally applied the model to re-synthesize
+duration data reviewed by \citet{Fazito2012}.
+% TODO

@@ -1,0 +1,195 @@
+\section{Analytic relationships}
+We now turn to deriving the exact relationship between:
+the distribution of \emph{total} durations selling sex
+among the source population: $x \sim p(x)$, and
+the distribution of \emph{observed} durations selling sex
+among participants in a cross-sectional survey: $z \sim p(z|s)$,
+given survey participation status $s$.
+We also consider two survey sampling cases:
+an ideal case which is representative of the active population, and
+a more realistic case which undersamples individuals in the early years of sex work.
+For reference throughout this section,
+Figure~\ref{fig:toy.distr.1} illustrates
+example distributions for $p(x)$, $p(z|s)$, and intermediates thereof.
+\begin{figure}
+  \includegraphics[width=\linewidth]{toy.distr.1}
+  \caption{Illustrative distributions of total and censored durations
+    among the source, active, and sampled populations
+    for 3 coefficients of variation $\CV[x]$ (rows)}
+  \label{fig:toy.distr.1}
+  \floatfoot{Assumed: $\E[x] = 5$ and $x \sim \txn{Weibull}$
+    (Figure~\ref{fig:toy.distr} illustrates other distribution families);
+    probability of being sampled per \eqref{eq:p(s|z)}.}
+\end{figure}
+% ------------------------------------------------------------------------------
+\paragraph{Active population bias}
+We being by reiterating that individuals who sell sex for longer
+are more likely to be active at any given time.
+Specifically, the probability of an individual being active
+is proportional to their total duration $x$.
+Thus, the distribution of total durations among the active population is:
+\begin{equation}
+  p(x|a) = \norm ~ x ~ p(x)
+  \label{eq:p(x|a)}
+  \enlargethispage{1\baselineskip} % TEMP
+\end{equation}
+where $K$ is a normalizing constant.
+These total durations among the active population are typically unobserved,
+except in cohort studies which follow participants until they exit sex work.
+From \eqref{eq:p(x|a)} we can see that
+the mean total duration among the active population $\E[x|a]$
+is always larger than the mean among the source population $\E[x]$
+(Figure~\ref{fig:toy.distr}, light green vs gray circles);
+specifically, we have that:
+\begin{equation}
+  \E[x|a] = \E[x] \left(1 + \CV^2[x]\right)
+  \label{eq:E[x|a]}
+\end{equation}
+This is because greater variability in durations among the source population,
+as measured by the coefficient of variation: $\CV[x]$,
+allows those with longer durations to increasingly dominate the active population.
+We also note that the probability of observing
+active individuals with very short total durations is inherently very small
+(Figure~\ref{fig:toy.distr.1}, light green).
+% ------------------------------------------------------------------------------
+\paragraph{Censoring}
+If survey timing is effectively random, then
+observed durations at the time of survey ($z$) will be right-censored
+and uniformly distributed between 0 and the total duration ($x$):
+\begin{equation}
+  p(z|x) = \txn{Unif}(0,x) =
+  \begin{cases}
+    \frac{1}{x} & \txn{if}~ 0 \le z \le x \\
+    0 & \txn{else}
+  \end{cases}
+  \label{eq:p(z|x)}
+\end{equation}
+Since the mean of $\txn{Unif}(0,x)$ is $\frac{x}{2}$,
+the mean censored duration is always half the mean total duration
+among the active population: $\E[z|a] = \frac{1}{2} \E[x|a]$
+(Figure~\ref{fig:toy.distr.1}, dark green vs light green circles).
+This idea appears to be well-known, and likely motivates
+doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 of \cite{Fazito2012}.
+However, method~3 does not account for selection of the active population noted above,
+and thus actually estimates the mean total duration among the active population $\E[x|a]$,
+which we know to be greater than among the source population $\E[x]$ per \eqref{eq:E[x|a]}.%
+\footnote{\citet{Fazito2012} partially acknowledge this issue
+  by opting to use the median over the mean of $z|a$ where possible,
+  since the median is less sensitive to outliers.
+  However, as shown in Figures \ref{fig:toy.distr} and \ref{fig:toy.est},
+  doubling the median $\M[z|a]$ still overestimates $\E[x]$,
+  just to a lesser degree than doubling the mean $\E[z|a]$,
+  since the median will always be less than the mean for right-skewed distributions.}
+\par
+If total durations among the source population are exponentially distributed:
+$p(x) \sim \txn{Exp}(\lambda)$, then $\CV[x] = 1$, and so
+the mean \emph{censored} duration among the \emph{active} population will directly equal
+the mean \emph{total} duration among the \emph{source} population (without doubling):
+$\E[z|a] = \E[x]$.
+In other words, under these conditions,
+the mean reported duration in a typical cross-sectional survey
+will be an unbiased estimator of the target $\E[x]$.
+Moreover, even the \emph{distributions} will be identical:
+$p(z|a) = p(x) = \txn{Exp}(\lambda)$, as we will show below.
+This is particularly notable since
+compartmental models usually assume exponentially distributed durations.
+% ------------------------------------------------------------------------------
+\paragraph{Complete distribution}
+By combining \eqrefa{eq:p(x|a)}{eq:p(z|x)}, we can derive
+the complete distribution of censored durations among the active population $p(z|a)$
+from the distribution of total durations among the source population $p(x)$
+\cite{Tufto2017}:
+\begin{equation}
+  \begin{aligned}
+    p(z|a) &= \int_0^\infty p(z|x) ~ p(x|a) ~ dx \\
+           &= \int_z^\infty \frac{1}{x} ~ p(x|a) ~ dx \\
+           &= \norm ~ \int_z^\infty \frac{x}{x} ~ p(x) ~ dx \\
+           &= \norm ~ \left(1 - F_x(z)\right)
+  \end{aligned}
+  \label{eq:p(z|a)}
+  \enlargethispage{1\baselineskip} % TEMP
+\end{equation}
+Interestingly, this is simply
+one minus the cumulative distribution of total durations $F_x$,
+normalized to have unit area under the curve (via $K$).%
+\footnote{The integral lower bound changes from 0 to $z$ because
+  $p(z|x) = \frac{1}{x}$ only when $x < z$ and $p(z|x) = 0$ otherwise,
+  per \eqref{eq:p(z|x)}.}
+For the exponential case, we have:
+$F_x = 1 - e^{-\lambda x}$, $K = \lambda^{-1}$, and thus
+$p(z|a) = \lambda e^{-\lambda x} = p(x)$.
+\par
+More generally, $\CV[z|a]$ is typically drawn towards 1 relative to $\CV[x]$,
+attenuating skewness when $\CV[x] > 1$, and
+amplifying skewness when $\CV[x] < 1$
+(Figures \ref{fig:toy.distr.1} and \ref{fig:toy.distr}).
+However, we believe that
+$\CV[x] > 1$ is more likely than $\CV[x] < 1$ for two reasons.
+First, heavy-tailed distributions having $\CV[x] > 1$
+arise naturally via selection effects
+in populations with heterogeneous rates \cite{Balan2020}.
+Second, most parametric distributions with $\CV[x] < 1$
+have $p(x\sp\rarr0)\sp\rarr0$ (Figure~\ref{fig:toy.distr}),
+which effectively implies
+that few people exit sex work shortly after starting, or
+that most people stay in sex work for a "minimum" period,
+which seems unrealistic.
+If $\CV[x] > 1$ is indeed more likely, then
+the skewness of the observable duration distribution $p(z|a)$
+will generally underestimate
+the skewness of the true duration distribution $p(x)$.
+% ------------------------------------------------------------------------------
+\paragraph{Sampling Biases}
+If the survey undersamples individuals in the early years of sex work,
+this probability of being sampled will be a function of
+current duration ($z$) not total duration ($x$),
+so we denote it $p(s|z)$.
+Many parameterizations are possible; \eg \eqref{eq:p(s|z)}.
+The distribution of observed durations among survey participants
+is then updated from \eqref{eq:p(z|a)} simply as:
+\begin{equation}
+  p(z|s) = \norm ~ p(s|z) \left(1 - F_x(z)\right)
+  \label{eq:p(z|s)}
+\end{equation}
+% ------------------------------------------------------------------------------
+\paragraph{Estimating $\E[x]$}
+We conclude this section by revisiting
+the three methods considered by \citet{Fazito2012}
+to estimate the "true" mean duration in sex work $\E[x]$.
+Figure~\ref{fig:toy.est} plots:
+the typically unobserved mean and median of total durations (method~1),
+\emph{double} the means and medians of censored durations (method~3),
+and the reciprocal proportion of censored durations less than 1 year (method~2),
+across a range of $\CV[x]$ and distribution families.
+% JK: focusing on CV[x] makes the trends more straightforward,
+%     but CV[x] is unknown in reality.
+%     I wonder if we should consider changing the x-axis to
+%     CV[*] where * is the data used to calculate the estimate?
+%     One challenge is that for many distributions, CV[z|a] > ~ 1.2
+%     is impossible to achieve when truncating at 50 years max duration.
+%     I was experimenting with some proxies for CV[x] based on p(z|a),
+%     but they are all rather sensitive to the truncation point (50)
+%     and/or assumed distribution family (Gamma, etc.).
+We see that at low $\CV[x]$, nearly all methods converge on $\E[x]$.
+However, as $\CV[x]$ increases,
+selection towards longer total durations among the active/sampled populations
+raises the means of the corresponding censored durations $\E[z|\cdot]$,
+according to \eqref{eq:E[x|a]}.
+Median censored durations exhibit a similar trend,
+but lag below means (true for all right-skewed distributions)
+to a degree which depends on the family,
+making such medians less useful estimators of $\E[x]$.
+For all method~3 estimates, undersampling of early sex work
+(here assuming $\pp = 0.5, \tt = 1$ year)
+predictably biases estimates slightly higher;
+this bias is also larger for smaller $\E[x]$ (not shown).
+Finally, turnover-based estimates (method~2) tends to be most consistent,
+only slightly overestimating $\E[x]$ as $\CV[x]$ increases;
+however, this method is especially sensitive to
+undersampling of early sex work, which biases estimates upwards.
+\par
+Nevertheless, the best simple estimate of $\E[x]$ is likely $\E[z|s]$,
+assuming $\CV[x] \approx 1$, or more generally:
+\begin{equation}
+  \sE[x] = \frac{1}{2} ~ \E[z|s] \left(1 + \CV^2[x]\right)
+\end{equation}

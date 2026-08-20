@@ -1,0 +1,25 @@
+\newcommand{\dd}[4]{#1 & {$\displaystyle#4$} & $#2$ & $#3$\\[3ex]}
+\begin{tabular}{llcc}
+  \toprule
+  Family & Definition $p(x)$ & $\aa$ log-prior\tn[*] & $\bb$ log-prior\tn[*] \\
+  \midrule
+  \dd{Exponential\tn[\dag]}        {   -   }{[-1,~3]}{\frac{1}{\aa}~e^{-\frac{x}{\aa} }}
+  \dd{Gamma\tn[\dag]}              {[-2,~2]}{[-3,~3]}{\frac{\bb^\aa}{\Gamma(\aa)}~x^{\aa-1}e^{-\bb x}}
+  \dd{Weibull\tn[\dag]}            {[-1,~2]}{[-1,~2]}{\frac{\aa}{\bb}~{\left(\frac{x}{\bb}\right)}^{\aa-1}e^{-{(x/\bb)}^\aa}}
+  \dd{Log-Normal\tn[\dag]}         {[-9,~1]}{[-2,~3]}{\frac{1}{x~\bb\sqrt{2\pi}}~e^{-\frac12{\left(\frac{\log{x}-\aa}{\bb}\right)}^2}}
+  \dd{Scaled Beta\tn[\ddag]}       {[-3,~3]}{[~0,~3]}{\frac{x^{\aa-1}{(1-x^\aa)}^{\bb-1}}{B(\aa,\bb)}}
+  \dd{Scaled Kumaraswamy\tn[\ddag]}{[-2,~3]}{[~0,~3]}{\aa~\bb~x^{\aa-1}{(1-x^\aa)}^{\bb-1}}
+  \\[-5ex]\bottomrule
+\end{tabular}
+\smallskip\floatfoot{
+  \tnd[*]{Priors for $\aa,\bb$ in the applied model were defined as uniform on the log-scale;
+    \eg $[-1,~3]$ corresponds to $[e^{-1},~e^{3}] \approx [0.37,~20]$.}\\
+  \tnd[\dag] {Distributions spanning $[0,\infty)$ were truncated to $[0,50]$ years.}
+  \tnd[\ddag]{Distributions spanning $[0,1]$ were scaled to span $[0,50]$ years.}}
+% notation:
+% exp:     aa = NA,          bb = 1/rate (β)
+% gamma:   aa = shape   (α), bb = rate   (β)
+% weibull: aa = shape   (k), bb = scale  (λ)
+% lnorm:   aa = meanlog (?), bb = sdlog  (?)
+% sbeta:   aa = shape1, (α), bb = shape2 (β)
+% skumar:  aa = a       (a), bb = b      (b)
