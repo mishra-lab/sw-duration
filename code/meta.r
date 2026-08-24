@@ -9,12 +9,13 @@ l$prop = 'Population proportion'
 l$fam = 'Family'
 fl = list()
 fl$fam = lapply(distrs,`[[`,'l')
+fl$data = list(x='Total: Source [x]',za='Cens: Sampled [z|s]')
 fl$par = list(
-  a   = 'α',      la   = 'log(α)',
-  b   = 'β',      lb   = 'log(β)',
   Ex  = 'E[x]',   CVx  = 'CV[x]',
   Ez  = 'E[z|s]', CVz  = 'CV[z|s]',
-  sp0 = 'p0',     st95 = 't95')
+  a   = 'α',      la   = 'log(α)',
+  b   = 'β',      lb   = 'log(β)',
+  sp0 = 'ρₛ',     st95 = 'τ₉₅')
 
 cmap = list()
 cmap$fam = unlist(lapply(distrs,`[[`,'c'))
@@ -54,6 +55,7 @@ prop.diff = function(Y){
 # model
 
 model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
+  # TODO: support individual-level data?
   d_i = d.vec(dd)
   Ym  = subset(Y,meas=='mean')
   Yq  = subset(Y,meas=='q')
@@ -64,12 +66,12 @@ model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
     weibull = list(la=c(-1,2),    lb=c(-1,2)),
     lnorm   = list(la=c(-9,1),    lb=c(-2,3)),
     sbeta   = list(la=c(-3,3),    lb=c( 0,3)),
-    skumar  = list(la=c(-2,3),    lb=c( 0,3)))
+    skumar  = list(la=c(-2,3),    lb=c( 0,4)))
   data = list(
     Ula = U$la,       # bounds: full* duration log(a) param
     Ulb = U$lb,       # bounds: full* duration log(b) param
     Usp0  = c(.5,1),  # bounds: proportion sampled immediately
-    Ust95 = c(.02,3), # bounds: time to 95% sampled
+    Ust95 = c(.02,2), # bounds: time to 95% sampled
     Ni = len(d_i),  # num integration steps
     Nm = nrow(Ym),  # num empiric means
     Nq = nrow(Yq),  # num empiric quantiles
@@ -100,7 +102,7 @@ get.sample = function(Y,fam,...,do='load',gps=0){
       args$data$fam = fams[args$data$fam] # HACK
       save.rds (fit, 'data','stan',hash,'fit')
       save.json(args,'data','stan',hash,'info')
-      g = rstan::stan_trace(fit,inc_w=1,pars=args$pars)
+      g = rstan::stan_trace(fit,inc_w=1,pars=names(fl$par)) + scale_colorfill()
       plot.save(g,'data','stan',hash,'trace',root='')
   }}
   S = expand.grid(i=args$warm+1:args$iter,chain=factor(1:args$chains))
@@ -108,6 +110,7 @@ get.sample = function(Y,fam,...,do='load',gps=0){
 }
 
 run.stan = function(args){
+  # TODO: diagnostic_file
   status(1,'run.stan: ',fams[args$data$fam])
   model = rstan::stan_model('meta.stan',auto_write=TRUE)
   args = ulist(args,object=model,cores=args$chains)
@@ -117,6 +120,7 @@ run.stan = function(args){
 plot.par = function(S,...){
   fl$par$lp__ = 'log(L)'
   S = melt(S,id=c('i','chain','fam'),var='par',m=names(fl$par))
+  # print(t(sapply(split(S$value,S[c('fam','par')]),mci))) # NUM
   S$par = factor(S$par,names(fl$par),fl$par)
   S$fam = factor(S$fam,names(fl$fam),fl$fam)
   g = ggplot(S,aes(x='',y=value,color=fam)) +
@@ -129,26 +133,29 @@ plot.par = function(S,...){
 # ==============================================================================
 # demo
 
-plot.demo = function(S,Y,dd=.01){
+plot.demo = function(S,Y,sub=10,dd=.01){
   d = d.vec(dd)
-  D = df(d=d,strat=int.cut(d,Y$value),value=sum1(
-    p.za(d,fam=S$fam[1],a=mean(S$a),b=mean(S$b)) *
-    p.sz(d,sp0=mean(S$sp0),st95=mean(S$st95)) )/dd )
+  D = rbind.lapply(seq(1,nrow(S),sub),function(g){
+    pz = sum1(p.za(d,fam=S$fam[g],a=S$a[g],b=S$b[g])
+            * p.sz(d,sp0=S$sp0[g],st95=S$st95[g]) ) / dd
+    df(src='Model',d=d,strat=int.cut(d,Y$value),value=pz) })
   cols = str('q_ps[',1:nrow(Y),']')
   P = rbind.lapply(1:nrow(S),function(k){
-    prop.diff(df(n=NA,p=unlist(S[k,cols]),value=Y$value)) })
-  f = c('p[z|a]','p[L < z < U]'); f = factor(f,f,f)
-  D$ff = f[1]; P$ff = f[2]; Y$ff = f[2];
-  g = ggplot(D,aes(color=strat,fill=strat)) +
+    prop.diff(df(src='Model',n=NA,p=unlist(S[k,cols]),value=Y$value)) })
+  Y = prop.diff(cbind(Y,src='Data'))
+  f = c('(i) P[a < z < b | s]','(ii) P[z|s]'); f = factor(f,f,f)
+  D$ff = f[2]; P$ff = f[1]; Y$ff = f[1];
+  g = ggplot(D,aes(color=strat,fill=strat,lty=src)) +
     facet_wrap('ff',scales='free') +
-    geom_ribbon(aes(x=d,ymin=0,ymax=value),color=NA,alpha=.5) +
-    geom_line(aes(x=d,y=value)) +
-    geom_viola(data=P,aes(x=strat,y=p),color=NA,show.legend=0) +
-    geom_estimate(data=prop.diff(Y),aes(x=strat,y=p,ymin=plo,ymax=phi),width=.5) +
-    ggh4x::scale_x_facet(ff==f[1],breaks=c(0,Y$value,25),minor=0,lim=c(0,25)) +
-    ggh4x::scale_x_facet(ff==f[2],type='discrete') +
-    scale_clr_viridis(discrete=TRUE,option='plasma') +
-    labs(x=l$dur,y=l$prop)
+    geom_mcrib(aes(x=d,y=value)) +
+    geom_viola(data=P,aes(x=strat,y=p),color=NA,show.legend=FALSE) +
+    geom_estimate(data=Y,aes(x=strat,y=p,ymin=plo,ymax=phi),width=.5) +
+    ggh4x::scale_x_facet(ff==f[1],type='discrete') +
+    ggh4x::scale_y_facet(ff==f[2],lim=c(0,.3)) +
+    ggh4x::scale_x_facet(ff==f[2],breaks=c(0,Y$value,20),minor=0,lim=c(0,20)) +
+    scale_colorfill('plasma') +
+    scale_linetype_manual(values=c('21','solid')) +
+    labs(x=l$dur,y=l$prop,color='Stratum',fill='Stratum',lty='Source')
 }
 
 main.demo = function(do='load'){
@@ -156,7 +163,7 @@ main.demo = function(do='load'){
   Y = subset(Y,ref=='rds')
   S = rbind.lapply(fams,get.sample,Y=Y,do=do,gps=1,.par=0)
   g = plot.par(S); plot.save(g,'stan','demo','par',size=c(7,5))
-  S = subset(S,fam=='skumar') # best fit
+  S = subset(S,fam=='gamma') # best fit
   g = plot.demo(S,Y); plot.save(g,'stan','demo','prop',size=c(7,3))
 }
 
@@ -181,7 +188,7 @@ meta.classic = function(Y){
     df(ns=nrow(Ym),method='2 × m',   meta='wtd.avg',boot.mci(2*Ym$value,Ym$n)))
 }
 
-plot.distr = function(S,Y,sub=500,dd=.05,zoom=15){
+plot.distr = function(S,Y,sub=10,dd=.05,zoom=15){
   d = d.vec(dd)
   D = rbind.lapply(seq(1,nrow(S),sub),function(g){
     fam = S$fam[g]
@@ -189,47 +196,45 @@ plot.distr = function(S,Y,sub=500,dd=.05,zoom=15){
     pz = sum1(p.za(d,fam=fam,a=S$a[g],b=S$b[g])
             * p.sz(d,sp0=S$sp0[g],st95=S$st95[g]) ) / dd
     Di = cbind(fam=fam,rbind(
-      df(d=d,data='total (source) p[x]',  type='PDF',value=px),
-      df(d=d,data='trunc (active) p[z|a]',type='PDF',value=pz),
-      df(d=d,data='total (source) p[x]',  type='CDF',value=cumsum(px)*dd),
-      df(d=d,data='trunc (active) p[z|a]',type='CDF',value=cumsum(pz)*dd),
-      df(d=0,data='total (source) p[x]',  type='mean',value=xp.mean(d,px)),
-      df(d=0,data='trunc (active) p[z|a]',type='mean',value=xp.mean(d,pz))))
+      df(d=d,data=fl$data$x, type='PDF',value=px),
+      df(d=d,data=fl$data$za,type='PDF',value=pz),
+      df(d=d,data=fl$data$x, type='CDF',value=cumsum(px)*dd),
+      df(d=d,data=fl$data$za,type='CDF',value=cumsum(pz)*dd),
+      df(d=0,data=fl$data$x, type='mean',value=xp.mean(d,px)),
+      df(d=0,data=fl$data$za,type='mean',value=xp.mean(d,pz))))
   })
-  types = c('CDF','PDF','mean')
-  D$type = factor(D$type,types,types)
+  fl$fam$data = 'Fazito 2012 Data'
+  types = factor(c('CDF','PDF','mean'))
+  D$type = factor(D$type,levels=types)
   D$fam = factor(D$fam,names(fl$fam),fl$fam)
   E = subset(D,type=='mean'); D = subset(D,type!='mean');
   g = ggplot(D,aes(x=d,y=value,color=fam,fill=fam)) +
-    facet_grid('type ~ data',scales='free',space='free') +
-    stat_summary(geom='ribbon',color=NA,alpha=.5,
-      fun.min=function(x){ quantile(x,.025) },
-      fun.max=function(x){ quantile(x,.975) }) +
-    stat_summary(geom='line',fun='mean') +
+    facet_grid('type ~ data',scales='free') +
+    geom_mcrib() +
     scale_colorfill(v=cmap$fam) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
-    ggh4x::scale_y_facet(type=='mean',breaks=0,labels='') +
     labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam)
-  geom_data = function(Yi,type,...){ geom_estimate(
-    data=cbind(Yi,type=type,data=E$data[2]),
-    pos='jitter',width=.25,inherit.aes=0,...) }
+  geom_data = function(Yi,type,data,...){ geom_estimate(
+    data=cbind(Yi,type=type,data=data),width=.25,inherit.aes=0,...) }
   gg = list(full=g,zoom=g + scale_x_continuous(lim=c(0,zoom)) +
-    geom_data(subset(Y,meas=='q'),   'CDF', map=aes(x=value,y=p,ymin=plo,ymax=phi)) +
-    geom_data(subset(Y,meas=='mean'),'mean',map=aes(y=0,x=value,xmin=NA, xmax=NA )) +
-    geom_viola(data=E,aes(x=value,y=0),show.legend=0,pos=dodge(w=.5)))
-    # TODO: CI for data means
+    ggh4x::scale_y_facet(type=='mean',type='discrete') +
+    ggh4x::force_panelsizes(rows=c(3,3,2)) +
+    geom_data(subset(Y,meas=='q'),   types[1],fl$data$za,map=aes(x=value,y=p,ymin=plo,ymax=phi)) +
+    geom_data(subset(Y,meas=='mean'),types[3],fl$data$za,map=aes(y=fl$fam$data,x=value,xmin=NA,xmax=NA)) +
+    geom_viola(data=E,aes(x=value,y=fam),show.legend=0,pos=dodge(w=.5)))
 }
 
 main.meta = function(do='load',pop='fsw'){
-  Y = prop.ci(load.csv('data','Fazito2012'))
-  for (reg in c('Africa','Europe','LatAm')[1]){
-    Yi = subset(Y,kp==pop & region==reg)
-    S = rbind.lapply(fams,get.sample,Y=subset(Yi,K26==1),do=do,gps=1,.par=1)
+  Y0 = prop.ci(load.csv('data','Fazito2012'))
+  for (reg in c('Africa','Europe','LatAm','Asia')){
+    Y = subset(Y0,kp==pop & region==reg)
+    M = meta.classic(Y)
+    Y = subset(Y,K26==1)
+    S = rbind.lapply(fams,get.sample,Y=Y,do=do,.par=0)
     g = plot.par(S); plot.save(g,'stan','meta',pop,str('par.',reg),size=c(7,5))
-    gg = plot.distr(S,Yi)
+    gg = plot.distr(S,Y)
     plot.save(gg$full,'stan','meta',pop,str('distr.full.',reg),size=c(7,5))
     plot.save(gg$zoom,'stan','meta',pop,str('distr.zoom.',reg),size=c(7,5))
-    M = meta.classic(Yi) # TODO: incorporate above?
   }
 }
 
