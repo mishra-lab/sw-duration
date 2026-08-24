@@ -1,6 +1,6 @@
 \clearpage
-\section{Application}
-We highlight the utility of the above analytic relationships though a Bayesian model,
+\section{Application} %SM: I *love* this section - it is clear and "pithy" too in getting to the point.
+We highlight the utility of the above analytic relationships though a Bayesian model, %SM: demonstrate instead of  highlight?
 which aims to infer
 the complete distribution of total durations among the source population $p(x)$
 from individual-level and/or aggregate data on
@@ -11,7 +11,7 @@ proportions of durations within a given interval $[a,b]$, denoted $\sP[\azb|s]$,
 which can encompass proportions of responses falling within pre-specified ranges,
 as well as estimated medians, quartiles, etc.
 % ==============================================================================
-\subsection{Bayesian Model}
+\subsection{Bayesian Model} %SM: nicely explained
 The model assumes a parametric distribution for
 total durations among the source population $p(x)$.
 Specifically, we considered 6 distribution families:
@@ -53,7 +53,7 @@ retaining 1000 samples after 500 warm-up iterations from 7 chains
 with default random initialization and sampling algorithm~\cite{Betancourt2018}.
 We confirmed convergence visually through parameter trace plots (not shown).
 % ==============================================================================
-\subsection{Single Study}
+\subsection{Single Study}  %SM: minor style edit ...consider sub-heading edits re: "Application to aggregate data from a single survey/study" .. and  minor thought - study or survey? (would survey work better in this paper)? [the longer subheading is something I've seen in AJE practice of epi papers, so thinking along those lines; also ensure define acronym re: RDS in figure footnote, text, etc. 
 We first apply the model to aggregate data from a single study:
 a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
 The study reported crude and RDS-adjusted mean (95\%~CI)
@@ -82,9 +82,10 @@ whose posterior distributions are effectively indistinguishable from their prior
 %     using the individual-level data (or even aggregate 1-year strata);
 %     if not for the paper, than for our own knowledge,
 %     but I need to make some code changes to support this.
-%     I also wonder whether the RDS-adjustment is doing something similar to
+%     I also wonder whether the RDS-adjustment is doing something similar to  
 %     our adjustment for undersampling early sex work,
 %     since the proportions in 0-3 years increase: 29% crude -> 38% RDS
+%SM: perhaps yes, b/c RDS is meant to (philosophically) address the sampling strategy, but if correlation between seeds and respondents is not dependent on duraiton in sex work, then might not? I would propose that its not needed for the paper, but agree its worth us knowing about later, and checking with the individual-level data. indeed, that could be a small commentary aterwards lol. 
 \par
 The posterior distribution of $\E[z|s]$ was
 reasonably precise and consistent across the families considered:
