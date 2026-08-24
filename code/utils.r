@@ -123,6 +123,11 @@ grid.apply = function(x,fun,args=list(),...,.rbind=TRUE,.cbind=TRUE,.par=TRUE){
 # ==============================================================================
 # stats
 
+mci = function(x,p=.95){ list(
+  m  = mean(x),
+  lo = quantile(x,  (1-p)/2),
+  hi = quantile(x,1-(1-p)/2))}
+
 d.mean = function(dfun,u,...,eps=1e-7){
   f = function(x){ x * dfun(x,u=u,...) }
   m = integrate(f,lower=eps,upper=u-eps)$value
@@ -143,7 +148,7 @@ xp.cv = function(x,p,m){
   cv = sqrt(sum(p*(x-m)^2)/sum(p)) / m
 }
 
-xp.quant = function(x,p,po=.5){
+xp.q = function(x,p,po=.5){
   spline(x=cumsum(sum1(p)),y=x,xout=po)$y
 }
 
@@ -192,7 +197,7 @@ distrs = list(
     p = function(q,a,b,u){ extraDistr::pkumar(q=q/u,a=a,b=b) },
     c = '#ff6600', l = 'Scaled Kumar'))
 
-fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7){
+fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7,strict=FALSE){
   if (is.character(dfun)){ dfun = distrs[[dfun]]$d }
   jfun = function(x){
     mx  = d.mean(dfun,a=exp(x[1]),b=exp(x[2]),u=u,eps=eps)
@@ -201,7 +206,8 @@ fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7){
   fail = function(...){ failed <<- 1 }; failed <<- 0
   opt = tryCatch(optim(c(a=0,b=0),jfun),warning=fail,error=fail)
   if (failed){ return(list(a=NA,b=NA,u=NA)) }
-  if (opt$value > tol){ print(opt) }
+  if (opt$value > tol){ # print(opt);
+    if (strict){ return(list(a=NA,b=NA,u=NA)) }  }
   return(c(as.list(exp(opt$par)),u=u))
 }
 
@@ -225,7 +231,7 @@ theme_update(
 dodge = function(...,w=.5){ position_dodge(...,width=w) }
 
 geom_viola = function(...){
-  geom_violin(...,alpha=.5,scale='width')
+  geom_violin(...,alpha=1/3,scale='width')
 }
 
 geom_estimate = function(...,shape=18,width=1){
@@ -233,6 +239,13 @@ geom_estimate = function(...,shape=18,width=1){
     geom_point(...,size=1,shape=shape),
     geom_errorbar(...,lwd=1/3,width=width)
 ))}
+
+geom_mcrib = function(...,alpha=1/3,p=.95){ list(
+  stat_summary(...,geom='line',fun=mean),
+  stat_summary(...,geom='ribbon',color=NA,alpha=alpha,
+    fun.min=function(x){ quantile(x,  (1-p)/2) },
+    fun.max=function(x){ quantile(x,1-(1-p)/2) }))
+}
 
 scale_colorfill = function(v='plasma',...,d=1,end=.85){
   require('viridis')
@@ -242,9 +255,12 @@ scale_colorfill = function(v='plasma',...,d=1,end=.85){
   if (v %in% ls('package:viridis')){ return(list(
     scale_color_viridis(option=v,...,discrete=d,end=end),
     scale_fill_viridis (option=v,...,discrete=d,end=end) ))}
-  if (v %in% names(RColorBrewer::brewer.pal.info)){ return(ifelse(d,
-    scale_color_brewer   (pal=v,aes=c('color','fill'),...),
-    scale_color_distiller(pal=v,aes=c('color','fill'),...) ))}
+  if (v %in% scico::scico_palette_names()){ return({ if (d)
+    scico::scale_color_scico_d(palette=v,aes=c('color','fill'),...) else
+    scico::scale_color_scico  (palette=v,aes=c('color','fill'),...) })}
+  if (v %in% rownames(RColorBrewer::brewer.pal.info)){ return({ if (d)
+    scale_color_brewer   (palette=v,aes=c('color','fill'),...) else
+    scale_color_distiller(palette=v,aes=c('color','fill'),...) })}
 }
 
 plot.save = function(g,...,size=NULL,ext='.pdf',root='out/fig'){
