@@ -1,12 +1,79 @@
 \section{Introduction}
-\dots
+Around the world, people engaged in sex work
+--- selling or buying sex for money or equivalent ---
+experience high risks of HIV acquisition and transmission due to
+intersecting structural, behavioural, and biological risk factors
+\cite{Scorgie2012,Shannon2015,Baral2015msw,Carael2006,Sanders2013cli}.
+Unmet HIV prevention and treatment needs among these populations
+have long been recognized as drivers of epidemic emergence and persistence,
+especially through insights from mathematical models of HIV transmission
+\cite{Boily2002,Watts2010,Silhol2026}.
+Yet, engagement in sex work is often transient,
+with entry (for sellers) driven primarily by economic and social instability,
+and exit further mediated by aging, stable partnering, stigma, and violence
+\cite{Cimino2017,Ingabire2012,Bowen2011}.
+% JK: is it worth adding analogous drivers for clients? e.g. Sanders2013cli
+%     It felt awkward when I tried.
+\par
+As such, durations selling or buying sex
+are key determinants of HIV epidemiology,
+and key inputs to HIV transmission models,
+particularly those aiming to compare the impacts of different prioritized services.
+For example, 10\% HIV prevalence among sex workers
+in a context with shorter typical durations / rapid turnover (\eg 1 year)
+suggests a high HIV incidence rate, whereas 10\% HIV prevalence
+in a context with longer typical durations / slower turnover (\eg 10 years)
+suggests a relatively lower HIV incidence rate,
+since prevalence has more time to accumulate \cite{Knight2020}.%
+\footnote{Assuming HIV prevalence among new sex workers is negligible.}
+% JK: I know publishers hate footnotes,
+%     but it's only because they refuse to use LaTeX :)
+%     https://history.stackexchange.com/q/46506/
+Turnover can also moderate levels of
+program / service coverage among sex workers (\eg PrEP),
+where rapid turnover could result in
+a constant influx of new sex workers to reach, and
+potentially high loss-to-follow-up among those exiting sex work,%
+\footnote{Questions remain regarding to what degree
+  those exiting sex work remain engaged with programs.}
+whereas slower turnover could make it easier to attain higher levels of coverage.
+Finally, duration in sex work can further moderate onward transmission risk,
+where longer durations theoretically allow
+more onward transmission following acquisition (in the absence of treatment).
+% JK: I considered adding something to the above
+%     about sex work becoming a net "sink" vs "source" of infections
+%     i.e. net # infections going in vs coming out of sex work overall.
+%     but it felt too awkward & tangential.
+\par
+Ideally, context-specific estimates of sex work duration could be obtained
+from representative longitudinal cohorts with minimal loss-to-follow-up, or
+from representative samples of "retired" sex workers.%
+\footnote{Throughout:
+  we often refer to "sex workers" for brevity,
+  but our statements usually apply similarly to their clients who buy sex;
+  we intentionally use gender-agnostic terminology,
+  since men, women, and transgender individuals can all sell and buy sex.}
+Unfortunately, such study designs are rare,
+and most estimates derive from cross-sectional surveys of
+those actively selling or buying sex \cite{Fazito2012}.
+Yet, it is not necessarily obvious how
+durations reported in cross-sectional surveys relate to durations of interest,
+as we will discuss in detail herein.
+As one recent HIV modelling study noted
+when specifying plausible parameter bounds:
+\emph{"We multiply the lower bound by 0.5 and upper bound by 2
+  because of uncertainty in how overall duration of sex work
+  relates to current duration of sex work"} \cite{Stone2021}.
+% JK: don't mean to throw shade, but I think it captures our motivation well!
 % ------------------------------------------------------------------------------
 \paragraph{Objectives}
-Our objectives were to:
+To address this gap, we sought to
+offer guidance on estimating duration in sex work from commonly available data.
+Specifically, our objectives were to:
 \begin{enumerate}
   \item \label{obj:1}
-        Describe the analytic relationship between
-        the distribution of reported durations selling sex in observational studies, and
+        Describe the exact analytic relationship between
+        the distribution of reported durations selling sex in cross-sectional studies, and
         the distribution of total durations selling sex in the population overall.
   \item \label{obj:2}
         Develop and apply a Bayesian model which leverages the above relationships to infer
@@ -14,7 +81,7 @@ Our objectives were to:
         from published data.
 \end{enumerate}
 While we focus on sex work as an illustrative example,
-our insights extend to any transient risk/disease state,
+our insights likely extend to other transient risk/disease states
 relevant to compartmental modelling or epidemiological study.
-Indeed, similar work has previously examined estimation of
-disease state "sojourn times" in models of chronic diseases \cite{Zelen1969}.
+% JK: moved reference to parallel work in cancer epi (Zelen1969) to discussion
+%     as it felt tangential and kinda undermined the excitement...
