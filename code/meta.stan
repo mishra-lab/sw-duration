@@ -25,16 +25,16 @@ data {
   int Nq; // num quantiles
   // data
   real m_n[Nm]; // mean sample sizes
-  real m_v[Nm]; // mean estimate
+  real m_v[Nm]; // mean estimates
   real q_n[Nq]; // quantile sample sizes
-  real q_p[Nq]; // quantile CDF estimate
-  int  q_i[Nq]; // quantile value index
+  real q_p[Nq]; // quantile CDF estimates
+  int  q_i[Nq]; // quantile value indices
   // misc
   vector[Ni] d_i; // integral steps
   real dmax; // maximum duration
   real eps; // a small number
   int gps; // generate posterior samples
-  int fam; // family {1:5} -> see below
+  int fam; // family {1:6} -> see below
 }
 
 parameters {

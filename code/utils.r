@@ -123,10 +123,12 @@ grid.apply = function(x,fun,args=list(),...,.rbind=TRUE,.cbind=TRUE,.par=TRUE){
 # ==============================================================================
 # stats
 
-mci = function(x,p=.95){ list(
+quant = function(...){ unname(quantile(...)) }
+
+mci = function(x,p=.95,type=list){ type(
   m  = mean(x),
-  lo = quantile(x,  (1-p)/2),
-  hi = quantile(x,1-(1-p)/2))}
+  lo = quant(x,  (1-p)/2),
+  hi = quant(x,1-(1-p)/2))}
 
 d.mean = function(dfun,u,...,eps=1e-7){
   f = function(x){ x * dfun(x,u=u,...) }
@@ -167,9 +169,9 @@ ptru = LaplacesDemon::ptrunc
 
 distrs = list(
   exp = list(
-    r = function(n,a,b,u){ rtru(n=n,spec='exp',rate=1/a,a=0,b=u) },
-    d = function(x,a,b,u){ dtru(x=x,spec='exp',rate=1/a,a=0,b=u) },
-    p = function(q,a,b,u){ ptru(x=q,spec='exp',rate=1/a,a=0,b=u) },
+    r = function(n,a,b,u){ rtru(n=n,spec='exp',rate=1/b,a=0,b=u) },
+    d = function(x,a,b,u){ dtru(x=x,spec='exp',rate=1/b,a=0,b=u) },
+    p = function(q,a,b,u){ ptru(x=q,spec='exp',rate=1/b,a=0,b=u) },
     c = '#cc0033', l = 'Exponential'),
   gamma = list(
     r = function(n,a,b,u){ rtru(n=n,spec='gamma',shape=a,rate=b,a=0,b=u) },
@@ -230,9 +232,8 @@ theme_update(
 
 dodge = function(...,w=.5){ position_dodge(...,width=w) }
 
-geom_viola = function(...){
-  geom_violin(...,alpha=1/3,scale='width')
-}
+geom_viola = function(...,alpha=1/3){
+  geom_violin(...,alpha=alpha,scale='width') }
 
 geom_estimate = function(...,shape=18,width=1){
   suppressWarnings(list(

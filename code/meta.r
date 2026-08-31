@@ -36,6 +36,11 @@ i.near = function(x,ref){ which.min(abs(x-ref)) }
 # ==============================================================================
 # data
 
+n.adj = function(n,m=1e3){
+  # shrink effective n to simulate random effects
+  n = round(1/(1/n+1/m))
+}
+
 prop.ci = function(Y,eps=1e-3){
   # generate phi & plo from p,n
   Y$p   = clip(Y$p,eps)
@@ -54,7 +59,7 @@ prop.diff = function(Y){
 # ==============================================================================
 # model
 
-model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
+model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9,m=1e3){
   # TODO: support individual-level data?
   d_i = d.vec(dd)
   Ym  = subset(Y,meas=='mean')
@@ -66,24 +71,24 @@ model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9){
     weibull = list(la=c(-1,2),    lb=c(-1,2)),
     lnorm   = list(la=c(-9,1),    lb=c(-2,3)),
     sbeta   = list(la=c(-3,3),    lb=c( 0,3)),
-    skumar  = list(la=c(-2,3),    lb=c( 0,4)))
+    skumar  = list(la=c(-3,3),    lb=c( 0,3)))
   data = list(
-    Ula = U$la,       # bounds: full* duration log(a) param
-    Ulb = U$lb,       # bounds: full* duration log(b) param
-    Usp0  = c(.5,1),  # bounds: proportion sampled immediately
-    Ust95 = c(.02,2), # bounds: time to 95% sampled
-    Ni = len(d_i),  # num integration steps
-    Nm = nrow(Ym),  # num empiric means
-    Nq = nrow(Yq),  # num empiric quantiles
-    d_i = d_i,      # integration values
-    dmax = dmax,    # maximum duration
-    m_n = Ym$n,     # mean sample size
-    m_v = Ym$value, # mean estimate
-    q_n = Yq$n,     # quantile sample sizes
-    q_p = Yq$p,     # quantile CDF estimate
-    q_i = q_i,      # quantile value index
-    eps = eps,      # a small number
-    gps = gps,      # generate posterior samples
+    Ula = U$la,          # bounds: full* duration log(a) param
+    Ulb = U$lb,          # bounds: full* duration log(b) param
+    Usp0 = c(.5,1),      # bounds: proportion sampled immediately
+    Ust95 = c(.02,2),    # bounds: time to 95% sampled
+    Ni = len(d_i),       # num integration steps
+    Nm = nrow(Ym),       # num empiric means
+    Nq = nrow(Yq),       # num empiric quantiles
+    d_i = d_i,           # integration values
+    dmax = dmax,         # maximum duration
+    m_n = n.adj(Ym$n,m), # mean sample sizes
+    m_v = Ym$value,      # mean estimates
+    q_n = n.adj(Yq$n,m), # quantile sample sizes
+    q_p = Yq$p,          # quantile CDF estimates
+    q_i = q_i,           # quantile value index
+    eps = eps,           # a small number
+    gps = gps,           # generate posterior samples
     fam = which(fams==fam)) # distr family
 }
 
@@ -188,7 +193,7 @@ meta.classic = function(Y){
     df(ns=nrow(Ym),method='2 × m',   meta='wtd.avg',boot.mci(2*Ym$value,Ym$n)))
 }
 
-plot.distr = function(S,Y,sub=10,dd=.05,zoom=15){
+plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
   d = d.vec(dd)
   D = rbind.lapply(seq(1,nrow(S),sub),function(g){
     fam = S$fam[g]
@@ -203,25 +208,28 @@ plot.distr = function(S,Y,sub=10,dd=.05,zoom=15){
       df(d=0,data=fl$data$x, type='mean',value=xp.mean(d,px)),
       df(d=0,data=fl$data$za,type='mean',value=xp.mean(d,pz))))
   })
-  fl$fam$data = 'Fazito 2012 Data'
+  geom_data = function(m,type,data,...){ geom_point(
+    data=cbind(subset(Y,meas==m),type=type,data=data),
+    inherit.aes=0,shape=16,alpha=.2,...) }
+  fl$fam$data = 'Data'
   types = factor(c('CDF','PDF','mean'))
   D$type = factor(D$type,levels=types)
   D$fam = factor(D$fam,names(fl$fam),fl$fam)
-  E = subset(D,type=='mean'); D = subset(D,type!='mean');
+  E = subset(D,type=='mean')
+  D = subset(D,type!='mean' & d<=zoom)
   g = ggplot(D,aes(x=d,y=value,color=fam,fill=fam)) +
     facet_grid('type ~ data',scales='free') +
     geom_mcrib() +
+    geom_viola(data=E,aes(x=value,y=fam),show.legend=0,pos=dodge(w=.5)) +
+    geom_data('q',   types[1],fl$data$za,map=aes(x=value,y=p,size=n.adj(n))) +
+    geom_data('mean',types[3],fl$data$za,map=aes(y=fl$fam$data,x=value,size=n.adj(n))) +
+    scale_size_area(limits=c(10,1000),breaks=c(10,100,1000)) +
     scale_colorfill(v=cmap$fam) +
+    scale_x_continuous(lim=c(0,zoom)) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
-    labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam)
-  geom_data = function(Yi,type,data,...){ geom_estimate(
-    data=cbind(Yi,type=type,data=data),width=.25,inherit.aes=0,...) }
-  gg = list(full=g,zoom=g + scale_x_continuous(lim=c(0,zoom)) +
     ggh4x::scale_y_facet(type=='mean',type='discrete') +
     ggh4x::force_panelsizes(rows=c(3,3,2)) +
-    geom_data(subset(Y,meas=='q'),   types[1],fl$data$za,map=aes(x=value,y=p,ymin=plo,ymax=phi)) +
-    geom_data(subset(Y,meas=='mean'),types[3],fl$data$za,map=aes(y=fl$fam$data,x=value,xmin=NA,xmax=NA)) +
-    geom_viola(data=E,aes(x=value,y=fam),show.legend=0,pos=dodge(w=.5)))
+    labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam,size='Data N')
 }
 
 main.meta = function(do='load',pop='fsw'){
@@ -232,9 +240,7 @@ main.meta = function(do='load',pop='fsw'){
     Y = subset(Y,K26==1)
     S = rbind.lapply(fams,get.sample,Y=Y,do=do,.par=0)
     g = plot.par(S); plot.save(g,'stan','meta',pop,str('par.',reg),size=c(7,5))
-    gg = plot.distr(S,Y)
-    plot.save(gg$full,'stan','meta',pop,str('distr.full.',reg),size=c(7,5))
-    plot.save(gg$zoom,'stan','meta',pop,str('distr.zoom.',reg),size=c(7,5))
+    g = plot.distr(S,Y); plot.save(g,'stan','meta',pop,str('distr.',reg),size=c(7,5))
   }
 }
 
