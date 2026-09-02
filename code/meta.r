@@ -9,7 +9,8 @@ l$prop = 'Population proportion'
 l$fam = 'Family'
 fl = list()
 fl$fam = lapply(distrs,`[[`,'l')
-fl$data = list(x='Total: Source [x]',za='Cens: Sampled [z|s]')
+fl$method = c('Complete','Turnover','2 × Med/Mean')
+fl$data = list(x='Total: source [x]',za='Censored: sampled [z|s]')
 fl$par = list(
   Ex  = 'E[x]',   CVx  = 'CV[x]',
   Ez  = 'E[z|s]', CVz  = 'CV[z|s]',
@@ -128,11 +129,12 @@ plot.par = function(S,...){
   # print(t(sapply(split(S$value,S[c('fam','par')]),mci))) # NUM
   S$par = factor(S$par,names(fl$par),fl$par)
   S$fam = factor(S$fam,names(fl$fam),fl$fam)
-  g = ggplot(S,aes(x='',y=value,color=fam)) +
+  g = ggplot(S,aes(x='',y=value,color=fam,fill=fam)) +
     facet_wrap('par',scales='free',ncol=4) +
     scale_colorfill(v=cmap$fam) +
     geom_viola() +
-    labs(x='Parameter',y='Value',color=l$fam)
+    axis_blank('x') +
+    labs(x='Parameter',y='Value',color=l$fam,fill=l$fam)
 }
 
 # ==============================================================================
@@ -167,9 +169,9 @@ main.demo = function(do='load'){
   Y = prop.ci(load.csv('data','Baral2014'))
   Y = subset(Y,ref=='rds')
   S = rbind.lapply(fams,get.sample,Y=Y,do=do,gps=1,.par=0)
-  g = plot.par(S); plot.save(g,'stan','demo','par',size=c(7,5))
+  g = plot.par(S); plot.save(g,'stan','demo.pars',size=c(7,4))
   S = subset(S,fam=='gamma') # best fit
-  g = plot.demo(S,Y); plot.save(g,'stan','demo','prop',size=c(7,3))
+  g = plot.demo(S,Y); plot.save(g,'stan','demo.props',size=c(7,3))
 }
 
 # ==============================================================================
@@ -220,28 +222,59 @@ plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
   g = ggplot(D,aes(x=d,y=value,color=fam,fill=fam)) +
     facet_grid('type ~ data',scales='free') +
     geom_mcrib() +
-    geom_viola(data=E,aes(x=value,y=fam),show.legend=0,pos=dodge(w=.5)) +
+    geom_viola(data=E,aes(x=value,y=''),show.legend=0,pos=dodge(w=-1)) +
     geom_data('q',   types[1],fl$data$za,map=aes(x=value,y=p,size=n.adj(n))) +
-    geom_data('mean',types[3],fl$data$za,map=aes(y=fl$fam$data,x=value,size=n.adj(n))) +
-    scale_size_area(limits=c(10,1000),breaks=c(10,100,1000)) +
+    geom_data('mean',types[3],fl$data$za,map=aes(y='',x=value,size=n.adj(n))) +
+    scale_size_area(limits=c(10,1000),breaks=c(30,100,300,1000)) +
     scale_colorfill(v=cmap$fam) +
     scale_x_continuous(lim=c(0,zoom)) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
     ggh4x::scale_y_facet(type=='mean',type='discrete') +
     ggh4x::force_panelsizes(rows=c(3,3,2)) +
-    labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam,size='Data N')
+    labs(x=l$dur,y=l$prop,color=l$fam,fill=l$fam,size='Data N*')
+}
+
+meta.forest = function(S0,pop='fsw'){
+  T = subset(load.csv('data','Fazito2012'),kp==pop & region!='NorthAm') # TEMP
+  S = dfu(aggregate(cbind(value=Ex)~kp+region+ns+fam,S0,mci,type=c))
+  X = rbind(cbind(S,src='Ours',method=''),cbind(T,src='Fazito 2012',fam=T$method))
+  X$fam = factor(X$fam,c(1:3,names(fl$fam)),c(fl$method,fl$fam))
+  num.str = function(...){ gsub('NA','    •    ',sprintf(...)) }
+  add_info = function(name,map,...){ list(
+    geom_info(map,...),
+    geom_info(ulist(map,label=name,y=''),data=df(region='',fam=NA),
+      inherit.aes=0,check_overlap=TRUE,...))}
+  geom_info = function(map,...){ geom_text(map=do.call(aes,map),
+    size=3,family='Alegreya Sans',show.legend=FALSE,...) }
+  g = ggplot(X,aes(x=value.m,xmin=value.lo,xmax=value.hi,
+      y=interaction(src,method,fam),color=fam)) +
+    facet_grid('region',scales='free',space='free') +
+    geom_vline(xintercept=0,color='#ccc') +
+    geom_estimate(size=1.5,lwd=.5,width=0,  position=dodge(w=1)) +
+    add_info(hjust=1,'Source',  list(x=-6.5,label=quote(src))) +
+    add_info(hjust=0,'Method / Family',list(x=-6.0,label=quote(fam))) +
+    add_info(hjust=1,'Mean',    list(x=15,  label=quote(num.str('%.1f',value.m)))) +
+    add_info(hjust=0,'(95% CI)',list(x=15.5,label=quote(num.str('(%.1f,%.1f)',value.lo,value.hi)))) +
+    add_info(hjust=1, 'Ns',     list(x=20,label=quote(ns))) +
+    scale_x_continuous(breaks=seq(0,12,2),lim=c(-10,20)) +
+    scale_colorfill(v=cmap$fam,guide='none') +
+    coord_cartesian(rev='y') +
+    axis_blank('y',panel.grid.minor.x=blank) +
+    labs(x=l$dur,y='',color=l$fam)
+  plot.save(g,'stan','meta.forest',size=c(5,5))
 }
 
 main.meta = function(do='load',pop='fsw'){
-  Y0 = prop.ci(load.csv('data','Fazito2012'))
+  S0 = NULL
+  Y0 = prop.ci(load.csv('data','Fazito2012x'))
   for (reg in c('Africa','Europe','LatAm','Asia')){
-    Y = subset(Y0,kp==pop & region==reg)
-    M = meta.classic(Y)
-    Y = subset(Y,K26==1)
-    S = rbind.lapply(fams,get.sample,Y=Y,do=do,.par=0)
-    g = plot.par(S); plot.save(g,'stan','meta',pop,str('par.',reg),size=c(7,5))
-    g = plot.distr(S,Y); plot.save(g,'stan','meta',pop,str('distr.',reg),size=c(7,5))
+    Y = subset(Y0,kp==pop & region==reg & K26==1)
+    S = rbind.lapply(fams,get.sample,Y=Y,do=do,.par=do=='load')
+    g = plot.par(S);     plot.save(g,'stan',str('meta.pars.',  reg),size=c(7,4))
+    g = plot.distr(S,Y); plot.save(g,'stan',str('meta.distrs.',reg),size=c(7,4))
+    S0 = rbind(S0,cbind(S,kp=pop,region=reg,ns=ulen(Y$id)))
   }
+  meta.forest(S0)
 }
 
 # ==============================================================================

@@ -231,6 +231,13 @@ theme_update(
   legend.spacing.y=unit(-1,'mm'))
 
 dodge = function(...,w=.5){ position_dodge(...,width=w) }
+blank = element_blank()
+
+axis_blank = function(x,...){
+  fs = c('axis.text','axis.ticks','panel.grid.major','panel.grid.minor')
+  args = lapply(fs,function(f){ blank })
+  args = lapply(x,function(i){ names(args) = str(fs,'.',i); args })
+  do.call(theme,ulist(unlist(args,rec=0),...)) }
 
 geom_viola = function(...,alpha=1/3){
   geom_violin(...,alpha=alpha,scale='width') }
