@@ -9,6 +9,7 @@ l$prop = 'Population proportion'
 l$fam = 'Family'
 fl = list()
 fl$fam = lapply(distrs,`[[`,'l')
+fl$region = c(Africa='Africa',Asia='Asia',Europe='Europe',LatAm='Latin America')
 fl$method = c('Complete','Turnover','2 × Med/Mean')
 fl$data = list(x='Total: source [x]',za='Censored: sampled [z|s]')
 fl$par = list(
@@ -235,9 +236,12 @@ plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
 }
 
 meta.forest = function(S0,pop='fsw'){
+  L = aggregate(lp__~fam+region,S0,mean)
+  L = merge(L,cbind(bf='*',aggregate(lp__~region,L,max)),all=1)
   T = subset(load.csv('data','Fazito2012'),kp==pop & region!='NorthAm') # TEMP
   S = dfu(aggregate(cbind(value=Ex)~kp+region+ns+fam,S0,mci,type=c))
   X = rbind(cbind(S,src='Ours',method=''),cbind(T,src='Fazito 2012',fam=T$method))
+  X = merge(X,L,all=1)
   X$fam = factor(X$fam,c(1:3,names(fl$fam)),c(fl$method,fl$fam))
   num.str = function(...){ gsub('NA','    •    ',sprintf(...)) }
   add_info = function(name,map,...){ list(
@@ -255,8 +259,9 @@ meta.forest = function(S0,pop='fsw'){
     add_info(hjust=0,'Method / Family',list(x=-6.0,label=quote(fam))) +
     add_info(hjust=1,'Mean',    list(x=15,  label=quote(num.str('%.1f',value.m)))) +
     add_info(hjust=0,'(95% CI)',list(x=15.5,label=quote(num.str('(%.1f,%.1f)',value.lo,value.hi)))) +
-    add_info(hjust=1, 'Ns',     list(x=20,label=quote(ns))) +
-    scale_x_continuous(breaks=seq(0,12,2),lim=c(-10,20)) +
+    add_info(hjust=1, 'Ns',     list(x=20,  label=quote(ns))) +
+    add_info(hjust=0, 'BF',     list(x=20.5,label=quote(bf))) +
+    scale_x_continuous(breaks=seq(0,12,2),lim=c(-10,21)) +
     scale_colorfill(v=cmap$fam,guide='none') +
     coord_cartesian(rev='y') +
     axis_blank('y',panel.grid.minor.x=blank) +
@@ -267,7 +272,7 @@ meta.forest = function(S0,pop='fsw'){
 main.meta = function(do='load',pop='fsw'){
   S0 = NULL
   Y0 = prop.ci(load.csv('data','Fazito2012x'))
-  for (reg in c('Africa','Europe','LatAm','Asia')){
+  for (reg in names(fl$region)){
     Y = subset(Y0,kp==pop & region==reg & K26==1)
     S = rbind.lapply(fams,get.sample,Y=Y,do=do,.par=do=='load')
     g = plot.par(S);     plot.save(g,'stan',str('meta.pars.',  reg),size=c(7,4))
