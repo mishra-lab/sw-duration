@@ -1,5 +1,5 @@
-\part{Supplementary Results}
-% ==============================================================================
+\part{Supplementary Content}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Parametric equations}
 % ------------------------------------------------------------------------------
 \paragraph{Distribution families}
@@ -53,7 +53,7 @@ whose durations can fall in the specified interval $[a,b]$.
   p15/$\P[\lzu15|s]$,%
   p59/$\P[\lzu59|s]$}{
 \begin{figure}
-  \centering\includegraphics[width=\linewidth]{val.lf.\slug.pdf}
+  \centering\includegraphics[width=\textwidth]{val.lf.\slug.pdf}
   \caption{Comparison of analytic likelihood functions
     and distribution of 10,000 stochastic estimates of \textbf{\stat},
     for different simulated survey sizes $N_i$ and
@@ -61,7 +61,7 @@ whose durations can fall in the specified interval $[a,b]$.
   \label{fig:val.lf.\slug}
 \end{figure}}
 \clearpage
-% ==============================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Illustrative analytic results}
 Figure~\ref{fig:toy.distr} repeats Figure~\ref{fig:toy.distr.1}
 for 5 distribution families considered (Table~\ref{tab:fams}) --- \ie
@@ -75,7 +75,7 @@ performance of different $\E[x]$ estimators considered in \cite{Fazito2012}
 across a range of $\CV[x]$ and the same 5 distribution families.
 \vspace{-2cm} % HACK
 \begin{figure}
-  \centering\includegraphics[width=\linewidth]{toy.distr}
+  \centering\includegraphics[width=\textwidth]{toy.distr}
   \caption{Illustrative distributions of total and censored durations
     among the source, active, and sampled populations for
     different $x$ distribution families (columns) and
@@ -85,7 +85,7 @@ across a range of $\CV[x]$ and the same 5 distribution families.
     probability of being sampled modelled per \eqref{eq:p(s|z)} with $\pp = 0.5, \tt = 1$.}
 \end{figure}
 \begin{figure}
-  \centering\includegraphics[width=\linewidth]{toy.est}
+  \centering\includegraphics[width=\textwidth]{toy.est}
   % TODO: investigate truncation issues @ CV->2
   \caption{Performance of $\E[x]$ estimators considered in \cite{Fazito2012}
     across a range of $\CV[x]$ and distribution families}
@@ -95,16 +95,10 @@ across a range of $\CV[x]$ and the same 5 distribution families.
     means and medians for censored data ($z$) are doubled per \cite{Fazito2012}.}
 \end{figure}
 \clearpage
-% ==============================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Application}
-\def\postcap{Posterior distribution of
-  mean \& CV total/censored distributions among source/sampled populations:
-  $\E[x], \CV[x]~/~\E[z|s], \CV[z|s]$;
-  model parameters: $\aa,\bb,\pp,\tt$;
-  and log-likelihood: $\log(L)$
-  across 6 distribution families considered}
-% ------------------------------------------------------------------------------
-\paragraph{Eswatini data}
+% ==============================================================================
+\subsection{Aggregate data from a single survey}
 Table~\ref{tab:data.demo} summarizes the
 RDS-adjusted sex work duration data reported in \cite{Baral2014},
 while Figure~\ref{fig:demo.pars} illustrates the posterior distributions
@@ -117,13 +111,73 @@ inferred by fitting our Bayesian model to those data.
   \input{tab.data.demo}
 \end{table}
 \begin{figure}[h]
-  \centering\includegraphics[width=\textwidth]{demo.pars}
-  \caption{\postcap\ 
+  \includegraphics[width=\textwidth]{demo.pars}
+  \caption{Posterior distributions of model parameters and summary statistics
     when fitting to the RDS-adjusted Eswatini data (Table~\ref{tab:data.demo})}
   \label{fig:demo.pars}
 \end{figure}
 \clearpage % TEMP
+% ==============================================================================
+\subsection{Aggregate data from a global review}
+\label{s.app.meta}
 % ------------------------------------------------------------------------------
-\paragraph{Global data}
-\cite{Fazito2012}
-% TODO: CSV file
+\paragraph{Data}
+The manually extracted data from Table~S2 in \cite{Fazito2012}
+are provided as supplementary file \texttt{Fazito2012.csv}.
+We extracted all reported duration means $\E[z|s]$ and
+interval proportions $\sP[\azb|s]$ (including medians and maximum durations),
+but dropped from our analyses for simplicity:
+standard deviations, minimum durations, and durations reported as "greater/less than X".
+We also dropped estimates from the following 9 sources
+due to the female sex worker (FSW) population definition
+(it's not clear whether these studies were included
+ in the quantitative syntheses of \cite{Fazito2012}):
+\begin{itemize}[parsep=0pt]
+  \item Anzala (1995) Kenya: FSW in a cohort who acquired HIV
+  \item Ward (2006) UK: FSW who retired and were followed-up
+  \item Pineda (1995) Spain: FSW working for at least 21 months
+  \item Strathdee (2008) Mexico: duplicate of Loza (2010) Mexico
+  \item MOH (2003) Cambodia: not clearly FSW (\eg karaoke workers)
+  \item MOH (2007) Cambodia: not clearly FSW (\eg karaoke workers)
+  \item Gu (2009) China: FSW who inject drugs
+  \item Silverman (2006) India: women trafficked into selling sex
+  \item Simoes (1993) India: women incarcerated for selling sex
+\end{itemize}
+\par
+Before synthesizing the extracted data via our Bayesian model,
+we also adjusted the effective sample sizes for each study $N_i$
+to reduce the influence of very large studies via:
+\begin{equation}
+  N_i^* = \frac{1}{\frac{1}{N_0}+\frac{1}{N_i}}
+  ,\qquad N_0 = 1000
+  \label{eq:n.adj}
+\end{equation}
+This adjustment loosely approximates a random effects approach
+by weighting each study more equally.
+% ------------------------------------------------------------------------------
+\paragraph{Results}
+Figures \ref{fig:meta.Africa}--\ref{fig:meta.LatAm} illustrate
+the posterior distributions of model parameters, summary statistics,
+and cumulative/density duration distributions and means versus the data
+for female sex workers reviewed in \cite{Fazito2012}.
+\clearpage
+% TODO: fix skumar convergence issues
+\foreach \slug/\region in \regions{
+  \begin{figure}[h]
+    \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth]{meta.pars.\slug.pdf}
+      \caption{Model parameter and summary statistics}
+      \label{fig:pars.\slug}
+    \end{subfigure}
+    \begin{subfigure}{\textwidth}
+      \includegraphics[width=\textwidth]{meta.distrs.\slug.pdf}
+      \caption{Modelled cumulative (CDF) and density (PDF) distributions and means
+        versus empirical data}
+      \label{fig:distrs.\slug}
+    \end{subfigure}
+    \caption{Model posteriors when fitting to
+    empirical aggregate female sex worker duration data
+    reviewed in \cite{Fazito2012} for \textbf{\region}}
+    \label{fig:meta.\slug}
+    \floatfoot{\distrfoot}
+  \end{figure}}

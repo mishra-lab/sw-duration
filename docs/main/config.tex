@@ -26,6 +26,7 @@
 \newcommand{\lzu}[2]{#1\sp{<}z\sp{<}#2}
 \newcommand{\azb}{\lzu{a}{b}}
 \newcommand{\norm}{\frac{1}{K}}
+\newcommand{\sref}[1]{\S\,\ref{#1}}
 \renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
 \newcommand{\eqrefr}[2]{Eqs.~(\ref{#1}--\ref{#2})}
 \newcommand{\eqrefa}[2]{Eqs. (\ref{#1}) and (\ref{#2})}
@@ -37,6 +38,11 @@
 \newcommand  {\pp}{\rho_s}
 \renewcommand{\tt}{\tau_{95}}
 \newcommand{\hreftt}[2][https://]{\href{#1#2}{\texttt{#2}}}
+\def\regions{Africa/Africa,Asia/Asia,Europe/Europe,LatAm/Latin~America}
+% NorthAm/North America
+\def\distrfoot{Coloured lines \& shaded ribbons denote
+  mean \& \CI distribution values;
+  gray circles denote aggregate empirical estimates}
 % paths
 \def\projroot{../../}
 \graphicspath{

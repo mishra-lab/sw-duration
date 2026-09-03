@@ -1,4 +1,3 @@
-\clearpage
 \section{Application}
 We demonstrate the utility of the above analytic relationships though a Bayesian model,
 which aims to infer
@@ -60,7 +59,7 @@ proportions of respondents who had been selling sex for
 We converted these 95\%~CI to effective sample sizes per stratum ($N_i$),
 for compatibility with \eqref{eq:lP}.
 \par
-Figure~\ref{fig:demo.prop} illustrates
+Figure~\ref{fig:demo.props} illustrates
 (i) the posterior distributions of modelled proportions vs the RDS-adjusted data, and
 (ii) the corresponding estimated distribution $p(z|s)$
 for the best-fitting family (Gamma).
@@ -96,6 +95,19 @@ whose posterior distributions are effectively indistinguishable from their prior
 %     kinda makes me think that there *was* correlation?
 %     But happy to wait on investigating this until after submitted
 \par
+\begin{figure}[b]
+  \centering\includegraphics[width=\textwidth]{demo.props}
+  \caption{Posterior estimates from fitting the Bayesian model
+    to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
+    (i) proportions of respondents with durations in pre-specified ranges;
+    (ii) inferred duration density distribution $p(z|s)$}
+  \label{fig:demo.props}
+  \floatfoot{Shaded regions denote:
+    (i) posterior of modelled proportions;
+    (ii) posterior \CI of modelled duration distribution.
+    Points and dashed line ranges denote reported \CI for proportion data.}
+\end{figure}
+\clearpage % TEMP
 The posterior distribution of $\E[z|s]$ was
 reasonably precise and consistent across the families considered:
 approximately 5.0 (\CI: 4.4, 5.8),
@@ -104,21 +116,71 @@ By contrast, estimates of $\E[x]$ and $\CV[x]$ were more varied,
 with \CI extremes spanning (2.0, 8.8) and (0.4, 1.9), respectively,
 and best-fitting $\E[x]$ = 5.7, $\CV[x]$ = 0.9 under the Gamma family.
 % JK: this feels a bit unfinished but I'm not sure what else to comment on
-\begin{figure}
-  \centering\includegraphics[width=\textwidth]{demo.prop}
-  \caption{Posterior estimates from fitting the Bayesian model
-    to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
-    (i) proportions of respondents with durations in pre-specified ranges;
-    (ii) inferred duration density distribution $p(z|s)$}
-  \label{fig:demo.prop}
-  \floatfoot{Shaded regions denote:
-    (i) posterior of modelled proportions;
-    (ii) posterior \CI of modelled duration distribution.
-    Points and dashed line ranges denote reported \CI for proportion data.}
-\end{figure}
 % ==============================================================================
-\subsection{Evidence Synthesis}
+\subsection{Aggregate data from a global review}
 Noting the limitations of previously considered methods to estimate $\E[x]$,
 we additionally applied the model to re-synthesize
 duration data reviewed by \citet{Fazito2012}.
-% TODO
+We manually extracted aggregate data
+for female sex workers from Table~S2 in \cite{Fazito2012}
+on duration means $\E[z|s]$ and interval proportions $\sP[\azb|s]$,
+including survey region, sample size, and other meta-data;
+see \sref{s.app.meta} for additional details.
+We then ran the model separately for each region with data,
+and for each distribution family.
+\par
+% JK: I have mixed feelings about para 2 below:
+%     on one hand, the comparison of families seems
+%     interesting and useful to comment on, given differeces in E[x];
+%     on the other hand, this comparison disrupts the flow b/w paras 1 to 3,
+%     which focus on comparing our results with those of Fazito2012.
+%     Overall I think para 2 is still needed though.
+Figures \ref{fig:meta.Africa}--\ref{fig:meta.LatAm} illustrate
+the posterior distributions of model parameters, summary statistics,
+cumulative/density duration distributions, and means versus the data.
+While censored duration distributions $p(z|s)$
+were approximately consistent across families,
+the inferred total duration distributions $p(x)$
+and corresponding means $\E[x]$ depended strongly on the family.
+In particular, $\E[x]$ was typically
+longest under Exponential and Log-Normal families and
+shortest under the Scaled Kumaraswamy family,
+with $\E[x]$ and $\CV[x]$ negatively correlated.
+Gamma, Weibull, Scaled Beta, and Scaled Kumaraswamy families also often suggested that
+a large proportion of women in the source population sold sex for under 1 year.
+According to total log-likelihoods, the best-fitting families were:
+Log-Normal for Africa, Weibull for Asia and Europe, and Scaled Kumaraswamy for Latin America;
+the Exponential family consistently fit worst
+by failing to capture the "heavy tails" of $p(z|s)$ and $p(x)$.
+Nevertheless, Exponential modelling of durations likely remains reasonable.
+\par
+Finally, Figure~\ref{fig:meta.forest} illustrates the mean (\CI)
+for our estimates of mean total duration $\E[x]$
+versus those in Table~1 of \cite{Fazito2012}.
+% JK: A reviewer might argue it's not clear what Fazito2012 aimed to estimate:
+%     total durations among source E[x], or
+%     total durations among active E[x|s].
+%     However, I think it's clearly E[x] from the other methods (1,2)
+%     and from the explicit motivation to parameterize turnover in HIV models.
+Across all distribution families considered,
+our estimates are consistently shorter than those of \cite{Fazito2012},
+with best-fitting families ranging
+from 1.5x shorter in Africa to 4x shorter in Latin America.
+\begin{figure}
+  \includegraphics[width=\textwidth]{meta.forest}
+  \caption{Forest plot of estimated mean total duration
+    among female sex workers $\E[x]$
+    versus regional synthesis estimates in \cite{Fazito2012}}
+  \label{fig:meta.forest}
+  \floatfoot{Synthesis methodology in \cite{Fazito2012} was unclear,
+    and regional estimates were variably reported as points or ranges;
+    see Table~\ref{tab:meth} for method definitions.
+    Ns: number of unique surveys contributing to the estimate;
+    BF: best-fitting family per region.}
+\end{figure}
+% JK: I am thinking to remove the Log-Normal family,
+%     since density at low duration goes to zero: p(x -> 0) -> 0
+%     which implies an initial exit rate of zero
+%     until at least some time has passed in sex work
+%     (also noted in "complete distribution" section)
+% JK: also still need to add NorthAm
