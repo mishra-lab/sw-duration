@@ -2,7 +2,7 @@
 We demonstrate the utility of the above analytic relationships though a Bayesian model,
 which aims to infer
 the complete distribution of total durations among the source population $p(x)$
-from individual-level and/or aggregate data on
+from individual-level and/or aggregate data on 
 the distribution of censored durations among the sampled population $p(z|s)$.
 Specifically, we focus on the types of aggregate estimates reviewed by \citet{Fazito2012}:
 distribution means $\sE[z|s]$, and
@@ -55,7 +55,7 @@ We first apply the model to aggregate data from a single survey:
 a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
 The authors reported crude and respondent-driven sampling (RDS)-adjusted mean (95\%~CI)
 proportions of respondents who had been selling sex for
-0--3, 3--6, 6--11, and 11+ years (Table~\ref{tab:data.demo}).
+0--3, 3--6, 6--11, and 11+ years (Table~\ref{tab:data.demo}).   %SM: in re-reading this, I think providing the data in Table A2 would be good in the main manuscript rather than appendix/supplementary material. then can end this section with an intepretation of the inference made from Fig 3i and 3ii especially?
 We converted these 95\%~CI to effective sample sizes per stratum ($N_i$),
 for compatibility with \eqref{eq:lP}.
 \par
@@ -66,13 +66,12 @@ for the best-fitting family (Gamma).
 Figure~\ref{fig:demo.pars} further illustrates the posterior distributions of
 model parameters and summary statistics for $p(x)$ and $p(z|s)$
 across all families considered.
-We find that the model can reproduce these data quite well.
+We find that the model can reproduce these data quite well. %SM: minor copy-edit ... specify what is meant by "these" wherever possible
 However, considerable uncertainty remains regarding
-the proportions of respondents selling sex for less than 1 year,
-mainly because the available data aggregate the first 0--3 years into one stratum.
-This issue also limits our ability to infer
+the proportions of respondents selling sex for less than 1 year because the available data have aggregated the first 0--3 years into one stratum.
+This aggregation issue also limits our ability to infer
 parameters of the sampling model: $\pp,\tt$,
-whose posterior distributions are effectively indistinguishable from their priors.
+whose posterior distributions are effectively indistinguishable from their priors. %SM would it be helpful to point to a concerete example of this in the appendix/suppl material?
 % JK: Our sampling model may also be redundant with the applied RDS-adjustment...
 %     I realized we still have these individual-level data
 %     so it may be worth examining how much we can reduce uncertainty
@@ -94,6 +93,7 @@ whose posterior distributions are effectively indistinguishable from their prior
 %     On the other hand, the change proportion selling sex for 0-3 years noted above
 %     kinda makes me think that there *was* correlation?
 %     But happy to wait on investigating this until after submitted
+%SM:  Ah good point back! there must be a correlation. lets investigate after submitting as would also make for a nice brief report after this paper is provisionally accepted if reviewer does not raise! esp if we can maybe explore with a few RDS studies to see how generalizable this correlation is, etc. [maybe even a good summer student project through DSI or EPIC or Fields or Global-MITACS, etc.]
 \par
 \begin{figure}[b]
   \centering\includegraphics[width=\textwidth]{demo.props}
@@ -115,7 +115,7 @@ and likewise for $\CV[z|s]$: 0.9 (0.7, 1.2).
 By contrast, estimates of $\E[x]$ and $\CV[x]$ were more varied,
 with \CI extremes spanning (2.0, 8.8) and (0.4, 1.9), respectively,
 and best-fitting $\E[x]$ = 5.7, $\CV[x]$ = 0.9 under the Gamma family.
-% JK: this feels a bit unfinished but I'm not sure what else to comment on
+% JK: this feels a bit unfinished but I'm not sure what else to comment on SM: how about an intepretation line here re: so what with a concrete example? that usually goes in discussion, but I think would be good for reader here - i.e. the take away so-what without the math. "That is, when applied to aggregate data from one survey, we esitmated that X% had been engaged in X years of sex work, etc...(i.e. intepret Figure 3ii without the math/equations?)
 % ==============================================================================
 \subsection{Aggregate data from a global review}
 Noting the limitations of previously considered methods to estimate $\E[x]$,
