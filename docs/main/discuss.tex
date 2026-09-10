@@ -1,0 +1,107 @@
+\section{Discussion}
+\enlargethispage{\baselineskip} % TEMP
+\par % summary of findings
+We sought to clarify several concepts relevant to
+characterizing the distribution of durations selling or buying sex.
+First, we distinguished between "source" and "active" populations,
+with the active population being a length-biased sample of the source population.
+Second, we reiterated the familiar implications of randomly censored durations,
+which halves the mean duration.
+We combined the above to derive the exact relationship between
+the distribution of censored durations among the active population and
+the distribution of total durations among the source population,
+which happen to be exactly equal if duration are Exponentially distributed.
+We then developed a parametric Bayesian model of this relationship
+to infer the distribution of total durations among the source population
+from aggregate data on censored durations among the active population.
+Applying this model to data from a previous global systematic review,
+we inferred significantly shorter mean durations across multiple regions.
+\par % implications for HIV incidence
+Our estimates of mean duration selling sex were
+around half or less versus those reported in \cite{Fazito2012}.
+Shorter durations suggest that HIV incidence in sex work
+could be higher than previously estimated via transmission models,
+since there is less time for infections to accumulate
+to match observed HIV prevalence in sex work \cite{Knight2020}.
+However, existing model-based estimates of HIV incidence
+among female sex workers in Sub-Saharan Africa
+already exceed empirical estimates \cite{Stevens2024inc};
+this might be partly explained by recruitment of
+relatively lower-risk female sex workers and
+relatively higher-risk wider population women
+for empirical HIV incidence studies \cite{Jones2024}.
+% JK: not sure where to go with this ...
+Rapid sex work turnover could also suggest that
+more infections in the wider population might be attributable to
+unmet needs during brief periods of sex work \cite{Knight2020}.
+\par % implications for modelling
+We also inferred that distributions of total durations in sex work are likely "heavy-tailed",
+such that rates of exit decline with duration in sex work.
+This declining exit rate could reflect
+selection effects acting on between-person differences in propensity to remain in sex work,
+\ie "frailties" \cite{Balan2020}, and/or
+within-person changes while in sex work,
+including self-identification as a sex worker, and
+changing social ties with family, friends, and clients
+\cite{Neufeld2023,Bhattacharjee2023,Ingabire2012,Bowen2011,Lora2025}.
+While individual-based simulation models could
+specify "heavy-tailed" distributions directly,
+compartmental simulation models would need
+two or more sex work states to reproduce this pattern --- \eg
+% TODO: derive conditions (rates) for heavy-tail in 2-state model in supp?
+separate short and long duration sex work trajectories, and/or
+separate early and late sex work periods.
+Indeed, such states would also be useful to capture
+unique risks associated with early sex work
+\cite{Neufeld2023,Bhattacharjee2023}.
+% TODO: revise above to note that models can/should model particular determinants?
+\par
+<<TODO>> up to 3 additional paragraphs on:
+\\1) source vs active population
+\\2) prior work in chronic diseases \& "sojourn times" \eg \cite{Zelen1969}
+\\3) more comparison with Fazito2012?
+% TODO: Fazito2012 acknowledge that durations were shorter via method 2 vs 3
+% ------------------------------------------------------------------------------
+\paragraph{Limitations}
+Our work has several limitations.
+First, we did not model any gaps (temporary breaks) in sex work.
+However, many estimates of sex work duration are derived from
+the difference between respondents' current age and the age they report first selling sex,
+which implicitly ignores such gaps.
+Respondents may also report "duration selling sex" in this way when asked directly,
+especially since unsuccessful attempts to exit sex work can be stigmatized \cite{Lora2025}.
+% JK: Should we recommend that modellers try to incorporate these "hidden gaps" somehow?
+%     Frankly I'm not sure what specifically I would recommend.
+Second, we did not consider any recall/reporting biases,
+as entry into sex work is likely a memorable life-course event
+\cite{Sandy2025,Cimino2017,Ingabire2012,Bowen2011,Lora2025},
+and self-identified sex workers do not, to our knowledge, have
+obvious motivations for under-reporting durations.
+We additionally assumed that sex work turnover is stable over time,
+despite empirical evidence of changing sex work dynamics in several contexts
+\cite{Anderegg2024,Anderson2026}.
+Finally, our re-analysis of duration data from \cite{Fazito2012}
+did not include more recent or individual-level data,
+since our motivation was mainly to compare
+results using our proposed versus prior estimation methods.
+Additionally, in forthcoming work we will synthesize
+individual-level data from 183 studies \cite{Anderson2026}.
+% ------------------------------------------------------------------------------
+\paragraph{Future work}
+Our Bayesian model could be extended in several ways.
+First, it might be more useful to model sex work durations
+via semi/parametric hazard rates of exiting sex work,
+rather than parametric duration distributions.%
+\footnote{Indeed, the hazard rates implied by
+  some parametric distributions we considered may be implausible,
+  \eg Log-Normal.}
+A hazard rate approach could allow and incorporation of
+more intuitive parameter priors (\eg 0.5--50\% exit rate per month),
+covariates (\eg under proportional hazards assumptions) \cite{Kalbfleisch2023}, and
+frailties (\eg to capture unmodelled heterogeneity) \cite{Balan2020}.
+Relatedly, joint modelling of duration and age and/or calendar time
+could help characterize relevant trends noted above
+\eg for HIV/STI transmission modelling \cite{Anderegg2024,Anderson2026}.
+% ------------------------------------------------------------------------------
+\paragraph{Conclusion}
+<<TODO>>
