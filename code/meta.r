@@ -228,7 +228,7 @@ plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
     geom_data('mean',types[3],fl$data$za,map=aes(y='',x=value,size=n.adj(n))) +
     scale_size_area(limits=c(10,1000),breaks=c(30,100,300,1000)) +
     scale_colorfill(v=cmap$fam) +
-    scale_x_continuous(lim=c(0,zoom)) +
+    scale_x_continuous(lim=c(0,zoom),breaks=seq(0,zoom,2)) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
     ggh4x::scale_y_facet(type=='mean',type='discrete') +
     ggh4x::force_panelsizes(rows=c(3,3,2)) +
@@ -251,7 +251,7 @@ meta.forest = function(S0,pop='fsw'){
   geom_info = function(map,...){ geom_text(map=do.call(aes,map),
     size=3,family='Alegreya Sans',show.legend=FALSE,...) }
   g = ggplot(X,aes(x=value.m,xmin=value.lo,xmax=value.hi,
-      y=interaction(src,method,fam),color=fam)) +
+      y=interaction(src,method,fam))) +
     facet_grid('region',scales='free',space='free') +
     geom_vline(xintercept=0,color='#ccc') +
     geom_estimate(size=1.5,lwd=.5,width=0,  position=dodge(w=1)) +
@@ -260,13 +260,16 @@ meta.forest = function(S0,pop='fsw'){
     add_info(hjust=1,'Mean',    list(x=15,  label=quote(num.str('%.1f',value.m)))) +
     add_info(hjust=0,'(95% CI)',list(x=15.5,label=quote(num.str('(%.1f,%.1f)',value.lo,value.hi)))) +
     add_info(hjust=1, 'Ns',     list(x=20,  label=quote(ns))) +
-    add_info(hjust=0, 'BF',     list(x=20.5,label=quote(bf))) +
     scale_x_continuous(breaks=seq(0,12,2),lim=c(-10,21)) +
-    scale_colorfill(v=cmap$fam,guide='none') +
     coord_cartesian(rev='y') +
     axis_blank('y',panel.grid.minor.x=blank) +
-    labs(x=l$dur,y='',color=l$fam)
-  plot.save(g,'stan','meta.forest',size=c(5,5))
+    labs(x=l$dur,y='')
+  plot.save('stan','meta.forest.all',size=c(5,6),g = g +
+    aes(color=fam) + scale_colorfill(v=cmap$fam,guide='none',na.value='#999') +
+    add_info(hjust=0,'BF',list(x=20.5,label=quote(bf))))
+  plot.save('stan','meta.forest.bf',size=c(5,3),g = g +
+    aes(color=src) + scale_colorfill(v=c('#999','#000'),guide='none') +
+    subset(X,bf=='*'|src=='Fazito 2012'))
 }
 
 main.meta = function(do='load',pop='fsw'){
