@@ -1,23 +1,28 @@
-\section{Introduction}
-Around the world, people engaged in sex work
+\section{Introduction}\label{intro}
+In epidemiology, we are often interested in quantifying duration distributions,
+\eg durations of transient health states or exposure to risk/protective factors.
+Such distributions can help
+characterize populations' cumulative exposure \cite{Ben-Shlomo2023}, and
+inform inputs to various kinds of simulation models \cite{Garnett2011}.
+\par
+In HIV epidemiology, sex work
 --- selling or buying sex for money or equivalent ---
-experience high risks of HIV acquisition and transmission due to
-intersecting structural, behavioural, and biological risk factors
+typically reflects a transient period of
+elevated risk for HIV acquisition and transmission due to
+intersecting structural, behavioural, and biological factors
 \cite{Scorgie2012,Shannon2015,Baral2015msw,Carael2006,Sanders2013cli}.
-Unmet HIV prevention and treatment needs among these populations
+Unmet HIV prevention and treatment needs during this period
 have long been recognized as drivers of epidemic emergence and persistence,
 especially through insights from mathematical models of HIV transmission
 \cite{Boily2002,Watts2010,Silhol2026}.
-Yet, engagement in sex work is often transient,
-with entry (for sellers) driven primarily by economic and social instability,
-and exit further mediated by aging, stable partnering, stigma, and violence
+While entry into sex work is driven primarily by economic and social instability,
+exit is further mediated by aging, stable partnering, stigma, and violence
 \cite{Ingabire2012,Bowen2011,Lora2025}.
 % JK: is it worth adding analogous drivers for clients? e.g. Sanders2013cli
 %     It felt awkward when I tried.
 \par
-As such, durations selling or buying sex
-are key determinants of HIV epidemiology,
-and key inputs to HIV transmission models,
+Durations selling or buying sex are thus
+key determinants of HIV epidemiology, and key inputs to HIV transmission models,
 particularly those aiming to compare the impacts of different prioritized services.
 For example, 10\% HIV prevalence among sex workers
 in a context with shorter typical durations / rapid turnover (\eg 1 year)
@@ -37,7 +42,7 @@ potentially high loss-to-follow-up among those exiting sex work,%
 \footnote{Questions remain regarding to what degree
   those exiting sex work remain engaged with programs.}
 whereas slower turnover could make it easier to attain higher levels of coverage.
-Finally, duration in sex work can further moderate onward transmission risk,
+Finally, duration in sex work can further influence onward transmission risk,
 where longer durations theoretically allow
 more onward transmission following acquisition (in the absence of treatment).
 % JK: I considered adding something to the above
@@ -51,24 +56,42 @@ from representative samples of "retired" sex workers.%
 \footnote{Throughout:
   we often refer to "sex workers" for brevity,
   but our statements usually apply similarly to their clients who buy sex;
-  we intentionally use gender-agnostic terminology,
+  we also intentionally use gender-agnostic terminology,
   since men, women, and transgender individuals can all sell and buy sex.}
-Unfortunately, such study designs are rare,
+Unfortunately, such studies are rare,
 and most estimates derive from cross-sectional surveys of
 those actively selling or buying sex \cite{Fazito2012}.
-Yet, it is not necessarily obvious how
-durations reported in cross-sectional surveys relate to durations of interest,
-as we will discuss in detail herein.
+In their global scoping review of HIV risk behaviour durations,
+\citet{Fazito2012} considered three methods to estimate
+mean duration selling/buying sex:
+1. mean total duration among those finished selling/buying sex;
+2. reciprocal of the proportion who started selling/buying sex within the past year; and
+3. double the mean/median reported duration among those actively selling/buying sex.
+Among the 118 estimates of duration selling or buying sex in \cite{Fazito2012}:
+the vast majority used method~3 (86\%),
+a small faction used method~2 (14\%),
+and none used method~1.
+Yet, methods 2 and 3 have their own limitations (Table~\ref{tab:meth}),
+especially overlooking so-called "length-biased sampling" \cite{Kafadar2009},
+as we will discuss further below.
+Moreover, studies also commonly report the proportions of respondents
+selling/buying sex for pre-specified duration ranges, \eg \{0--2, 2--5, 5+\} years,
+but it's not clear if/how such data could be used with methods 2 or 3.
 As one recent HIV modelling study noted
-when specifying plausible parameter bounds:
+when specifying plausible duration parameter bounds:
 \emph{"We multiply the lower bound by 0.5 and upper bound by 2
   because of uncertainty in how overall duration of sex work
   relates to current duration of sex work"} \cite{Stone2021}.
-% JK: don't mean to throw shade, but I think it captures our motivation well!
+\begin{table}
+  \caption{Methods of estimating mean duration selling sex
+    suggested and reviewed in \cite{Fazito2012}}
+  \label{tab:meth}
+  \input{tab.meth}
+\end{table}
 % ------------------------------------------------------------------------------
 \paragraph{Objectives}
-To address this gap, we sought to
-offer guidance on estimating duration in sex work from commonly available data.
+So, we sought to offer updated guidance on estimating duration in sex work
+from different kinds of commonly available data.
 Specifically, our objectives were to:
 \begin{enumerate}
   \item \label{obj:1}
@@ -76,12 +99,18 @@ Specifically, our objectives were to:
         the distribution of reported durations selling sex in cross-sectional studies, and
         the distribution of total durations selling sex in the population overall.
   \item \label{obj:2}
-        Develop and apply a Bayesian model which leverages the above relationships to infer
-        the distribution of total durations selling sex in the population overall
-        from published data.
+        Apply a Bayesian model of the above relationships to infer
+        mean total durations selling sex in the population overall
+        from commonly available aggregate data,
+        and compare resulting estimates with previously published estimates.
 \end{enumerate}
 While we focus on sex work as an illustrative example,
-our insights likely extend to other transient risk/disease states
+our insights likely extend to other transient health/risk states
 relevant to compartmental modelling or epidemiological study.
-% JK: moved reference to parallel work in cancer epi (Zelen1969) to discussion
-%     as it felt tangential and kinda undermined the excitement...
+The remainder of our paper is structured as follows:
+In \sref{pre}, we clarify some key concepts and assumptions.
+In \sref{math}, we derive the analytic relationship noted above.
+In \sref{app}, we introduce and apply our Bayesian model,
+  comparing mean total durations with previous estimates.
+In \sref{disc}, we conclude with discussion of implications and future work.
+

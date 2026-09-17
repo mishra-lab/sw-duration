@@ -1,4 +1,4 @@
-\section{Analytic relationships}
+\section{Analytic relationships}\label{math}
 We now turn to deriving the exact relationship between:
 the distribution of \emph{total} durations selling sex
 among the source population: $x \sim p(x)$, and
@@ -28,7 +28,7 @@ example distributions for $p(x)$, $p(z|s)$, and intermediates thereof.
 % JK: good call! I've cited the mother paper, and a recent one using more established terminology
 The probability of an individual being active at any given time
 is proportional to their total duration $x$;
-a phenomenon well-described in cancer epidemiology
+a phenomenon well-described (\eg in cancer epidemiology)
 as "length-biased sampling" \cite{Kafadar2009}.
 Thus, the distribution of total durations among the active population is
 \cite{Zelen1969}:
@@ -164,7 +164,7 @@ is then updated from \eqref{eq:p(z|a)} simply as:
   \label{eq:p(z|s)}
 \end{equation}
 % ------------------------------------------------------------------------------
-\paragraph{Estimating $\E[x]$}
+\paragraph{Estimating mean total durations $\E[x]$}
 We conclude this section by revisiting
 the three methods considered by \citet{Fazito2012}
 to estimate the "true" mean duration in sex work $\E[x]$.
@@ -207,6 +207,7 @@ undersampling of early sex work, which biases estimates upwards.
 \par
 Nevertheless, the best simple estimate of $\E[x]$ is likely $\E[z|s]$,
 assuming $\CV[x] \approx 1$, or more generally:
+% TODO: would be nice to replace CV[x] here with some function of CV[z|s]
 \begin{equation}
   \sE[x] = \frac{1}{2} ~ \E[z|s] \left(1 + \CV^2[x]\right)
 \end{equation}
