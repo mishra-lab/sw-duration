@@ -1,8 +1,8 @@
-\section{Application}
+\section{Application}\label{app}
 We demonstrate the utility of the above analytic relationships though a Bayesian model,
 which aims to infer
 the complete distribution of total durations among the source population $p(x)$
-from individual-level and/or aggregate data on 
+from individual-level and/or aggregate data on
 the distribution of censored durations among the sampled population $p(z|s)$.
 Specifically, we focus on the types of aggregate estimates reviewed by \citet{Fazito2012}:
 distribution means $\sE[z|s]$, and
@@ -23,8 +23,7 @@ so the interpretation of and priors for each parameter depend on the family.
 We model the probability of
 being sampled for survey participation among the active population as
 increasing exponentially from $\pp \in [0.5,1]$ initially
-to 95\% by year $\tt \in [0,3]$,
-and 100\% asymptotically:%
+to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically:%
 \footnote{Thus, if either $\pp = 1$ or $\tt = 0$,
   then sampling will be modelled as
   perfectly representative of the active population: $p(s|z) = 1$.}
@@ -33,12 +32,12 @@ and 100\% asymptotically:%
     e^{\bigg(\frac{z}{\tt}\log\bigg(\frac{0.05}{1-\pp}\bigg)\bigg)}
   \label{eq:p(s|z)}
 \end{equation}
-We then define
-the distribution of censored durations among the sampled population
+We then define the distribution of censored durations among the sampled population
 $p(z|s;\aa,\bb,\pp,\tt)$ via \eqref{eq:p(z|s)}.
 What remains is the specify likelihood functions for
 estimates $\sE[z|s]$ and $\sP[\azb|s]$ from empirical data,
 which are defined in \eqrefa{eq:lE}{eq:lP}, respectively.
+Similar functions could be specified for individual-level data.
 \par
 Under this model, we infer
 posterior distributions for $\aa,\bb,\pp,\tt$ given the data.
@@ -55,23 +54,41 @@ We first apply the model to aggregate data from a single survey:
 a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
 The authors reported crude and respondent-driven sampling (RDS)-adjusted mean (95\%~CI)
 proportions of respondents who had been selling sex for
-0--3, 3--6, 6--11, and 11+ years (Table~\ref{tab:data.demo}).   %SM: in re-reading this, I think providing the data in Table A2 would be good in the main manuscript rather than appendix/supplementary material. then can end this section with an intepretation of the inference made from Fig 3i and 3ii especially?
+0--3, 3--6, 6--11, and 11+ years (Table~\ref{tab:data.demo}).
+% SM: in re-reading this, I think providing the data in Table A2
+%     would be good in the main manuscript rather than appendix/supplementary material.
+%     then can end this section with an intepretation of the inference made
+%     from Fig 3i and 3ii especially?
 We converted these 95\%~CI to effective sample sizes per stratum ($N_i$),
 for compatibility with \eqref{eq:lP}.
+From these data alone (without further assumptions), we can only conclude that
+the median censored duration among active sex workers $\M[z|s]$ was between 3 and 6.
+\begin{table}[b]
+  \centering
+  \caption{RDS-adjusted proportions of durations selling sex
+    reported by a 2011 sample of female sex workers in Eswatini
+    (N = 313) \cite{Baral2014}}
+  \label{tab:data.demo}
+  \input{tab.data.demo}
+\end{table}
 \par
 Figure~\ref{fig:demo.props} illustrates
-(i) the posterior distributions of modelled proportions vs the RDS-adjusted data, and
+(i) the posterior distributions of modelled proportions versus the RDS-adjusted data, and
 (ii) the corresponding estimated distribution $p(z|s)$
 for the best-fitting family (Gamma).
 Figure~\ref{fig:demo.pars} further illustrates the posterior distributions of
 model parameters and summary statistics for $p(x)$ and $p(z|s)$
 across all families considered.
-We find that the model can reproduce these data quite well. %SM: minor copy-edit ... specify what is meant by "these" wherever possible
+We find that the model can reproduce these proportion data well.
 However, considerable uncertainty remains regarding
-the proportions of respondents selling sex for less than 1 year because the available data have aggregated the first 0--3 years into one stratum.
-This aggregation issue also limits our ability to infer
+the proportions of respondents selling sex for less than 1 year
+because the available data aggregate the first 0--3 years into one stratum.
+This aggregation also limits our ability to infer
 parameters of the sampling model: $\pp,\tt$,
-whose posterior distributions are effectively indistinguishable from their priors. %SM would it be helpful to point to a concerete example of this in the appendix/suppl material?
+whose posterior distributions are effectively indistinguishable from their priors
+(Figure~\ref{fig:demo.pars}).
+% SM: would it be helpful to point to a concerete example of this in the appendix/suppl material?
+% JK: sorry, not sure what you mean by "this" above?
 % JK: Our sampling model may also be redundant with the applied RDS-adjustment...
 %     I realized we still have these individual-level data
 %     so it may be worth examining how much we can reduce uncertainty
@@ -93,9 +110,14 @@ whose posterior distributions are effectively indistinguishable from their prior
 %     On the other hand, the change proportion selling sex for 0-3 years noted above
 %     kinda makes me think that there *was* correlation?
 %     But happy to wait on investigating this until after submitted
-%SM:  Ah good point back! there must be a correlation. lets investigate after submitting as would also make for a nice brief report after this paper is provisionally accepted if reviewer does not raise! esp if we can maybe explore with a few RDS studies to see how generalizable this correlation is, etc. [maybe even a good summer student project through DSI or EPIC or Fields or Global-MITACS, etc.]
-\par
-\begin{figure}[b]
+% SM: Ah good point back! there must be a correlation.
+%     lets investigate after submitting as would also make for a nice brief report
+%     after this paper is provisionally accepted if reviewer does not raise!
+%     esp if we can maybe explore with a few RDS studies
+%     to see how generalizable this correlation is, etc.
+%     [maybe even a good summer student project through DSI or EPIC or Fields or Global-MITACS, etc.]
+% JK: TODO
+\begin{figure}
   \centering\includegraphics[width=\textwidth]{demo.props}
   \caption{Posterior estimates from fitting the Bayesian model
     to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
@@ -107,83 +129,105 @@ whose posterior distributions are effectively indistinguishable from their prior
     (ii) posterior \CI of modelled duration distribution.
     Points and dashed line ranges denote reported \CI for proportion data.}
 \end{figure}
-\clearpage % TEMP
-The posterior distribution of $\E[z|s]$ was
-reasonably precise and consistent across the families considered:
-approximately 5.0 (\CI: 4.4, 5.8),
+\par
+The posterior distribution of $\E[z|s]$
+was reasonably precise and consistent across the families considered
+(Figure~\ref{fig:demo.pars}): approximately 5.0 (\CI: 4.4, 5.8),
 and likewise for $\CV[z|s]$: 0.9 (0.7, 1.2).
 By contrast, estimates of $\E[x]$ and $\CV[x]$ were more varied,
 with \CI extremes spanning (2.0, 8.8) and (0.4, 1.9), respectively,
 and best-fitting $\E[x]$ = 5.7, $\CV[x]$ = 0.9 under the Gamma family.
-% JK: this feels a bit unfinished but I'm not sure what else to comment on SM: how about an intepretation line here re: so what with a concrete example? that usually goes in discussion, but I think would be good for reader here - i.e. the take away so-what without the math. "That is, when applied to aggregate data from one survey, we esitmated that X% had been engaged in X years of sex work, etc...(i.e. intepret Figure 3ii without the math/equations?)
+% JK: this feels a bit unfinished but I'm not sure what else to comment on
+% SM: how about an intepretation line here re: so what with a concrete example?
+%     that usually goes in discussion, but I think would be good for reader here
+%     - i.e. the take away so-what without the math.
+%     "That is, when applied to aggregate data from one survey, we esitmated that
+%     X% had been engaged in X years of sex work, etc...
+%     - i.e. intepret Figure 3ii without the math/equations?
+Since the best-fitting distribution was approximately Exponential,
+the distributions of total durations among the source population
+and censored durations among the sampled population were approximately equal.
+Thus, we estimated that:
+34.6\% of all female sex workers in Eswatini sell sex for 0--3 years,
+25.5\% for 3--6 years, 25.6\% for 6--11 years, and 12.9\% for 11+ years.
+(\cf Table~\ref{tab:data.demo}).
+% JK: Hm, is this what you mean?
+%     Unfortunately the Baral2014 paper (and others on the same data)
+%     don't report the mean duration anywhere, only strata proportions,
+%     so we only have those to directly compare to.
 % ==============================================================================
 \subsection{Aggregate data from a global review}
-Noting the limitations of previously considered methods to estimate $\E[x]$, %SM: to which previous limitations is this referring to? suggest we remove sentences like this for ease of reading.
-Next, we applied the model to re-synthesize %SM: what does "re-synthesize" mean? - how does this lead from the objectives as currently written? 
-duration data reviewed by \citet{Fazito2012}.
+Next, we applied our model to produce
+regionally pooled estimates of mean total duration selling sex
+using the same aggregate data and region definitions as \citet{Fazito2012},
+and compared our pooled estimates to theirs.%
+\footnote{We acknowledge that region definitions in \cite{Fazito2012} are now outdated,
+  \eg combining all of Africa.}
+% SM: what does "re-synthesize" mean? - how does this lead from the objectives as currently written?
+% JK: hopefully it aligns & flows better now?
 We manually extracted aggregate data
 for female sex workers from Table~S2 in \cite{Fazito2012}
-on duration means $\E[z|s]$ and interval proportions $\sP[\azb|s]$,
+on duration means $\E[z|s]$ and interval proportions $\P[\azb|s]$,
 including survey region, sample size, and other meta-data;
 see \sref{s.app.meta} for additional details.
-We then ran the model separately for each region with data,
-and for each distribution family.
-\par
+We then fit our model separately for each region with data,
+and for each distribution family, retaining the best-fitting family per region.
+Figures \ref{fig:meta.Africa}--\ref{fig:meta.LatAm} illustrate
+the posterior distributions of model parameters, summary statistics,
+cumulative/density duration distributions, and means versus the data.
 % JK: I have mixed feelings about para 2 below:
 %     on one hand, the comparison of families seems
 %     interesting and useful to comment on, given differeces in E[x];
 %     on the other hand, this comparison disrupts the flow b/w paras 1 to 3,
 %     which focus on comparing our results with those of Fazito2012.
 %     Overall I think para 2 is still needed though.
-%SM: what are the points you want to make? because I found this next part hard to follow and got lost in what the point of doing this application was. i.e. I agree. Overall, I think we have to know exactly which points we want to make, and then concrete examples and also sign-post things ahead of time.
-% for example, if we want to discuss families, then we have to a priori say that in the objectives and applications that we are going to do this. So I suggest work backwards from the key points/messages, and then structure the para? 
-
-Figures \ref{fig:meta.Africa}--\ref{fig:meta.LatAm} illustrate
-the posterior distributions of model parameters, summary statistics,
-cumulative/density duration distributions, and means versus the data.
-While censored duration distributions $p(z|s)$
-were approximately consistent across families,
-the inferred total duration distributions $p(x)$
-and corresponding means $\E[x]$ depended strongly on the family.
-In particular, $\E[x]$ was typically
+% SM: what are the points you want to make?
+%     because I found this next part hard to follow
+%     and got lost in what the point of doing this application was.
+%     i.e. I agree. Overall, I think we have to know exactly which points we want to make,
+%     and then concrete examples and also sign-post things ahead of time.
+%     For example, if we want to discuss families, then we have to
+%     a priori say that in the objectives and applications that we are going to do this.
+%     So I suggest work backwards from the key points/messages, and then structure the para?
+\par
+Figure~\ref{fig:meta.forest.bf} then illustrates
+our estimates of mean total duration $\E[x]$ versus those in Table~1 of \cite{Fazito2012}.
+% SM: it seems like this is the key message?
+%     I would value (as a reader/user) some concrete examples / numbers
+%     to make this more "grounded" (same suggestion as for above application).
+% JK: Yes, definitely; I've revised to provide some more concrete examples
+Our estimates are consistently shorter than those of \cite{Fazito2012} for all regions
+--- \eg we estimated:
+3.7 (3.4--3.9) versus 5.5 years for Africa (approximately 1.5x shorter), and
+2.9 (2.0--4.0) versus 11.2--12.0 years for Latin America (approximately 4x shorter).
+% SM: what might this mean to a AJE reader? I would provide some estimates X-years vs. Y-years.
+%     Also, there is a lot of push-back on using terms like Africa or Latin America ...
+%     given heterogeneity within regions. Is there a reason we cannnot write which country,
+%     or is that becuase we grouped our results by region too?
+%     Sorry if I'm forgetting but am not clear on the rationale for why groupiing
+%     - based on the introduction or the start of this application section
+% JK: Yes, I was thinking something similar about the choice of regions.
+%     My motivation was to allow direct comparison
+%     Maybe we can consider additional pooled analyses for our own regions
+%     which we add to the supplement; e.g. matching UNAIDS regions,
+%     and maybe at the country level too where possible.
+Such results were broadly consistent across other distribution families
+(Figure~\ref{fig:meta.forest.all}), with $\E[x]$ typically
 longest under Exponential and Log-Normal families and
-shortest under the Scaled Kumaraswamy family,
-with $\E[x]$ and $\CV[x]$ negatively correlated.
+shortest under the Scaled Kumaraswamy family.
 Gamma, Weibull, Scaled Beta, and Scaled Kumaraswamy families also often suggested that
 a large proportion of women in the source population sold sex for under 1 year.
-According to total log-likelihoods, the best-fitting families were:
-Log-Normal for Africa, Weibull for Asia and Europe, and Scaled Kumaraswamy for Latin America;
-the Exponential family consistently fit worst
-by failing to capture the "heavy tails" of $p(z|s)$ and $p(x)$.
-Nevertheless, Exponential modelling of durations likely remains reasonable.
-\par
-Finally, Figure~\ref{fig:meta.forest} illustrates the mean (\CI)
-for our estimates of mean total duration $\E[x]$
-versus those in Table~1 of \cite{Fazito2012}.
-% JK: A reviewer might argue it's not clear what Fazito2012 aimed to estimate:
-%     total durations among source E[x], or
-%     total durations among active E[x|s].
-%     However, I think it's clearly E[x] from the other methods (1,2)
-%     and from the explicit motivation to parameterize turnover in HIV models.
-Across all distribution families considered,  %SM: it seems like this is the key message? I would value (as a reader/user) some concrete examples / numbers to make this more "grounded" (same suggestion as for above application).
-our estimates are consistently shorter than those of \cite{Fazito2012},
-with best-fitting families ranging
-from 1.5x shorter in Africa to 4x shorter in Latin America. %SM: what might this mean to a AJE reader? i would provide some estimates X-years vs. Y-years. [also, there is a lot of push-back on using terms like Africa or Latin America... given heterogeneity within regions. is there a reason we cannnot write which country, or is that becuase we grouped our results by region too? sorry if I'm forgetting but am not clear on the rationale for why groupiing - based on the introduction or the start of this application section]
+% JK: TODO: I will pull out these proportions to add here.
 \begin{figure}
-  \includegraphics[width=\textwidth]{meta.forest}
+  \includegraphics[width=\textwidth]{meta.forest.bf}
   \caption{Forest plot of estimated mean total duration
     among female sex workers $\E[x]$
     versus regional synthesis estimates in \cite{Fazito2012}}
-  \label{fig:meta.forest}
+  \label{fig:meta.forest.bf}
   \floatfoot{Synthesis methodology in \cite{Fazito2012} was unclear,
     and regional estimates were variably reported as points or ranges;
     see Table~\ref{tab:meth} for method definitions.
-    Ns: number of unique surveys contributing to the estimate;
-    BF: best-fitting family per region.}
+    Ns: number of unique surveys contributing to the estimate.}
 \end{figure}
-% JK: I am thinking to remove the Log-Normal family,
-%     since density at low duration goes to zero: p(x -> 0) -> 0
-%     which implies an initial exit rate of zero
-%     until at least some time has passed in sex work
-%     (also noted in "complete distribution" section)
-% JK: also still need to add NorthAm
+% JK: still need to add NorthAm
+\clearpage % TEMP

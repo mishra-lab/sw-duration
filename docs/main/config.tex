@@ -16,6 +16,7 @@
 \newcommand{\tabullet}{\par\labelitemi\hskip1ex}
 \newcommand{\eg}{e.g.\xspace}
 \newcommand{\ie}{i.e.\xspace}
+\newcommand{\cf}{cf.\xspace}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\M}{\mathbb{M}}
 \renewcommand{\P}{\mathbb{P}}
@@ -23,8 +24,8 @@
 \newcommand{\sP}{\hat{\mathbb{P}}}
 \newcommand{\CV}{\mathbb{CV}\hskip1pt}
 \newcommand{\CI}[1][95]{#1\%~CI\xspace}
-\newcommand{\lzu}[2]{#1\sp{<}z\sp{<}#2}
-\newcommand{\azb}{\lzu{a}{b}}
+\newcommand{\lzu}[3][z]{#2\sp{<}#1\sp{<}#3}
+\newcommand{\azb}[1][z]{\lzu[#1]{a}{b}}
 \newcommand{\norm}{\frac{1}{K}}
 \newcommand{\sref}[1]{\S\,\ref{#1}}
 \renewcommand{\eqref}[1]{Eq.~(\ref{#1})}

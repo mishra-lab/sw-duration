@@ -12,7 +12,7 @@ We considered 6 distribution families for $p(x)$ in our analysis
   \label{tab:fams}
   \input{tab.fams}
 \end{table}
-\clearpage % TEMP
+\clearpage % HACK
 % ------------------------------------------------------------------------------
 \paragraph{Likelihoods functions}
 Under the model for $p(z|s)$, we define the likelihoods
@@ -99,24 +99,17 @@ across a range of $\CV[x]$ and the same 5 distribution families.
 \section{Application}
 % ==============================================================================
 \subsection{Aggregate data from a single survey}
-Table~\ref{tab:data.demo} summarizes the
-RDS-adjusted sex work duration data reported in \cite{Baral2014},
-while Figure~\ref{fig:demo.pars} illustrates the posterior distributions
-inferred by fitting our Bayesian model to those data.
-\begin{table}[h]
-  \centering
-  \caption{RDS-adjusted proportions of durations selling sex
-    among Swati female sex workers in \cite{Baral2014} (N = 313)}
-  \label{tab:data.demo}
-  \input{tab.data.demo}
-\end{table}
+Figure~\ref{fig:demo.pars} illustrates the posterior distributions
+inferred by fitting our Bayesian model to
+the RDS-adjusted sex work duration data reported in \cite{Baral2014}.
+The best-fitting distribution family, based on overall log-likelihood, was Gamma (purple).
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{demo.pars}
   \caption{Posterior distributions of model parameters and summary statistics
     when fitting to the RDS-adjusted Eswatini data (Table~\ref{tab:data.demo})}
   \label{fig:demo.pars}
 \end{figure}
-\clearpage % TEMP
+\clearpage % HACK
 % ==============================================================================
 \subsection{Aggregate data from a global review}
 \label{s.app.meta}
@@ -160,6 +153,9 @@ Figures \ref{fig:meta.Africa}--\ref{fig:meta.LatAm} illustrate
 the posterior distributions of model parameters, summary statistics,
 and cumulative/density duration distributions and means versus the data
 for female sex workers reviewed in \cite{Fazito2012}.
+Figure~\ref{fig:meta.forest.all} then summarizes estimates of
+mean total duration in sex work among the source population $\E[x]$
+obtained via our model versus those reported in \cite{Fazito2012}.
 \clearpage
 % TODO: fix skumar convergence issues
 \foreach \slug/\region in \regions{
@@ -181,3 +177,15 @@ for female sex workers reviewed in \cite{Fazito2012}.
     \label{fig:meta.\slug}
     \floatfoot{\distrfoot}
   \end{figure}}
+\begin{figure}
+  \includegraphics[width=\textwidth]{meta.forest.all}
+  \caption{Forest plot of estimated mean total duration
+    among female sex workers $\E[x]$
+    versus regional synthesis estimates in \cite{Fazito2012}}
+  \label{fig:meta.forest.all}
+  \floatfoot{Synthesis methodology in \cite{Fazito2012} was unclear,
+    and regional estimates were variably reported as points or ranges;
+    see Table~\ref{tab:meth} for method definitions.
+    Ns: number of unique surveys contributing to the estimate;
+    BF: best-fitting family per region.}
+\end{figure}
