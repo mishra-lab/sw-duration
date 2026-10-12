@@ -1,13 +1,16 @@
 \section{Application}\label{app}
 We demonstrate the utility of the above analytic relationships though a Bayesian model,
+% LW: Not exactly sure what this means by sentence alone
 which aims to infer
 the complete distribution of total durations among the source population $p(x)$
 from individual-level and/or aggregate data on
 the distribution of censored durations among the sampled population $p(z|s)$.
 Specifically, we focus on the types of aggregate estimates reviewed by \citet{Fazito2012}:
 distribution means $\sE[z|s]$, and
+% LW: "mean censored durations"
 proportions of durations within a given interval $[a,b]$, denoted $\sP[\azb|s]$,
 which can encompass proportions of responses falling within pre-specified ranges,
+% LW: maybe give an example: % of sample reported duration of xx-xx years.
 as well as estimated medians, quartiles, etc.
 % ==============================================================================
 \subsection{Bayesian Model}
@@ -48,8 +51,19 @@ We implemented and fit the model using Stan~\cite{Stan2024},
 retaining 1000 samples after 500 warm-up iterations from 7 chains
 with default random initialization and sampling algorithm~\cite{Betancourt2018}.
 We confirmed convergence visually through parameter trace plots (not shown).
+% LW: or show in appendix? in case reviewers ask
+% JK: TODO: add one example.
 % ==============================================================================
 \subsection{Aggregate data from a single survey}
+% LW: in the application using example:
+%     I feel the writing of this section can be structured to better distinguish
+%     the methods/process vs. results. now they are kinda mixed together.
+%     the key findings can get lost.
+%     Maybe somewhere in methods have the The process clearly mentioned as steps. Sth like:
+%     1) First - convert available aggregated data into compatible format
+%     2) Fit Baysian model using a variety to family : evaluate and identify the best fit family
+%     3) Using the best family posterior: estimate
+%     the true/total duration selling sex among source population
 We first apply the model to aggregate data from a single survey:
 a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
 The authors reported crude and respondent-driven sampling (RDS)-adjusted mean (95\%~CI)
@@ -62,6 +76,9 @@ proportions of respondents who had been selling sex for
 We converted these 95\%~CI to effective sample sizes per stratum ($N_i$),
 for compatibility with \eqref{eq:lP}.
 From these data alone (without further assumptions), we can only conclude that
+% LW: Are u trying to convey sth like " based on the 'raw' reported data - we can only infer this;
+%     but using ur baysian model - we can infer more as shown in Figure 3).
+%     if it is the right interpretation - make it even more explicit.
 the median censored duration among active sex workers $\M[z|s]$ was between 3 and 6.
 \begin{table}[b]
   \centering
@@ -85,6 +102,8 @@ the proportions of respondents selling sex for less than 1 year
 because the available data aggregate the first 0--3 years into one stratum.
 This aggregation also limits our ability to infer
 parameters of the sampling model: $\pp,\tt$,
+% LW: i feel even though u had defined earlier - it maybe worth mentioning what these are again
+%     as they appear otherwise hard to follow.
 whose posterior distributions are effectively indistinguishable from their priors
 (Figure~\ref{fig:demo.pars}).
 % SM: would it be helpful to point to a concerete example of this in the appendix/suppl material?
@@ -119,10 +138,16 @@ whose posterior distributions are effectively indistinguishable from their prior
 % JK: TODO
 \begin{figure}
   \centering\includegraphics[width=\textwidth]{demo.props}
+% LW: guess we need a different y axis title for the plot on the right?
+%     as they essentially reflect different things. one is population fraction/proportion;
+%     one is the density distribution.
+% LW: u may need footnote to remind readers of what facet labels "P[a<z<b|s] & P[z|s]"
+%     are for figure to be interpretable stand alone.
   \caption{Posterior estimates from fitting the Bayesian model
     to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
     (i) proportions of respondents with durations in pre-specified ranges;
     (ii) inferred duration density distribution $p(z|s)$}
+% LW: u may need footnote to remind readers of what
   \label{fig:demo.props}
   \floatfoot{Shaded regions denote:
     (i) posterior of modelled proportions;
@@ -130,9 +155,14 @@ whose posterior distributions are effectively indistinguishable from their prior
     Points and dashed line ranges denote reported \CI for proportion data.}
 \end{figure}
 \par
+% LW: u may wan to easier break into two sentences, or rephrase.
+%     the posteriror distribution of E and CV[z]
+%     are both reasonably precious and consistent across families.
+%     For Gamma as an example, the values for E and CV were xx and xx, respectively.
 The posterior distribution of $\E[z|s]$
 was reasonably precise and consistent across the families considered
 (Figure~\ref{fig:demo.pars}): approximately 5.0 (\CI: 4.4, 5.8),
+% LW: hard to follow here. the 5.0() maps to a specific family?
 and likewise for $\CV[z|s]$: 0.9 (0.7, 1.2).
 By contrast, estimates of $\E[x]$ and $\CV[x]$ were more varied,
 with \CI extremes spanning (2.0, 8.8) and (0.4, 1.9), respectively,
@@ -145,6 +175,7 @@ and best-fitting $\E[x]$ = 5.7, $\CV[x]$ = 0.9 under the Gamma family.
 %     X% had been engaged in X years of sex work, etc...
 %     - i.e. intepret Figure 3ii without the math/equations?
 Since the best-fitting distribution was approximately Exponential,
+% LW: ? which is the best fitting?
 the distributions of total durations among the source population
 and censored durations among the sampled population were approximately equal.
 Thus, we estimated that:
@@ -199,6 +230,7 @@ our estimates of mean total duration $\E[x]$ versus those in Table~1 of \cite{Fa
 Our estimates are consistently shorter than those of \cite{Fazito2012} for all regions
 --- \eg we estimated:
 3.7 (3.4--3.9) versus 5.5 years for Africa (approximately 1.5x shorter), and
+% LW: 1.5 shorter reads a bit odd to me. usually we say 1.5 more/longer
 2.9 (2.0--4.0) versus 11.2--12.0 years for Latin America (approximately 4x shorter).
 % SM: what might this mean to a AJE reader? I would provide some estimates X-years vs. Y-years.
 %     Also, there is a lot of push-back on using terms like Africa or Latin America ...
@@ -220,6 +252,7 @@ a large proportion of women in the source population sold sex for under 1 year.
 % JK: TODO: I will pull out these proportions to add here.
 \begin{figure}
   \includegraphics[width=\textwidth]{meta.forest.bf}
+% LW: wonder if u want to call it Ours or maybe sth 'Baysian model inferred'
   \caption{Forest plot of estimated mean total duration
     among female sex workers $\E[x]$
     versus regional synthesis estimates in \cite{Fazito2012}}

@@ -1,6 +1,10 @@
 \section{Analytic relationships}\label{math}
 We now turn to deriving the exact relationship between:
+% LW: is "exact" a math terminology? i crossed it over early on as it is in Intro.
+%     here - if it is math term - u can keep it in methods.
 the distribution of \emph{total} durations selling sex
+% LW: I think total duration reads well when it is in contrast to observed/censored duration.
+%     I wonder if somewhere early on - can define those terminology.
 among the source population: $x \sim p(x)$, and
 the distribution of \emph{observed} durations selling sex
 among participants in a cross-sectional survey: $z \sim p(z|s)$,
@@ -14,8 +18,13 @@ example distributions for $p(x)$, $p(z|s)$, and intermediates thereof.
 \begin{figure}
   \includegraphics[width=\textwidth]{toy.distr.1}
   \caption{Illustrative distributions of total and censored durations
+% LW: censored vs observed ?
+%     I like censored as it is intuitive to me but observed it is more lay term and probably better.
+%     i think somewhere early on can define those terminology used:
+%     total vs. observed/censored. so reader can follow consistently.
     among the source, active, and sampled populations
-    for 3 coefficients of variation $\CV[x]$ (rows)}
+    for 3 coefficients of variation $\CV[x]$ (columns)}
+% LW: "under 3 different assumptions on"
   \label{fig:toy.distr.1}
   \floatfoot{Assumed: $\E[x] = 5$ and $x \sim \txn{Weibull}$
     (Figure~\ref{fig:toy.distr} illustrates other distribution families);
@@ -32,6 +41,8 @@ a phenomenon well-described (\eg in cancer epidemiology)
 as "length-biased sampling" \cite{Kafadar2009}.
 Thus, the distribution of total durations among the active population is
 \cite{Zelen1969}:
+% LW: is the detailed derivation in citation 21?
+%     if so - I would make that clear or show in Appendix if not already in 21.
 \begin{equation}
   p(x|a) = \norm ~ x ~ p(x)
   \label{eq:p(x|a)}
@@ -78,7 +89,9 @@ This idea appears to be well-known, and likely motivates
 % JK: added the \ie below - does it help?
 doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 of \cite{Fazito2012}
 --- \ie to "undo" halving the mean.
+% LW: add "due to censoring"
 However, method~3 does not account for selection of the active population noted above,
+% LW: add "due to length-time bias, as ..."
 and thus actually estimates the mean total duration among the active population $\E[x|a]$,
 which we know to be greater than among the source population $\E[x]$ per \eqref{eq:E[x|a]}.%
 \footnote{\citet{Fazito2012} partially acknowledge this issue
@@ -91,11 +104,12 @@ which we know to be greater than among the source population $\E[x]$ per \eqref{
 \par
 If total durations among the source population are exponentially distributed:
 $p(x) \sim \txn{Exp}(\lambda)$, then $\CV[x] = 1$, and so
-the mean \emph{censored} duration among the \emph{active} population will directly equal
+the mean \emph{censored} duration among the \emph{active} population will equal
 the mean \emph{total} duration among the \emph{source} population (without doubling):
 $\E[z|a] = \E[x]$.
 In other words, under these conditions,
 the mean reported duration in a typical cross-sectional survey
+% LW: add "among active population"
 will be an unbiased estimator of the target $\E[x]$.
 Moreover, even the \emph{distributions} will be identical:
 $p(z|a) = p(x) = \txn{Exp}(\lambda)$, as we will show below.
@@ -103,8 +117,21 @@ This is particularly notable since
 compartmental models usually assume exponentially distributed durations.
 % ------------------------------------------------------------------------------
 \paragraph{Complete distribution}
+% LW: i wonder if we want to leave this part in appendix - as it is already math heavy.
+%     we may want to reduce the burden of readers.
 By combining \eqrefa{eq:p(x|a)}{eq:p(z|x)}, we can derive
 the complete distribution of censored durations among the active population $p(z|a)$
+% LW: I know u have the notations embedded while talk about each equations as they come up.
+%     but i wonder if somewhere early on: the terminilogy and notiation can be
+%     defined at once and altogether - e.g.,
+%     z denotes observed/censored duration, x denotes the true/total duration;
+%     a denote active population ...
+%     and now we don't have anything for source population as it is omitted.
+%     wonder if helps to distinguish in the notation in terms of measures
+%     (total duration vs observed duration) vs. population (source, active etc).
+%     maybe a table? we can have e.g., both z|a and x|a; but for source - we only have x.
+%     also - maybe choose a different notiation for survey participation.
+%     because s can be short for survey and for source. i for one time got confused.
 from the distribution of total durations among the source population $p(x)$
 \cite{Tufto2017}:
 \begin{equation}
@@ -146,6 +173,15 @@ If $\CV[x] > 1$ is indeed more likely, then
 the skewness of the observable duration distribution $p(z|a)$
 will generally underestimate
 the skewness of the true duration distribution $p(x)$.
+% LW: I wonder if this can be rephrased and structured to easier to follow.
+%     e.g., can  seperate out the scenarios (different asusmption on CV(x),
+%     and what each assumption implies.
+%     Then get into under each assumption, the effect on the distribution.
+%     e.g. E.g., sth like this:
+%     If CV[X] =1 scenario - which is the most common assumption in model
+%     --- what is the result (as u nicely laid out in the above paras.
+%     If CV[X] >1 scenario - which implies ... what is the result.
+%     If CV[X] <1 scenario - which implies ... what is the result.
 % ------------------------------------------------------------------------------
 \paragraph{Further sampling bias}
 If the survey further undersamples individuals in the early years of sex work
@@ -153,6 +189,7 @@ If the survey further undersamples individuals in the early years of sex work
 due to delays in self-identification as a sex worker ---
 this probability of being sampled will be a function of
 current duration ($z$) not total duration ($x$),
+% LW: i.e., given their observed duration till date (z), what is the probability of being sampled
 so we denote it $p(s|z)$.
 Many parameterizations are possible; \eg \eqref{eq:p(s|z)}.
 The distribution of observed durations among survey participants
@@ -168,6 +205,8 @@ the three methods considered by \citet{Fazito2012}
 to estimate the "true" mean duration in sex work $\E[x]$.
 Figure~\ref{fig:toy.est} plots:
 the typically unobserved mean and median of total durations (method~1),
+% LW: method 1 is also based on sample of retired sw right? vs. source population?
+%     i wonder if u have plotted the latter not necessarily method 1
 \emph{double} the means and medians of censored durations (method~3),
 and the reciprocal proportion of censored durations less than 1 year (method~2),
 across a range of $\CV[x]$ and distribution families.
@@ -189,6 +228,7 @@ We see that at low $\CV[x]$, nearly all methods converge on $\E[x]$.
 However, as $\CV[x]$ increases,
 selection towards longer total durations among the active or sampled populations
 raises the means of the corresponding censored durations $\E[z|\cdot]$,
+% LW: not very clear
 according to \eqref{eq:E[x|a]}.
 Median censored durations exhibit a similar trend,
 but lag below means (true for all right-skewed distributions)
@@ -205,7 +245,7 @@ undersampling of early sex work, which biases estimates upwards.
 \par
 Nevertheless, the best simple estimate of $\E[x]$ is likely $\E[z|s]$,
 assuming $\CV[x] \approx 1$, or more generally:
-% TODO: would be nice to replace CV[x] here with some function of CV[z|s]
+% LW: can u provide more support to this statement.
 \begin{equation}
   \sE[x] = \frac{1}{2} ~ \E[z|s] \left(1 + \CV^2[x]\right)
 \end{equation}

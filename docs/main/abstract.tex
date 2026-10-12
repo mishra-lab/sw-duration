@@ -1,21 +1,32 @@
 % JK: AJE Prac of Epi abstracts: 200 words unstructured
-Average total durations selling or buying sex
+Durations selling or buying sex
 are key determinants of HIV/STI transmission dynamics and service coverage.
 Such durations are usually estimated from
 cross-sectional surveys of people actively selling/buying sex.
-However, cross-sectional surveys tend to
-over-sample individuals selling/buying sex for longer,
+However, cross-sectional surveys
+are more likely to include individuals selling/buying sex for longer,
+% LW: tend to oversample makes it sound like a design choice vs.
+%     it is the nature of the cross-sectional design
 while survey-reported durations will be right-censored.
-Prior works have not precisely addressed these two competing biases.
+Prior works have not adequately addressed these two competing biases.
 In this paper, we derive the exact relationship between
+% LW: What is the method? is it pure math? can briefly mention here.
 the distribution of durations reported in cross-sectional surveys and
 the distribution of total durations in the population overall.
 These distributions will be identical
 if total durations are exponentially distributed;
+% LW: I guess u try to distinguish the true duration from reported censored duration.
+%     (i think the word total duration is confusing).
+%     maybe "true duration"?
+% JK: Yes, I'm not totally happy with "total durations"
+%     but I feel "true" suggests that truncated durations are somehow invalid?
+%     Relatedly, in some cases we may be simply interested in the truncated durations
+%     e.g. when contextualizing an HIV prevalence estimate wrt typical time-at-risk
+%     My other contender was "complete durations"
 otherwise, reported durations will typically underestimate the variance in total durations.
 We develop a parametric Bayesian model of this relationship,
 and apply it to re-analyze aggregate data from a global systematic review.
-Our model-estimated average total durations are
+Our model-estimated average total durations buying/selling sex are
 significantly shorter than previously published for all regions --- \eg
 % JK: I chose these regions to highlight b/c they have the most data
 in Africa: 3.7 (\CI: 3.4--3.9) versus 5.5 years;
@@ -23,5 +34,17 @@ in Asia: 1.4 (1.2--1.5) versus 2.8--4.0 years.
 Shorter average durations then suggest that
 HIV incidence in sex work could be higher than previously thought,
 to match the same HIV prevalence data.
+% LW: I think we may need to elaborate on this to work the readers through as
+%     HIV incidence data could also be estimated directly from longitudinal cohort data
+%     which does not require estimates of sex work duration.
+%     e.g., HIV incidence in sex work is often estimated using mathematical models
+%     that fit to observed HIV prevalence data using assumptions about
+%     the duration of selling or buying sex.
+%     Consequently, shorter estimates of the duration of sex work
+%     would lead to higher estimated HIV incidence rates,
+%     because a higher rate of new infections would be needed
+%     to generate the same observed HIV prevalence.
+% JK: We can definitely try to spell it out a bit more, words permitting,
+%     though a more step-wise explanation is given in the intro, currently.
 Our approach can be applied beyond sex work,
 to characterize duration distributions for any transient risk/disease state.
