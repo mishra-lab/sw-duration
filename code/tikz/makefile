@@ -1,5 +1,8 @@
 figs =
-figs += diag.pop
+# figs += diag.0
+# figs += diag.1
+# figs += diag.2
+# figs += diag.leg
 all:
 	for fig in $(figs); do \
 	  ./maketikz.sh $$fig ;\

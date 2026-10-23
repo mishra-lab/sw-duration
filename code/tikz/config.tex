@@ -1,29 +1,39 @@
 \usepackage{tikz,xfp}
 % style
 \input{../../docs/style.tex}
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows.meta,fadings}
+\definecolor{cx}{HTML}{000000} % overall
+\definecolor{ci}{HTML}{cccccc} % inactive
+\definecolor{ca}{HTML}{009999} % active
+\definecolor{cs}{HTML}{ff9900} % survey
 \tikzset{
   > = latex,
+  lab/.style  = {font=\footnotesize\strut},
   per/.style  = {line width=1pt},             % basic period
-  peri/.style = {per,{Circle[length=4pt]}- }, % right-censor
-  pero/.style = {per, -{Rays[length=6pt]}},   % left-censor
-  perf/.style = {per,{Circle[length=4pt]}-{Rays[length=6pt]}}, % no censor
+  pero/.style = {per,{Circle[length=4pt]}- }, % o-
+  perx/.style = {per, -{Rays[length=6pt]}},   % -x
+  perf/.style = {per,{Circle[length=4pt]}-{Rays[length=6pt]}}, % o-x
+  dash/.style 2 args = { dash pattern = on #1/2pt off #2/2pt },
+  obs/.style = {dash=10},
+  uno/.style = {dash=21},
 }
-% colors
-\definecolor{xt}{HTML}{cccccc}
-\definecolor{xa}{HTML}{33cccc}
-\definecolor{za}{HTML}{006666}
-\definecolor{ss}{HTML}{ff9900}
-% macros
-\newcommand{\defsrv}[2][0]{% survey time: [duration=0]{start}
-  \gdef\xsi{#2}\gdef\xso{#2+#1}}
+% period diagram
+\def\ts{9.5}\def\ti{1}\def\tf{18} % times: survey, fade in, fade out
 \newcommand{\period}[4][]{% [style]{start time}{duration}{y}
-  \def\xpi{#2+.01}\def\xpo{#2+#3-.01}
-  \ifnum1=\fpeval{(\xpi>\xso)|(\xpo<\xsi)}
-    \draw[perf,xt,#1] (\xpi,#4) -- (\xpo,#4); % fully unobserved
-  \else\ifnum1=\fpeval{\xpo>\xso}
-    \draw[peri,za,#1] (\xpi,#4) -- (\xso,#4); % observed part
-    \draw[pero,xa,#1] (\xso,#4) -- (\xpo,#4); % unobserved part
+  \def\to{#2+.01}\def\tx{#2+#3-.01}
+  \ifnum1=\fpeval{(\to>\ts)|(\tx<\ts)}
+    \draw[perf,ci,uno,#1] (\to,#4) -- (\tx,#4); % inactive
   \else
-    \draw[perf,za,#1] (\xpi,#4) -- (\xpo,#4); % fully observed
-  \fi\fi}
+    \draw[pero,ca,obs,#1] (\to,#4) -- (\ts,#4); % observed active
+    \draw[perx,ca,uno,#1] (\ts,#4) -- (\tx,#4); % unobserved active
+  \fi}
+\newcommand{\periods}[1][]{%
+  \begin{scope}
+  \clip (\ti,0) rectangle (\tf,6);
+  \foreach \y/\dur/\n in {1/1/18,2/2/9,3/3/6,4/6/3,5/12/2}{
+    \foreach \i in {0,...,\n}{
+      \period[#1]{\i*\dur-\dur+\y}{\dur}{\y} }}
+  \draw[cs,per,opacity=.5] (\ts,.5) -- (\ts,5.5);
+  \fill[white,path fading=east] (\ti,0.5) rectangle ++(+2,5);
+  \fill[white,path fading=west] (\tf,0.5) rectangle ++(-2,5);
+  \end{scope}}
