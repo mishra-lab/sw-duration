@@ -1,13 +1,12 @@
 \section{Application}\label{app}
-We demonstrate the utility of the above analytic relationships though a Bayesian model,
+We implemented the above mathematical relationships in a Bayesian model,
 % LW: Not exactly sure what this means by sentence alone
-which aims to infer
-the complete distribution of total durations among the source population $p(x)$
+allowing us to infer
+the distribution of total durations among the source population $f(x)$
 from individual-level and/or aggregate data on
-the distribution of censored durations among the sampled population $p(z|s)$.
+the distribution of censored durations among the sampled population $f(z|s)$.
 Specifically, we focus on the types of aggregate estimates reviewed by \citet{Fazito2012}:
-distribution means $\sE[z|s]$, and
-% LW: "mean censored durations"
+censored duration means $\sE[z|s]$, and
 proportions of durations within a given interval $[a,b]$, denoted $\sP[\azb|s]$,
 which can encompass proportions of responses falling within pre-specified ranges,
 % LW: maybe give an example: % of sample reported duration of xx-xx years.
@@ -15,7 +14,7 @@ as well as estimated medians, quartiles, etc.
 % ==============================================================================
 \subsection{Bayesian Model}
 The model assumes a parametric distribution for
-total durations among the source population $p(x)$.
+total durations among the source population $f(x)$.
 Specifically, we considered 6 distribution families:
 Exponential, Gamma, Weibull, Log-Normal, Scaled Beta, and Scaled Kumaraswamy,
 all truncated or scaled to 50 years maximum duration (Table~\ref{tab:fams}).
@@ -29,14 +28,14 @@ increasing exponentially from $\pp \in [0.5,1]$ initially
 to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically:%
 \footnote{Thus, if either $\pp = 1$ or $\tt = 0$,
   then sampling will be modelled as
-  perfectly representative of the active population: $p(s|z) = 1$.}
+  perfectly representative of the active population: $f(s|z) = 1$.}
 \begin{equation}
-  p(s|z) = 1 + \big(\pp-1\big)
+  f(s|z) = 1 + \big(\pp-1\big)
     e^{\bigg(\frac{z}{\tt}\log\bigg(\frac{0.05}{1-\pp}\bigg)\bigg)}
-  \label{eq:p(s|z)}
+  \label{eq:f(s|z)}
 \end{equation}
 We then define the distribution of censored durations among the sampled population
-$p(z|s;\aa,\bb,\pp,\tt)$ via \eqref{eq:p(z|s)}.
+$f(z|s;\aa,\bb,\pp,\tt)$ via \eqref{eq:f(z|s)}.
 What remains is the specify likelihood functions for
 estimates $\sE[z|s]$ and $\sP[\azb|s]$ from empirical data,
 which are defined in \eqrefa{eq:lE}{eq:lP}, respectively.
@@ -45,14 +44,13 @@ Similar functions could be specified for individual-level data.
 Under this model, we infer
 posterior distributions for $\aa,\bb,\pp,\tt$ given the data.
 From $\aa,\bb$, we can then compute
-the distribution of total durations among the source population $p(x;\aa,\bb)$,
+the distribution of total durations among the source population $f(x;\aa,\bb)$,
 and any characteristics thereof, \eg the mean $\E[x;\aa,\bb]$.
 We implemented and fit the model using Stan~\cite{Stan2024},
 retaining 1000 samples after 500 warm-up iterations from 7 chains
 with default random initialization and sampling algorithm~\cite{Betancourt2018}.
-We confirmed convergence visually through parameter trace plots (not shown).
-% LW: or show in appendix? in case reviewers ask
-% JK: TODO: add one example.
+We confirmed convergence visually through parameter trace plots
+(\eg Figure~\ref{fig:demo.trace}).
 % ==============================================================================
 \subsection{Aggregate data from a single survey}
 % LW: in the application using example:
@@ -91,10 +89,10 @@ the median censored duration among active sex workers $\M[z|s]$ was between 3 an
 \par
 Figure~\ref{fig:demo.props} illustrates
 (i) the posterior distributions of modelled proportions versus the RDS-adjusted data, and
-(ii) the corresponding estimated distribution $p(z|s)$
+(ii) the corresponding estimated distribution $f(z|s)$
 for the best-fitting family (Gamma).
 Figure~\ref{fig:demo.pars} further illustrates the posterior distributions of
-model parameters and summary statistics for $p(x)$ and $p(z|s)$
+model parameters and summary statistics for $f(x)$ and $f(z|s)$
 across all families considered.
 We find that the model can reproduce these proportion data well.
 However, considerable uncertainty remains regarding
@@ -146,7 +144,7 @@ whose posterior distributions are effectively indistinguishable from their prior
   \caption{Posterior estimates from fitting the Bayesian model
     to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
     (i) proportions of respondents with durations in pre-specified ranges;
-    (ii) inferred duration density distribution $p(z|s)$}
+    (ii) inferred duration density distribution $f(z|s)$}
 % LW: u may need footnote to remind readers of what
   \label{fig:demo.props}
   \floatfoot{Shaded regions denote:
@@ -262,5 +260,5 @@ a large proportion of women in the source population sold sex for under 1 year.
     see Table~\ref{tab:meth} for method definitions.
     Ns: number of unique surveys contributing to the estimate.}
 \end{figure}
-% JK: still need to add NorthAm
+% JK: TODO need to add NorthAm
 \clearpage % TEMP

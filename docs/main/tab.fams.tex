@@ -1,7 +1,7 @@
 \newcommand{\dd}[4]{#1 & {$\displaystyle#4$} & $#2$ & $#3$\\[3ex]}
 \begin{tabular}{llcc}
   \toprule
-  Family & Definition $p(x)$ & $\aa$ log-prior\tn[*] & $\bb$ log-prior\tn[*] \\
+  Family & Definition $f(x)$ & $\aa$ log-prior\tn[*] & $\bb$ log-prior\tn[*] \\
   \midrule
   \dd{Exponential\tn[\dag]}        {   -   }{[-1,~3]}{\frac{1}{\aa}~e^{-\frac{x}{\aa} }}
   \dd{Gamma\tn[\dag]}              {[-2,~2]}{[-3,~3]}{\frac{\bb^\aa}{\Gamma(\aa)}~x^{\aa-1}e^{-\bb x}}

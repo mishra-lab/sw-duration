@@ -1,196 +1,135 @@
 \section{Introduction}\label{intro}
-% SM: style suggestion only: would shift from first-person in the intro and discussion,
-%     to still using active voice but with nouns like "studies" "models", etc.
-%     (see edits to first sentence as an example)
-% SM: Epidemiological studies and health programs are interested in
-%     the distribution of durations, such as the duration of
-%     transient health states or exposures to risk and/or protective factors.
-We are often interested in quantifying duration distributions,
-\eg durations of transient health states or exposure to risk/protective factors.
-Estimates of such distributions can help
+Epidemiological studies and healthcare programs
+are often interested in quantifying distributions of durations,
+such as durations of transient health states or exposure to risk/protective factors.
+Estimates of these distributions can help
 characterize a population's cumulative exposure \cite{Ben-Shlomo2023}, and
-inform inputs to various kinds of simulation models \cite{Garnett2011}.
-% SM: and are used as parameters in mathematical and simulation models of state transitions.
+inform inputs to state-transition simulation models \cite{Garnett2011}.
+% JK: I went with "state-transition simulation models",
+%     since I feel "mathematical models" are a subset of these?
 \par
 % SM: One prominent example is in the modeling of epidemics of HIV and other STI,
-%     where the unmet needs of populations at disproportionate exposure and onward transmission risk
-%     shape epidemic dynamics [refs]. Sex work - selling or buying sex for money...
-In HIV epidemiology, sex work
---- selling or buying sex for money or equivalent ---
-% SM: did we want to say "buying" sex here,
-%     or might that make things more confusing in the introduction to include clients as well?
-%     perhaps stick to just selling sex or receiving money in exchange for sex,
-%     and not include clients?
-typically reflects a transient period of
-elevated risk for HIV acquisition and transmission due to
+%     where the unmet needs of populations at
+%     disproportionate exposure and onward transmission risk shape epidemic dynamics [refs].
+%     Sex work - selling or buying sex for money...
+% JK: I was hoping to keep this paragraph motivated by HIV/STI epidemiology more generally,
+%     i.e. not only motivated by modelling.
+One prominent example is duration in sex work
+--- selling sex for money or equivalent ---
+reflecting a transient period of elevated risk for
+acquisition and transmission of HIV and other STI due to
 intersecting structural, behavioural, and biological factors
-\cite{Scorgie2012,Shannon2015,Baral2015msw,Carael2006,Sanders2013cli}.
-% SM: Nice
-Unmet HIV prevention and treatment needs during this period
-have long been recognized as drivers of epidemic emergence and persistence,
-especially through insights from mathematical models of HIV transmission
-\cite{Boily2002,Watts2010,Silhol2026}.
+\cite{Scorgie2012,Shannon2015,Baral2015msw}.
 While entry into sex work is driven primarily by economic and social instability,
 exit is further mediated by aging, stable partnering, stigma, and violence
 \cite{Ingabire2012,Bowen2011,Lora2025}.
-% LW: Suggest moving this above the 'Unmet..' sentence.
-%     As putting here breaks the flow between 'unmet ...' and '... are thus key determinants'
+Simulation models of HIV/STI transmission have highlighted how
+unmet prevention and treatment needs within sex work
+are often drivers of epidemic emergence and persistence
+\cite{Boily2002,Watts2010,Silhol2026}.
+In such models, rates of exit from sex work are typically defined as
+the inverse of the mean duration in sex work
+--- \eg a 5-year mean duration corresponding to a 20\% exit rate per year.
+If the sex worker population size is approximately stable over time, then
+exiting sex workers must be replaced by a similar number of entering sex workers
+--- \eg corresponding to 20\% "turnover" \cite{Knight2020}.
+% JK: this implicit definition of turnover is not ideal - might try to revise again later
 \par
-% LW: I would start para 3 with sth like
-%     "Estimates of duration selling or buying sex,
-%     which are often used as key inputs to HIV transmission models,
-%     play an influential role in estimating disease epidemiology/dynamics
-%     and evaluation of the impacts of different prioritized services."
-Durations selling or buying sex are thus
-key determinants of HIV epidemiology, and key inputs to HIV transmission models,
-% LW: Suggest move this above to para 2 as either opening or closing sentence.
-%     Then start para 3 with a new opening line (see suggestion in next comment).
+Mean durations in sex work are thus
+key determinants of HIV/STI epidemiology, and key inputs to transmission models,
 particularly those aiming to compare the impacts of different prioritized services.
 For example, 10\% HIV prevalence among sex workers
-in a context with shorter typical durations / rapid turnover (\eg 1 year)
+in a context with 1-year mean duration (rapid turnover)
 suggests a high HIV incidence rate, whereas 10\% HIV prevalence
-in a context with longer typical durations / slower turnover (\eg 10 years)
-suggests a relatively lower HIV incidence rate,
-since prevalence has more time to accumulate \cite{Knight2020}.%
-\footnote{Assuming HIV prevalence among new sex workers is negligible.}
-% SM: define turnover more explicilty - i.e. spell it out ...
-%     a shorter duration in sex work means faster exit aout of sex work or,
-%     in population-terms, a more rapid "turnover" (ref) ...
+in a context with 10-year mean durations (slow turnover)
+suggests a lower HIV incidence rate,
+since prevalence has more time to accumulate \cite{Knight2020,Anderegg2024}.%
+\footnote{Assuming HIV prevalence among new sex workers is low.}
 Turnover can also moderate levels of
-% LW: Duration selling or buying sex, which reflects rate of turn over in sex work,
-program / service coverage among sex workers (\eg PrEPs)
-where rapid turnover could result in
-a constant influx of new sex workers to reach, and
-potentially high loss-to-follow-up among those exiting sex work,%
-\footnote{Questions remain regarding to what degree
-  those exiting sex work remain engaged with programs.}
+program / service coverage among sex workers (\eg PrEP),
+where rapid turnover could create a constant influx of new sex workers to reach, and
+potentially high loss-to-follow-up among those exiting sex work,
 whereas slower turnover could make it easier to attain higher levels of coverage.
 Finally, duration in sex work can further influence onward transmission risk,
 where longer durations theoretically allow
 more onward transmission following acquisition (in the absence of treatment).
 \par
-Ideally, context-specific estimates of sex work duration could be obtained
-% LW: i wonder if u want to define "sex work duration" early on and use consistently.
-%     Basically choose a term and stick to it
-duration buying or selling sex vs. duration buying/selling sex vs. sex work duration.
-from representative longitudinal cohorts with minimal loss-to-follow-up, or
-from representative samples of "retired" sex workers.%
-% LW: I wonder if you want to rephrase to point out the limitation of those design
-%    (reason for them being rare): e.g.,
-%    longitudal cohorts: prone to loss-to-follow-up for this particular group;
-%    retired sex workers: I suspect identification bias
-%    - as retired sex workers may not want to self-identify.
-% SM: agree!! great suggestion.
-\footnote{Throughout:
-  we often refer to "sex workers" for brevity,
-  but our statements usually apply similarly to their clients who buy sex;
-  we also intentionally use gender-agnostic terminology,
-  since men, women, and transgender individuals can all sell and buy sex.}
-% SM: Style suggestion: remove starting words like "Ideally", and "Unfortunately".
-%     Suggest state as fact. Accurate measures of duration require....
-%     and are limited by (as LW's suggestion above).
-Unfortunately, such studies are rare,
-and most estimates derive from cross-sectional surveys of
-those actively selling or buying sex \cite{Fazito2012}.
-In their global scoping review of HIV risk behaviour durations,
-\citet{Fazito2012} considered three methods to estimate
-% SM: considered or examined or used three methods?
-%     (can we be more specific as to what they did?)
-mean duration selling/buying sex:
-% SM: 'mean duration of selling/buying sex from cross-sectional studies
-%     with self-reported "years since selling/buying sex".
-%     The three approaches are defined in Table 1 alongside their potential challenges.'
-1. mean total duration among those finished selling/buying sex;
-% SM: SM: I would use the term "cease" rather than finished.
-%     (and also go thr to check consistency in our use of terminology
-%     [even ones that seem obvious to us like sex work])
-% LW: meaning retired sex worker?
-% JK: yes, but something about the term "retired" seems wrong for sex work;
-%     maybe we can discuss
-2. reciprocal of the proportion who started selling/buying sex within the past year; and
-3. double the mean/median reported duration among those actively selling/buying sex.
-Among the 118 estimates of duration selling or buying sex in \cite{Fazito2012}:
-the vast majority used method~3 (86\%),
-a small faction used method~2 (14\%),
-and none used method~1.
-Yet, methods 2 and 3 have their own limitations (Table~\ref{tab:meth}),
-especially overlooking so-called "length-biased sampling" \cite{Kafadar2009},
-as we will discuss further below.
-% SM: as a reader, I want to read about this now :).
-%     is there anyway to consider putting the explanation here,
-%     or sign-posting which section below? or even removing the
-%     "as discussed in XXX" but simply discuss in XXX.
-Moreover, studies also commonly report the proportions of respondents
-selling/buying sex for pre-specified duration ranges, \eg \{0--2, 2--5, 5+\} years,
-but it's not clear if/how such data could be used with methods 2 or 3.
+% JK: I actually removed the mention of longitudinal studies & former sex workers above
+%     since they are not necessarily any simpler to obtain
+%     an estimate of the "true" mean duration when considering sampling biases
+%     and I think it is better to just discuss the methods applied by Fazito2012.
+%     Possibly we can add back to the discussion.
+\citet{Fazito2012} conducted
+a global scoping review and regional syntheses of mean duration in sex work,
+with estimates ranging from 2.8 years in Asia to 12 years in Latin America.
+This review focused on cross-sectionally reported durations,
+and applied three methods to estimate mean duration, as data permitted:
+1. mean duration among former sex workers;
+2. inverse of the proportion who started sex work within the past year among active sex workers; and
+3. double the mean/median duration among active sex workers, to account for right-censoring.
+Yet, as detailed in Table~\ref{tab:meth},
+each of these methods has challenges/limitations --- mainly related to:
+difficulty sampling the target population (methods 1,2) \cite{Ward2006}, and
+overlooking length-biased sampling (methods 2,3) \cite{Kafadar2009},
+as we will discuss further herein.
+Only some of these challenges/limitations were acknowledged in \cite{Fazito2012}.
+Notably, some studies also report the proportions of respondents
+selling sex for pre-specified duration ranges, \eg \mbox{\{0--2, 2--5, 5+\}} years,
+but it's not clear if/how such data were used in \cite{Fazito2012}.
 % SM: v minor style point: check journal specs:
 %     but I think "or" is preferred to the the backlash in more health journals?
-As one recent HIV modelling study noted
-when specifying plausible duration parameter bounds:
-\emph{"We multiply the lower bound by 0.5 and upper bound by 2
-  because of uncertainty in how overall duration of sex work
-  relates to current duration of sex work"} \cite{Stone2021}.
-% LW: not very clear. is it relate to the previous sentence on reporting proportions?
-%     not sure what the lower and upper bound refer to here.
+% JK: I didn't find style guidance on this particular issue, but I prefer to keep "/"
+%     since the "how" is subtly conditioned on the "if"
+%     in a way that the "or" seems to miss / seems awkward gramatically, to me.
 \begin{table}
-  \caption{Methods of estimating mean duration selling sex
-    suggested and reviewed in \cite{Fazito2012}}
+  \caption{Methods of estimating mean duration in sex work applied in \cite{Fazito2012}}
   \label{tab:meth}
   \input{tab.meth}
 \end{table}
+\par
+% JK: I split off this paragraph below to focus the motivation of the work
+Considering these challenges/limitations,
+we posit that estimates of mean duration in sex work
+reported in \cite{Fazito2012}, and elsewhere using similar methods,
+could be substantially biased.
+Indeed, there appears to be uncertainty in general regarding
+how durations reported in cross-sectional studies
+relate to true overall durations in sex work.
+As one recent HIV modelling study noted
+when specifying a duration parameter's prior distribution upper/lower bounds:
+\emph{"We multiply the lower bound by 0.5 and upper bound by 2
+  because of uncertainty in how overall duration of sex work
+  relates to current duration of sex work"} \cite{Stone2021}.
 % ------------------------------------------------------------------------------
 \paragraph{Objectives}
-% SM: To address the above limitations, we sought to propose and apply
-%     an updated approach to estimating the duration in sex work from cross-sectional data.
-We sought to offer updated guidance on estimating duration in sex work
-% SM: would avoid the term "guidance" here? and use same verbs as in objective 1 & 2
-%     (or see potential edits). and then in discussion,
-%     can say something about this approach re: its use.
-%     the term "guidance" has a lot of meaning in research
-%     (e.g. setting up committees, consensus, etc. etc.)
-%     I am learning not to use this word for example in our CIHR grant
-%     re: reporting community participation (and instead, using the term recommendations lol)
-from different kinds of commonly available data.
-% SM: Why "different kinds" of data? Are we not focusing on cross-sectional data alone?
-%     I would keep it simple and/or clearly sign-post what the "different kinds" of data are exactly.
-Specifically, our objectives were to:
+To address this uncertainty
+and challenges/limitations of existing methods to estimate mean duration in sex work,
+we sought to:
 \begin{enumerate}
   \item \label{obj:1}
-        Describe the exact analytic relationship between
-% LW: not sure what "exact" means - "mathematical relationship" ?
-        the distribution of reported durations selling sex in cross-sectional studies, and
-        the distribution of total durations selling sex in the target population overall.
+        Derive the mathematical relationship between
+        the distribution of observed durations in sex work sex from cross-sectional studies and
+        the distribution of true durations in sex work overall.
 % LW: population overall is a bit vague. I think we can be more explict about
 %     who the target population is. Are we restricting the analysis to female sex workers?
 % SM: or is it here only duration selling sex among female sex workers?
 %     would specify the population included in cross-sectional studies.
 %     and if in this analysis - we only consider duration selling sex it is ok.
 %     but make it explicit in objective.
+% JK: I may have made it worse by shortening to "true durations in sex work overall",
+%     but I am trying to avoid "revealing" the 2 different populations (source / active)
+%     described in the next section.
+%     The challenge with this intro seems to be balancing references to challenges/limitations
+%     to motivate the work, without fully defining and explaining them,
+%     since that's the content of the next half of the paper...!
   \item \label{obj:2}
-        Develop and apply a Bayesian model of the above relationships to infer
-% LW: replace "above" -> "relationship between reported duration and true duration"
-        mean total durations selling sex in the target population overall
-        from commonly available aggregate data,
-        and compare resulting estimates with previously published estimates,
-        for a single illustrative study \cite{Baral2014}, and
-        for pooled regional estimates from a systematic review \cite{Fazito2012}.
+        Develop and apply a Bayesian model of this relationship with aggregate data from
+        a single illustrative study \cite{Baral2014} and
+        a global scoping review \cite{Fazito2012},
+        and compare model-estimated mean durations in sex work to previously published estimates.
 \end{enumerate}
-While we focus on sex work as an illustrative example,
-our insights likely extend to other transient health/risk states
-relevant to compartmental modelling or epidemiological study.
-% LW: on re-reading intro, this might work better in the discussion instead.
-%     it feels like the sentnece breaks the flow from objectives to the outline for rest of paper ...
 The remainder of our paper is structured as follows:
-In \sref{pre}, we clarify some key concepts and assumptions.
-In \sref{math}, we derive the analytic relationship noted above.
-% SM: "noted above" - as a reader, am what am supposed to refer to here.
-%     suggest replacing any words like this with exactly what we mean (even if repetitive lol) :)
-%     for example as a reader I was trying to find out where we talked about "analytic relationships"
-%     by ctrl-f the text above lol.
-In \sref{app}, we introduce and apply our Bayesian model,
-  comparing mean total durations with previous estimates.
-% SM: we develop and apply a new, Bayesian model (remove "our")
-%     and then compare the estimated mean durations from the new model
-%     with previously published estimates using the previous three approaches.
+In \sref{pre}, we clarify some key concepts and assumptions for the work.
+In \sref{math}, we derive the mathematical relationship for Objective~\ref{obj:1}.
+In \sref{app}, we develop and apply the Bayesian model for Objective~\ref{obj:2}.
 In \sref{disc}, we conclude with discussion of implications and future work.
-

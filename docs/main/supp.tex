@@ -1,10 +1,38 @@
 \part{Supplementary Content}
+\begin{table}[h]
+  \centering
+  \caption{Notation reference}
+  \label{tab:notation}
+  \input{tab.notation}
+\end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Parametric equations}
+\section{Mathematical relationships}
+% ------------------------------------------------------------------------------
+\paragraph{Derivation of $f(z|a)$}
+\eqref{eq:f(z|a).full} gives the complete derivation of \eqref{eq:f(z|a)} --- \ie
+the complete distribution of censored durations among the active population $f(z|a)$
+from the distribution of total durations among the source population $f(x)$
+\cite{Tufto2017}:
+\begin{equation}
+  \begin{aligned}
+    f(z|a) &= \int_0^\infty f(z|x) ~ f(x|a) ~ dx \\
+           &= \int_z^\infty \frac{1}{x} ~ f(x|a) ~ dx \\
+           &= \norm ~ \int_z^\infty \frac{x}{x} ~ f(x) ~ dx \\
+           &= \norm ~ \left(1 - F_x(z)\right)
+  \end{aligned}
+  \label{eq:f(z|a).full}
+\end{equation}
+Note that the integral lower bound changes from 0 to $z$ because
+$f(z|x) = \frac{1}{x}$ only when $x < z$ and $f(z|x) = 0$ otherwise,
+per \eqref{eq:f(z|x)}.
+\clearpage
 % ------------------------------------------------------------------------------
 \paragraph{Distribution families}
-We considered 6 distribution families for $p(x)$ in our analysis
-(Table~\ref{tab:fams}).
+We considered 6 distribution families for
+the true/total durations among the source population $f(x)$
+in Objectives \ref{obj:1}~\&~\ref{obj:2} ---
+Table~\ref{tab:fams} defines these families using our common notation,
+and specifies our parameter priors for the Bayesian model.
 \begin{table}[h]
   \centering
   \caption{Distribution families considered,
@@ -12,10 +40,44 @@ We considered 6 distribution families for $p(x)$ in our analysis
   \label{tab:fams}
   \input{tab.fams}
 \end{table}
-\clearpage % HACK
+% ------------------------------------------------------------------------------
+\paragraph{Illustrative analytic results}
+Figure~\ref{fig:toy.distr} repeats Figure~\ref{fig:toy.distr.1}
+for 5 distribution families considered (Table~\ref{tab:fams}) --- \ie
+showing distributions of total ($x$) and censored ($z$) durations
+among the source, active, and sampled populations for each family,
+all having $\E[x] = 5$ and $\CV[x] = \{0.5, 1, 1.5\}$.
+We omit the Exponential family as it is
+a special case of both Gamma and Weibull with $\CV[x] = 1$.
+Figure~\ref{fig:toy.est} further illustrates
+performance of different $\E[x]$ estimators considered in \cite{Fazito2012}
+across a range of $\CV[x]$ and the same 5 distribution families.
+\begin{figure}
+  \centering\includegraphics[width=\textwidth]{toy.distr}
+  \caption{Illustrative distributions of total and censored durations
+    among the source, active, and sampled populations for
+    different $x$ distribution families (columns) and
+    3 coefficients of variation $\CV[x]$ (rows)}
+  \label{fig:toy.distr}
+  \floatfoot{Note: true $\E[x] = 5$;
+    probability of being sampled modelled per \eqref{eq:f(s|z)} with $\pp = 0.5, \tt = 1$.}
+\end{figure}
+\begin{figure}
+  \centering\includegraphics[width=\textwidth]{toy.est}
+  % TODO: investigate truncation issues @ CV->2
+  \caption{Performance of $\E[x]$ estimators considered in \cite{Fazito2012}
+    across a range of $\CV[x]$ and distribution families}
+  \label{fig:toy.est}
+  \floatfoot{Note: true $\E[x] = 5$;
+    probability of being sampled modelled per \eqref{eq:f(s|z)} with $\pp = 0.5, \tt = 1$;
+    means and medians for censored data ($z$) are doubled per \cite{Fazito2012}.}
+\end{figure}
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Application}
 % ------------------------------------------------------------------------------
 \paragraph{Likelihoods functions}
-Under the model for $p(z|s)$, we define the likelihoods
+Under the model for $f(z|s)$, we define the likelihoods
 for empirical estimates of the mean $\sE_i[z|s]$ and proportions $\sP_i[\azb|s]$
 from a given survey with sample size $N_i$ as, respectively:
 the Gamma-equivalent of Normal sampling error for the mean (since $\sE > 0$), and
@@ -32,7 +94,7 @@ the Beta-approximation of the Binomial distribution (for differentiability):
 To validate these likelihood functions,
 we simulated 10,000 stochastic samples of $z$
 with sample sizes $N_i = \{30, 100, 300, 1000\}$
-given known $p(z|s)$ under $\E[x] = 5, \CV[x] = \{0.5, 1, 1.5\}$,
+given known $f(z|s)$ under $\E[x] = 5, \CV[x] = \{0.5, 1, 1.5\}$,
 and all 6 distribution families.
 We then compared the distribution of stochastic estimates of
 $\sE[z|s;N_i]$ and $\sP[\azb|s;N_i]$ from each sample
@@ -57,59 +119,31 @@ whose durations can fall in the specified interval $[a,b]$.
   \caption{Comparison of analytic likelihood functions
     and distribution of 10,000 stochastic estimates of \textbf{\stat},
     for different simulated survey sizes $N_i$ and
-    latent distribution families for $p(x)$}
+    latent distribution families for $f(x)$}
   \label{fig:val.lf.\slug}
 \end{figure}}
 \clearpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Illustrative analytic results}
-Figure~\ref{fig:toy.distr} repeats Figure~\ref{fig:toy.distr.1}
-for 5 distribution families considered (Table~\ref{tab:fams}) --- \ie
-showing distributions of total ($x$) and censored ($z$) durations
-among the source, active, and sampled populations for each family,
-all having $\E[x] = 5$ and $\CV[x] = \{0.5, 1, 1.5\}$.
-We omit the Exponential family as it is
-a special case of both Gamma and Weibull with $\CV[x] = 1$.
-Figure~\ref{fig:toy.est} further illustrates
-performance of different $\E[x]$ estimators considered in \cite{Fazito2012}
-across a range of $\CV[x]$ and the same 5 distribution families.
-\vspace{-2cm} % HACK
-\begin{figure}
-  \centering\includegraphics[width=\textwidth]{toy.distr}
-  \caption{Illustrative distributions of total and censored durations
-    among the source, active, and sampled populations for
-    different $x$ distribution families (columns) and
-    3 coefficients of variation $\CV[x]$ (rows)}
-  \label{fig:toy.distr}
-  \floatfoot{Note: true $\E[x] = 5$;
-    probability of being sampled modelled per \eqref{eq:p(s|z)} with $\pp = 0.5, \tt = 1$.}
-\end{figure}
-\begin{figure}
-  \centering\includegraphics[width=\textwidth]{toy.est}
-  % TODO: investigate truncation issues @ CV->2
-  \caption{Performance of $\E[x]$ estimators considered in \cite{Fazito2012}
-    across a range of $\CV[x]$ and distribution families}
-  \label{fig:toy.est}
-  \floatfoot{Note: true $\E[x] = 5$;
-    probability of being sampled modelled per \eqref{eq:p(s|z)} with $\pp = 0.5, \tt = 1$;
-    means and medians for censored data ($z$) are doubled per \cite{Fazito2012}.}
-\end{figure}
-\clearpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Application}
 % ==============================================================================
 \subsection{Aggregate data from a single survey}
 Figure~\ref{fig:demo.pars} illustrates the posterior distributions
 inferred by fitting our Bayesian model to
 the RDS-adjusted sex work duration data reported in \cite{Baral2014}.
 The best-fitting distribution family, based on overall log-likelihood, was Gamma (purple).
+Figure~\ref{fig:demo.trace} also illustrates an example trace plot (Gamma family)
+showing convergence of 7 sampling chains during 500 warm-up iterations.
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{demo.pars}
   \caption{Posterior distributions of model parameters and summary statistics
     when fitting to the RDS-adjusted Eswatini data (Table~\ref{tab:data.demo})}
   \label{fig:demo.pars}
 \end{figure}
-\clearpage % HACK
+\begin{figure}[b]
+  \includegraphics[width=\textwidth]{demo.trace}
+  \caption{Example trace plot showing convergence of 7 MCMC chains
+    for model parameters and outcomes over 500 warm-up iterations,
+    followed by 1000 sampling iterations}
+  \label{fig:demo.trace}
+\end{figure}
 % ==============================================================================
 \subsection{Aggregate data from a global review}
 \label{s.app.meta}
@@ -190,3 +224,5 @@ across all distribution families considered.
     Ns: number of unique surveys contributing to the estimate;
     BF: best-fitting family per region.}
 \end{figure}
+\clearpage
+\printbibliography
