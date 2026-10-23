@@ -255,6 +255,19 @@ geom_mcrib = function(...,alpha=1/3,p=.95){ list(
     fun.max=function(x){ quantile(x,1-(1-p)/2) }))
 }
 
+inner_legend = function(g,U,...,
+    y0=.5,y1=1,x0=.7,x1=1,pad=.03,wid=.06,eps=.005){
+  l = ggplot_build(g)$layout$coord$limits
+  tx = function(x){ l$x[1] + x * diff(l$x) }
+  ty = function(y){ l$y[1] + y * diff(l$y) }
+  U$ly = ty(seq(y1-2*pad,y0+2*pad,len=nrow(U)))
+  g = g + geom_rect(data=U,color=NA,fill='#fff',show.legend=FALSE,
+    aes(xmin=tx(x0+eps),xmax=tx(x1-eps),ymin=ty(y0+eps),ymax=ty(y1-eps))) +
+  geom_segment(data=U,aes(x=tx(x0+pad),xend=tx(x0+wid+pad),y=ly)) +
+  geom_text(data=U,aes(x=tx(x0+wid+2*pad),y=ly,label=leg),hjust=0,
+    color='#000',size=3,family='Alegreya Sans')
+}
+
 scale_colorfill = function(v='plasma',...,d=1,end=.85){
   require('viridis')
   if (len(v) > 1){ return(list(
