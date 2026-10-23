@@ -15,10 +15,10 @@ fl$poq = list(o='source (total)',a='active (2 x censored)',s='sampled (2 x censo
 fl$fam = lapply(distrs,`[[`,'l')
 
 map = list() # aes maps
-map$est  = c(mean='solid',median='31',turnover='11')
-map$qty  = c(x='solid',z='21');           names(map$qty) = fl$qty[names(map$qty)]
-map$pop  = c(o='#000',a='#099',s='#f90'); names(map$pop) = fl$pop[names(map$pop)]
-map$poq  = c(o='#000',a='#099',s='#f90'); names(map$poq) = fl$poq[names(map$poq)]
+map$est = c(mean='solid',median='31',turnover='11')
+map$qty = c(x='solid',z='21');           names(map$qty) = fl$qty[names(map$qty)]
+map$pop = c(o='#000',a='#099',s='#f90'); names(map$pop) = fl$pop[names(map$pop)]
+map$poq = c(o='#000',a='#099',s='#f90'); names(map$poq) = fl$poq[names(map$poq)]
 
 plot.1o = list(w1=2,h1=1.4,wo=2,ho=1)
 
@@ -41,21 +41,21 @@ toy.math = function(fam,m,cv,dmax,sp0,st95,dd=1e-3,zm=1,pdf=0){
   pza = sum1(1 - distr.call(dfam$p,args,q=d)) # censored durs among active
   pzs = sum1(pza * p.sam(d,sp0,st95))         # censored durs among sampled
   S = rbind(
-    df(est='mean',     data='xo',d=NA,value=xp.mean(d,pxo)),
-    df(est='mean',     data='xa',d=NA,value=xp.mean(d,pxa)),
-    df(est='mean',     data='za',d=NA,value=xp.mean(d,pza)*zm),
-    df(est='mean',     data='zs',d=NA,value=xp.mean(d,pzs)*zm),
-    df(est='median',   data='xo',d=NA,value=xp.q(d,pxo,.50)),
-    df(est='median',   data='xa',d=NA,value=xp.q(d,pxa,.50)),
-    df(est='median',   data='za',d=NA,value=xp.q(d,pza,.50)*zm),
-    df(est='median',   data='zs',d=NA,value=xp.q(d,pzs,.50)*zm),
-    df(est='turnover', data='za',d=NA,value=1/sum(pza[d<1])),
-    df(est='turnover', data='zs',d=NA,value=1/sum(pzs[d<1])))
+    df(est='mean',    data='xo',d=NA,value=xp.mean(d,pxo)),
+    df(est='mean',    data='xa',d=NA,value=xp.mean(d,pxa)),
+    df(est='mean',    data='za',d=NA,value=xp.mean(d,pza)*zm),
+    df(est='mean',    data='zs',d=NA,value=xp.mean(d,pzs)*zm),
+    df(est='median',  data='xo',d=NA,value=xp.q(d,pxo,.50)),
+    df(est='median',  data='xa',d=NA,value=xp.q(d,pxa,.50)),
+    df(est='median',  data='za',d=NA,value=xp.q(d,pza,.50)*zm),
+    df(est='median',  data='zs',d=NA,value=xp.q(d,pzs,.50)*zm),
+    df(est='turnover',data='za',d=NA,value=1/sum(pza[d<1])),
+    df(est='turnover',data='zs',d=NA,value=1/sum(pzs[d<1])))
   if (pdf){ S = rbind(S,
-    df(est='pdf',data='xo',d=d, value=pxo/dd),
-    df(est='pdf',data='xa',d=d, value=pxa/dd),
-    df(est='pdf',data='za',d=d, value=pza/dd),
-    df(est='pdf',data='zs',d=d, value=pzs/dd) )}
+    df(est='pdf',     data='xo',d=d, value=pxo/dd),
+    df(est='pdf',     data='xa',d=d, value=pxa/dd),
+    df(est='pdf',     data='za',d=d, value=pza/dd),
+    df(est='pdf',     data='zs',d=d, value=pzs/dd) )}
   return(S)
 }
 
@@ -71,21 +71,21 @@ toy.stoc = function(fam,m,cv,dmax,sp0,st95,n=1e6,zm=1,pdf=0){
   d = seq(0,dmax,.2) # helper for pdf
   pfun = function(x){ h = hist(x,c(d,dmax+1)); list(d=h$mids,value=h$dens) }
   S = rbind(
-    df(est='mean',     data='xo',d=NA,value=mean(xo)),
-    df(est='mean',     data='xa',d=NA,value=mean(xa)),
-    df(est='mean',     data='za',d=NA,value=mean(za)*zm),
-    df(est='mean',     data='zs',d=NA,value=mean(zs)*zm),
-    df(est='median',   data='xo',d=NA,value=median(xo)),
-    df(est='median',   data='xa',d=NA,value=median(xa)),
-    df(est='median',   data='za',d=NA,value=median(za)*zm),
-    df(est='median',   data='zs',d=NA,value=median(zs)*zm),
-    df(est='turnover', data='za',d=NA,value=1/mean(za<1)),
-    df(est='turnover', data='zs',d=NA,value=1/mean(zs<1)))
+    df(est='mean',    data='xo',d=NA,value=mean(xo)),
+    df(est='mean',    data='xa',d=NA,value=mean(xa)),
+    df(est='mean',    data='za',d=NA,value=mean(za)*zm),
+    df(est='mean',    data='zs',d=NA,value=mean(zs)*zm),
+    df(est='median',  data='xo',d=NA,value=median(xo)),
+    df(est='median',  data='xa',d=NA,value=median(xa)),
+    df(est='median',  data='za',d=NA,value=median(za)*zm),
+    df(est='median',  data='zs',d=NA,value=median(zs)*zm),
+    df(est='turnover',data='za',d=NA,value=1/mean(za<1)),
+    df(est='turnover',data='zs',d=NA,value=1/mean(zs<1)))
   if (pdf){ S = rbind(S,
-    df(est='pdf',data='xo', pfun(xo)),
-    df(est='pdf',data='xa', pfun(xa)),
-    df(est='pdf',data='za', pfun(za)),
-    df(est='pdf',data='zs', pfun(zs)) )}
+    df(est='pdf',     data='xo',pfun(xo)),
+    df(est='pdf',     data='xa',pfun(xa)),
+    df(est='pdf',     data='za',pfun(za)),
+    df(est='pdf',     data='zs',pfun(zs)) )}
   return(S)
 }
 
