@@ -77,11 +77,10 @@
   natbib=true,
   style=\ms@bibstyle,
   sorting=none,
-  url=true,
-  doi=false,
   isbn=false,
   date=year,
 ]{biblatex}
+\AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}}}
 % helpers
 \renewcommand{\paragraph}[1]{\par\textbf{#1}\hskip.5em}
 \newcommand{\ifempty}[3]{\if\relax\detokenize{#1}\relax#2\else#3\fi}
