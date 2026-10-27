@@ -1,24 +1,20 @@
 \section{Discussion}\label{disc}
-% LW: may be also include sth around suggestions for
-%     future reporting of duration data/estimates, and collection of duration data, given our findings
 \par % summary of findings
-We clarified several concepts relevant to
-characterizing the distribution of durations selling or buying sex.
+In this paper, we have clarified several concepts relevant to
+characterizing the distribution of durations in sex work.
 First, we distinguished between "source" and "active" populations,
-with the active population being a length-biased sample of the source population.
-% LW: i think worth repeating the definition:
-%     "such that the probability of being active is proportional to total duration selling sex."
+with the active population being a length-biased subset of the source population,
+where the probability of being active is proportional to total duration in sex work.
 Second, we reiterated the familiar implications of randomly censored durations,
 which halves the mean duration.
-We combined the above to derive the exact relationship between
+We combined the above to derive the exact mathematical relationship between
 the distribution of censored durations among the active population and
 the distribution of total durations among the source population,
-which happen to be exactly equal if duration are Exponentially distributed.
-% LW: "and we demonsrated that they are equal if..."
+which we showed to be equal if durations are Exponentially distributed.
 We then developed a parametric Bayesian model of this relationship
 to infer the distribution of total durations among the source population
 from aggregate data on censored durations among the active population.
-Applying this model to data from a previous global systematic review,
+Applying this model to data from a previous global systematic review \cite{Fazito2012},
 % LW: actually while reading section 4.2 and 4.3:
 %     i was wondering if there is a rationale why show case two applications:
 %     one for single study and one for estimates in the review.
@@ -31,48 +27,53 @@ Applying this model to data from a previous global systematic review,
 %     However, another issue which came up is that
 %     a) the model can also technically incorporate individual-level data (ILD), and
 %     b) we could access to the Eswatini ILD
-%     --- so we could revise 4.2 to use this ILD, which I think could strengthen the paper
+%     --- so we could revise 4.2 to use this ILD,
+%     but we plan to explore after first submission
 we inferred significantly shorter mean durations across multiple regions.
 % LW: and the Eswatini study?
+% JK: I was not going to mention it here, as it is mainly a simple demonstration
 \par % implications for HIV incidence
-Our estimates of mean duration selling sex were
+Our estimates of mean duration in sex work were
 around half or less versus those reported in \cite{Fazito2012}.
 This was expected, as we showed how both methods 2 and 3 can overestimate mean duration,
 especially if surveys undersample individuals in the early years of sex work.
 Shorter durations suggest that HIV incidence in sex work
-% LW: add "estimates of" -> see edits and comments in Abstract for the contents here.
 could be higher than previously estimated via transmission models,
 since there is less time for infections to accumulate
-to match observed HIV prevalence in sex work \cite{Knight2020}.
+to match observed HIV prevalence in sex work \cite{Knight2020,Anderegg2024}.
 However, existing model-based estimates of HIV incidence
 among female sex workers in Sub-Saharan Africa
-already exceed empirical estimates \cite{Stevens2024inc};
-% LW: more description on this empircical estimates from ...
+already exceed empirical estimates (mainly from cohorts and trials)
+\cite{Jones2024,Stevens2024inc};
 this might be partly explained by recruitment of
 relatively lower-risk female sex workers and
 relatively higher-risk wider population women
 for empirical HIV incidence studies \cite{Jones2024}.
-% JK: not sure where to go with this ...
-Rapid sex work turnover could also suggest that
-% LW: Shoter duration of sex worker would also mean more rapid sex work turnover, which then suggest
-more infections in the wider population might be attributable to
-unmet prevention needs during brief periods of sex work \cite{Knight2020}.
-% LW: i think u need to walk readers through this logic step by step.
-%     i think u had in Intro around what it means for prevention coverage when there is rapid turn over.
-%     can add that element here - then leads to greater unmet prevention needs etc,
+\par % implications for prioritization
+Shorter durations, and thus more rapid sex work turnover, could also suggest that
+a greater proportion of women in the wider population might have previously sold sex.
+Indeed, quasi-anonymous polling booth surveys have indicated
+substantial under-reporting lifetime sex work engagement for both women and men
+in face-to-face interviews \cite{Lowndes2012,Behanzin2013}.
+A greater proportion of prevalent infections in the population overall
+might then be attributable to brief, unreported periods of sex work,
+additionally considering unique vulnerabilities of early sex work \cite{Cheuk2020}.
+We reiterate that such brief periods in sex work are
+especially difficult to observe in cross-sectional studies
+due to length-biased sampling \cite{Ross2003}.
 \par % implications for modelling
-We also inferred that distributions of total durations in sex work are likely "heavy-tailed",
-such that rates of exit decline with duration in sex work.
+We also inferred that distributions of total durations in sex work overall
+are likely "heavy-tailed", such that
+rates of exit decline with longer duration in sex work.
 This declining exit rate could reflect
-selection effects acting on between-person differences in propensity to remain in sex work,
-\ie "frailties" \cite{Balan2020}, and/or
-within-person changes while in sex work,
+selection effects acting on fixed between-person heterogeneity in
+a propensity to remain in sex work \cite{Balan2020},
+and/or within-person changes that make it easier to remain in sex work,
 including self-identification as a sex worker, and
-changing social ties with family, friends, and clients
+changing social ties with family, friends, and clients,
 \cite{Neufeld2023,Bhattacharjee2023,Ingabire2012,Bowen2011,Lora2025}.
-% LW: not very clear
-While individual-based simulation models could
-specify "heavy-tailed" distributions directly,
+While individual-based simulation models could specify
+such heterogeneity or declining exit rates directly,
 compartmental simulation models would need
 two or more sex work states to reproduce this pattern --- \eg
 separate short and long duration sex work trajectories, and/or
@@ -80,7 +81,11 @@ separate early and late sex work periods.
 Indeed, such states would also be useful to capture
 unique risks associated with early sex work
 \cite{Neufeld2023,Bhattacharjee2023}.
-% TODO: revise above to note that models can/should model particular determinants?
+\par % study design & reporting suggestions
+% TODO ...
+% histogram
+% minimum, maximum, mean, median, and interquartile range
+% proportion < 1 year
 % ------------------------------------------------------------------------------
 \paragraph{Limitations}
 Our work has several limitations.
@@ -88,17 +93,16 @@ First, we did not model any gaps (temporary breaks) in sex work.
 However, many estimates of sex work duration are derived from
 the difference between respondents' current age and the age they report first selling sex,
 which implicitly ignores such gaps.
-Respondents may also report "duration selling sex" in this way when asked directly,
+Respondents may also report "duration in sex work" in this way when asked directly,
 especially since unsuccessful attempts to exit sex work can be stigmatized \cite{Lora2025}.
-% JK: Should we recommend that modellers try to incorporate these "hidden gaps" somehow?
-%     Frankly I'm not sure what specifically I would recommend.
 % LW: need to report paper 13 probably.
 %     but first inpression was why uncessful attempts to exit would be stigmatized.
 %     maybe a bit details from the paper to help readers like me
+% JK: Not really sure what you mean?
 Second, we did not consider any recall/reporting biases,
 as entry into sex work is likely a memorable life-course event
 \cite{Sandy2025,Cimino2017,Ingabire2012,Bowen2011,Lora2025},
-and self-identified sex workers do not, to our knowledge, have
+and self-identified active sex workers do not, to our knowledge, have
 obvious motivations for under-reporting durations.
 We additionally assumed that sex work turnover is stable over time,
 despite empirical evidence of changing sex work dynamics in several contexts
@@ -106,7 +110,7 @@ despite empirical evidence of changing sex work dynamics in several contexts
 Finally, our re-analysis of duration data from \cite{Fazito2012}
 did not include more recent or individual-level data,
 since our motivation was mainly to compare
-results using our proposed versus prior estimation methods.
+results using the Bayesian model versus prior estimation methods.
 Additionally, in forthcoming work we will synthesize
 individual-level data from 183 studies \cite{Anderson2026}.
 % ------------------------------------------------------------------------------
@@ -116,8 +120,7 @@ First, it might be more useful to model sex work durations
 via semi/parametric hazard rates of exiting sex work,
 rather than parametric duration distributions.%
 \footnote{Indeed, the hazard rates implied by
-  some parametric distributions we considered may be implausible,
-  \eg Log-Normal.}
+  some parametric distributions we considered may be implausible, \eg Log-Normal.}
 A hazard rate approach could allow and incorporation of
 more intuitive parameter priors (\eg 0.5--50\% exit rate per month),
 covariates (\eg under proportional hazards assumptions) \cite{Kalbfleisch2023}, and
