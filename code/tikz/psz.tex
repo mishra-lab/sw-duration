@@ -1,0 +1,12 @@
+\newcommand{\fun}[1]{{1+(\p-1)*exp(#1/\t*ln(.05/(1-\p)))}}%
+\def\p{.5}\def\t{3}\def\m{6}%
+\begin{tikzpicture}[x=20pt,y=80pt]
+  \draw[ci,dash=22] (0,1) -- (\m,1);
+  \draw[lab,->] (0,1) node[left]{1}
+    -- node[above,pos=.5,rotate=90]{$f(s|z)$} (0,0) node[left]{0}
+    -- node[below,pos=.6]{$z$} (\m,0);
+  \draw[main,cs,samples=100,domain=0:\m,->] plot (\x,\fun\x);
+  \draw[ci,lab,dash=22,<->] (\t,0) -- node[right] {0.95} (\t,\fun\t);
+  \draw[cr,main,lab,<->] (0,0) -- node[left]{$\rho_s$}     (0,\p);
+  \draw[cr,main,lab,<->] (0,0) -- node[below]{$\tau_{95}$} (\t,0);
+\end{tikzpicture}

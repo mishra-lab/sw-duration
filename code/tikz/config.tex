@@ -6,13 +6,15 @@
 \definecolor{ci}{HTML}{cccccc} % inactive
 \definecolor{ca}{HTML}{009999} % active
 \definecolor{cs}{HTML}{ff9900} % survey
+\definecolor{cr}{HTML}{cc0066} % reference
 \tikzset{
   > = latex,
-  lab/.style  = {font=\footnotesize\strut},
-  per/.style  = {line width=1pt},             % basic period
-  pero/.style = {per,{Circle[length=4pt]}- }, % o-
-  perx/.style = {per, -{Rays[length=6pt]}},   % -x
-  perf/.style = {per,{Circle[length=4pt]}-{Rays[length=6pt]}}, % o-x
+  lab/.style  = {font=\footnotesize},
+  labs/.style = {font=\footnotesize\strut},
+  main/.style = {line width=1pt},              % basic period
+  pero/.style = {main,{Circle[length=4pt]}- }, % o-
+  perx/.style = {main, -{Rays[length=6pt]}},   % -x
+  perf/.style = {main,{Circle[length=4pt]}-{Rays[length=6pt]}}, % o-x
   dash/.style 2 args = { dash pattern = on #1/2pt off #2/2pt },
   obs/.style = {dash=10},
   uno/.style = {dash=21},
@@ -33,7 +35,7 @@
   \foreach \y/\dur/\n in {1/1/18,2/2/9,3/3/6,4/6/3,5/12/2}{
     \foreach \i in {0,...,\n}{
       \period[#1]{\i*\dur-\dur+\y}{\dur}{\y} }}
-  \draw[cs,per,opacity=.5] (\ts,.5) -- (\ts,5.5);
+  \draw[cs,main,opacity=.5] (\ts,.5) -- (\ts,5.5);
   \fill[white,path fading=east] (\ti,0.5) rectangle ++(+2,5);
   \fill[white,path fading=west] (\tf,0.5) rectangle ++(-2,5);
   \end{scope}}
