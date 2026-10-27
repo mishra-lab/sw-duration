@@ -1,0 +1,21 @@
+\RequirePackage[T1]{fontenc}
+\RequirePackage{newtxsf,cmbright}
+\RequirePackage[sfdefault,tabular,osf]{AlegreyaSans}
+\RequirePackage[italic]{mathastext}
+\RequirePackage[scale=.85]{FiraMono}
+\RequirePackage{microtype}\DisableLigatures{shape=sc}
+\RequirePackage[marginal,bottom]{footmisc}
+\AtBeginDocument{\fontdimen2\font=.2em}
+\renewcommand{\labelitemi}{$\bullet$}
+\let\xbfseries\bfseries\renewcommand\bfseries{\boldmath\xbfseries}
+\let\xitemize\itemize\renewcommand{\itemize}{\xitemize\itemsep0pt}
+\RequirePackage{enumitem}
+\setlist{itemsep=0pt,topsep=0pt}
+\setlength{\skip\footins}{\baselineskip}
+\frenchspacing
+\predisplaypenalty=9999
+\interfootnotelinepenalty=9999
+% \renewcommand{\topfraction}{.9}
+\renewcommand{\bottomfraction}{.9}
+\renewcommand{\textfraction}{.1}
+% \renewcommand{\floatpagefraction}{.67}
