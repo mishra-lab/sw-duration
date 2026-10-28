@@ -1,10 +1,10 @@
 \section{Application}\label{app}
-We implemented the above mathematical relationship in a Bayesian model,
-allowing us to infer
+We implemented the mathematical relationship \eqref{eq:f(z|s)}
+in a Bayesian framework, allowing us to infer
 the distribution of total durations among the source population $f(x)$
 from individual-level and/or aggregate data on
 the distribution of censored durations among the sampled population $f(z|s)$.
-Specifically, we focused on the types of aggregate estimates reviewed by \citet{Fazito2012}:
+We focused on the types of aggregate estimates reviewed by \citet{Fazito2012}:
 duration means $\sE[z|s]$, and
 proportions of durations within a given interval $[a,b]$, denoted $\sP[\azb|s]$
 --- \eg if 33\% of durations were between 2 and 5 years, then $\sP[\lzu25|s] = 0.33$ ---
@@ -13,8 +13,8 @@ which can also encompass estimated medians, quartiles, etc. with $a=0$.
 \subsection{Bayesian Model}
 The model assumes a parametric distribution for
 total durations among the source population $f(x)$.
-Specifically, we considered 6 candidate distribution families:
-Exponential, Gamma, Weibull, Log-Normal, Scaled Beta, and Scaled Kumaraswamy,
+Specifically, we considered 5 candidate distribution families:
+Exponential, Gamma, Weibull, Scaled Beta, and Scaled Kumaraswamy,
 all truncated or scaled to 50 years maximum duration (Table~\ref{tab:fams}).
 For convenience, we denote the parameters of all families as: $\aa,\bb$
 (for Exponential: $\bb$ only),
@@ -25,8 +25,7 @@ being sampled for survey participation among the active population as
 increasing exponentially from $\pp \in [0.5,1]$ initially
 to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically:%
 \footnote{Thus, if either $\pp = 1$ or $\tt = 0$,
-  then sampling will be modelled as
-  perfectly representative of the active population:
+  then sampling will be modelled as representative of the active population:
   $f(s|z) = 1$ and so $f(z|s) = f(z|a)$.}
 \begin{equation}
   f(s|z) = 1 + \big(\pp-1\big)
@@ -69,7 +68,7 @@ each with uncertainty.
 %     the true/total duration selling sex among source population
 % JK: I've added this above, integrating existing details about implementation in Stan, etc.
 %     Does this help?
-We first applied the model to aggregate data from a
+We first demonstrated the model on aggregate data from
 a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
 The authors reported crude and respondent-driven sampling (RDS)-adjusted
 mean (95\%~CI) proportions of respondents who had been in sex work for
@@ -97,10 +96,10 @@ and fit the model as described above.
 %     vs before they were described up front before the narrative.
 %     2) tell the story of unidentifiability & its implications
 The best-fitting family was Gamma.
-We find that the model can reproduce the empirical proportion data well
+We found that the model could reproduce the empirical proportion data well
 (Figure~\ref{fig:demo.props}.i),
-but may suffer from unidentifiability using these data alone --- \ie
-many combinations of parameters can reproduce the data equally well.
+but may have suffered from unidentifiability using these data alone --- \ie
+many combinations of parameters could reproduce the data equally well.
 For example, posterior uncertainty was
 low around the observed duration distribution $f(z|s)$, but
 high around the inferred "true" duration distribution $f(x)$
@@ -112,9 +111,9 @@ wide for $\E[x]$: 2.30--8.53 and $\CV[x]$: 0.43--1.79
 Posteriors for $\E[z|s]$ and $\CV[z|s]$ also remained similar across families,
 whereas posteriors for $\E[x]$ and $\CV[x]$ varied even further across families
 (Figure~\ref{fig:demo.pars}).
-\par
+\par\clearpage % TEMP
 This identifiability issue likely arose because
-the available data aggregate the first 0--3 years into one stratum.
+the available data aggregated the first 0--3 years into one stratum.
 This especially limited our ability to infer
 parameters of the early sex work sampling model: $\pp,\tt$,
 % LW: i feel even though u had defined earlier
@@ -171,9 +170,10 @@ including survey region, sample size $N_i$, and other meta-data
 (see \sref{s.app.meta} for additional details).
 We then fit our model separately for each region with data,
 retaining the best-fitting family per region.
-Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorthAm} illustrate
+Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorAm} illustrate
 the posterior distributions of model parameters, summary statistics,
-cumulative/density duration distributions, and means versus the data.
+cumulative/density duration distributions, and means versus the data,
+stratified by region (Figure) and family (colour).
 % JK: I have mixed feelings about para 2 below:
 %     on one hand, the comparison of families seems
 %     interesting and useful to comment on, given differeces in E[x];
@@ -188,27 +188,28 @@ cumulative/density duration distributions, and means versus the data.
 %     For example, if we want to discuss families, then we have to
 %     a priori say that in the objectives and applications that we are going to do this.
 %     So I suggest work backwards from the key points/messages, and then structure the para?
-\par
-Figure~\ref{fig:meta.forest.bf} illustrates
+\par\clearpage % TEMP
+Figure~\ref{fig:meta.forest.bf} then illustrates
 model-estimated mean total durations $\E[x]$ (best-fitting family per region)
 versus those in Table~1 of \cite{Fazito2012}.
 Our estimates are significantly shorter than those of \cite{Fazito2012} for all regions
 --- \eg we estimated:
-3.7 (3.4--3.9) versus 5.5 years for Africa (approximately 1.5x shorter),
+2.1 (1.8--2.5) versus 5.5 years for Africa (approximately 2.5x shorter),
 % LW: 1.5 shorter reads a bit odd to me. usually we say 1.5 more/longer
 % JK: I tried other phrases like "33% shorter" etc.
 %     but I feel these are less intuitive / less compelling?
 1.4 (1.2--1.5) versus 2.9 years for Asia (approximately 2x shorter), and
-2.9 (2.0--4.0) versus 11.2--12.0 years for Latin America (approximately 4x shorter).
-% TODO: what is key message?
-% TODO: comment on heavy-tail?
-Such results were broadly consistent across other distribution families
-(Figure~\ref{fig:meta.forest.all}), with $\E[x]$ typically
-longest under Exponential and Log-Normal families and
-shortest under the Scaled Kumaraswamy family.
-Gamma, Weibull, Scaled Beta, and Scaled Kumaraswamy families also often suggested that
-a large proportion of women in the source population sold sex for under 1 year.
-% JK: TODO: pull out these proportions to add here?
+2.9 (2.0--3.9) versus 11.2--12.0 years for Latin America (approximately 4x shorter).
+These differences were expected when considering that
+method~3 can overestimate $\E[x]$ by failing to account for length-biased sampling, while
+method~2 can overestimate $\E[x]$ if early sex work is undersampled.
+Model-estimated distributions of total durations among the source population $f(x)$
+were also consistently heavy-tailed, with $\CV[x] > 1.5$,
+suggesting substantial population heterogeneity \cite{Balan2020}.
+Relatedly, the model estimated that
+over half of all source population women remain in sex work for less than 1 year
+in all regions except North America, which had only 3 studies
+(Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorAm}).
 \begin{figure}
   \includegraphics[width=\textwidth]{meta.forest.bf}
   \caption{Forest plot of Bayesian model-estimated
@@ -220,3 +221,4 @@ a large proportion of women in the source population sold sex for under 1 year.
     see Table~\ref{tab:meth} for method definitions.
     Ns: number of unique surveys contributing to the estimate.}
 \end{figure}
+\clearpage % TEMP

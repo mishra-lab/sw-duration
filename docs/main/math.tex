@@ -63,7 +63,7 @@ is always larger than the mean among the source population $\E[x]$
 (Figure~\ref{fig:toy.distr}, green vs black circles);
 specifically, we have \cite{Zelen1969}:
 \begin{equation}
-  \E[x|a] = \E[x] \left(1 + \CV^2[x]\right)
+  \E[x|a] = \E[x] (1 + \CV^2[x])
   \label{eq:E[x|a]}
 \end{equation}
 % JK: Interestingly, this is the same equation for "effective contact rate"
@@ -137,7 +137,7 @@ we can combine \eqrefa{eq:E[x|a]}{eq:E[z|a]} to relate
 the mean total duration among the source population $\E[x]$ to
 the mean censored duration among the active population $\E[z|s]$:
 \begin{equation}
-  \E[x] = \frac{2}{\left(1 + \CV^2[x]\right)} ~ \E[z|s]
+  \E[x] = \frac{2}{1 + \CV^2[x]} ~ \E[z|s]
   \label{eq:E[x].cv}
 \end{equation}
 However, this is not immediately useful unless $\CV[x]$ is known.
@@ -188,11 +188,10 @@ We can then recover $f(x)$ by differentiating $f(z|a)$ and multiplying by $\E[x]
   f(x) = - ~ \E[x] \frac{d}{dz} f(z|a)
   \label{eq:f(x)}
 \end{equation}
-Evidently, \eqref{eq:f(x)} is only useful if the complete distribution $f(z|a)$ is known,
+\eqref{eq:f(x)} is only useful if the complete distribution $f(z|a)$ is known,
 or can be approximated \eg via histogram.
 If only summary statistics for $f(z|a)$ are available,
-we can still leverage the relationships in \eqrefr{eq:f(z|a)}{eq:f(x)}
-to infer $f(x)$, as we illustrate in \sref{app}.
+we can still leverage \eqref{eq:f(z|a)} to infer $f(x)$, as we show in \sref{app}.
 % ------------------------------------------------------------------------------
 \paragraph{Exponential case}
 A special case arises if durations are exponentially distributed:
@@ -229,15 +228,17 @@ from \eqref{eq:f(z|a)} as:
   f(z|s) = f(s|z) ~ \frac{1 - F_x(z)}{\E[x]}
   \label{eq:f(z|s)}
 \end{equation}
+In this context, $f(x)$ cannot be directly determined via \eqref{eq:f(x)},
+but it can be inferred as we show in \sref{app}.
 % ------------------------------------------------------------------------------
-\paragraph{Estimating mean total durations $\E[x]$}
+\paragraph{Revisiting prior methods to estimate $\E[x]$}
 % JK: this section now feels slightly disconnected,
 %     especially because the 3 methods aren't directly labeled in Figure~A.2
 %     as it depends whether we distinguish active vs sampled and mean vs median.
 %     However, I'm opting to leave as-is for now and see what reviewers think.
 We conclude this section by revisiting
-the three methods considered by \citet{Fazito2012}
-to estimate the "true" mean duration in sex work $\E[x]$.
+the three methods applied by \citet{Fazito2012}
+to estimate the "true" mean duration in sex work $\E[x]$ (Table~\ref{tab:meth}).
 Figure~\ref{fig:toy.est} plots:
 the typically unobserved mean and median of total durations (method~1),%
 \footnote{We are being generous to method~1 here by assuming
@@ -245,7 +246,7 @@ the typically unobserved mean and median of total durations (method~1),%
   whereas only the \emph{inactive} population is sampled in practice.}
 the reciprocal proportion of censored durations less than 1 year (method~2),
 and \emph{double} the means and medians of censored durations (method~3),
-across a range of $\CV[x]$ and distribution families.
+across a range of $\CV[x]$ and distribution families for $f(x)$ with true $\E[x] = 5$.
 We see that at low $\CV[x]$, nearly all methods converge on the true $\E[x]$.
 However, as $\CV[x]$ increases,
 length-biased sampling causes stronger selection towards

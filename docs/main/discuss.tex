@@ -34,9 +34,9 @@ we inferred significantly shorter mean durations across multiple regions.
 % JK: I was not going to mention it here, as it is mainly a simple demonstration
 \par % implications for HIV incidence
 Our estimates of mean duration in sex work were
-around half or less versus those reported in \cite{Fazito2012}.
+significantly less than those reported in \cite{Fazito2012}.
 This was expected, as we showed how both methods 2 and 3 can overestimate mean duration,
-especially if surveys undersample individuals in the early years of sex work.
+especially if surveys undersample individuals in early sex work.
 Shorter durations suggest that HIV incidence in sex work
 could be higher than previously estimated via transmission models,
 since there is less time for infections to accumulate
@@ -81,11 +81,23 @@ separate early and late sex work periods.
 Indeed, such states would also be useful to capture
 unique risks associated with early sex work
 \cite{Neufeld2023,Bhattacharjee2023}.
-\par % study design & reporting suggestions
-% TODO ...
-% histogram
-% minimum, maximum, mean, median, and interquartile range
-% proportion < 1 year
+\par % empirical data
+Regarding empirical data sources,
+we focused on cross-sectional studies,
+which are generally simpler, less expensive,
+and consequently more common than cohort studies \cite{Fazito2012}.
+We also note that a cohort design
+does not necessarily simplify estimation of "true" sex work durations,
+as sampling can still be length-biased
+(depending on how participants are recruited)
+and significant loss-to-follow-up can occur \cite{Ward2006}.
+While the proposed Bayesian model can leverage
+multiple kinds of aggregate data on durations,
+future cross-sectional studies could most helpfully report
+complete duration histograms, where possible,
+and the following key summary statistics:
+minimum, maximum, mean, median, and interquartile range of durations,
+as well as the proportion of active individuals in sex work 1 year or less.
 % ------------------------------------------------------------------------------
 \paragraph{Limitations}
 Our work has several limitations.
@@ -118,9 +130,7 @@ individual-level data from 183 studies \cite{Anderson2026}.
 Our Bayesian model could be extended in several ways.
 First, it might be more useful to model sex work durations
 via semi/parametric hazard rates of exiting sex work,
-rather than parametric duration distributions.%
-\footnote{Indeed, the hazard rates implied by
-  some parametric distributions we considered may be implausible, \eg Log-Normal.}
+rather than parametric duration distributions.
 A hazard rate approach could allow and incorporation of
 more intuitive parameter priors (\eg 0.5--50\% exit rate per month),
 covariates (\eg under proportional hazards assumptions) \cite{Kalbfleisch2023}, and
@@ -133,4 +143,16 @@ durations (also called sojourn times) in chronic disease states
 for modelling and analysis of screening programs \cite{Zelen1969}.
 % ------------------------------------------------------------------------------
 \paragraph{Conclusion}
-<<TODO>>
+The distribution of durations in sex work is
+a key determinant of HIV/STI dynamics and
+an essential input to HIV/STI transmission models.
+Such durations are commonly reported in cross-sectional studies,
+where they are subject to two competing biases:
+length-biased sampling (increases the mean)
+and censoring (decreases the mean).
+The former bias, omitted from prior work, is likely stronger, such that
+the mean duration reported in cross-sectional studies
+actually overestimates rather than underestimates the "true" mean duration.
+Methods herein also support inference of
+the complete distribution of "true" durations,
+given a complete distribution of reported durations.
