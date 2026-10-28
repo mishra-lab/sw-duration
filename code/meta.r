@@ -2,6 +2,7 @@
 # config
 
 source('utils.r')
+distrs$lnorm = NULL # HACK
 
 l = list()
 l$dur = 'Duration (years)'
@@ -70,9 +71,9 @@ model.data = function(Y,fam,gps=0,dd=.1,eps=1e-9,m=1e3){
     exp     = list(la=c(-eps,eps),lb=c(-1,3)),
     gamma   = list(la=c(-2,2),    lb=c(-3,3)),
     weibull = list(la=c(-1,2),    lb=c(-1,2)),
-    lnorm   = list(la=c(-9,1),    lb=c(-2,3)),
     sbeta   = list(la=c(-3,3),    lb=c( 0,3)),
-    skumar  = list(la=c(-3,3),    lb=c( 0,3)))
+    skumar  = list(la=c(-3,3),    lb=c( 0,3)),
+    lnorm   = list(la=c(-9,1),    lb=c(-2,3)))
   data = list(
     Ula = U$la,          # bounds: full* duration log(a) param
     Ulb = U$lb,          # bounds: full* duration log(b) param
@@ -225,14 +226,20 @@ plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
     px = sum1(p.x (d,fam=fam,a=S$a[g],b=S$b[g])) / dd # TODO: why need sum1?
     pz = sum1(p.za(d,fam=fam,a=S$a[g],b=S$b[g])
             * p.sz(d,sp0=S$sp0[g],st95=S$st95[g]) ) / dd
+    cpx = cumsum(px)*dd
+    cpz = cumsum(pz)*dd
     Di = cbind(fam=fam,rbind(
       df(d=d,data=fl$data$x, type='PDF',value=px),
       df(d=d,data=fl$data$za,type='PDF',value=pz),
-      df(d=d,data=fl$data$x, type='CDF',value=cumsum(px)*dd),
-      df(d=d,data=fl$data$za,type='CDF',value=cumsum(pz)*dd),
+      df(d=d,data=fl$data$x, type='CDF',value=cpx),
+      df(d=d,data=fl$data$za,type='CDF',value=cpz),
+      df(d=0,data=fl$data$x, type='p<1',value=approx(d,cpx,1)$y),
+      df(d=0,data=fl$data$za,type='p<1',value=approx(d,cpz,1)$y),
       df(d=0,data=fl$data$x, type='mean',value=xp.mean(d,px)),
       df(d=0,data=fl$data$za,type='mean',value=xp.mean(d,pz))))
   })
+  print(aggregate(value~fam+data,subset(D,type=='p<1'),mci,type=c)) # NUM
+  D = subset(D,type!='p<1')
   geom_data = function(m,type,data,...){ geom_point(
     data=cbind(subset(Y,meas==m),type=type,data=data),
     inherit.aes=0,shape=16,alpha=.2,...) }

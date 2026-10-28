@@ -183,21 +183,21 @@ distrs = list(
     d = function(x,a,b,u){ dtru(x=x,spec='weibull',shape=a,scale=b,a=0,b=u) },
     p = function(q,a,b,u){ ptru(x=q,spec='weibull',shape=a,scale=b,a=0,b=u) },
     c = '#0099cc', l = 'Weibull'),
-  lnorm = list(
-    r = function(n,a,b,u){ rtru(n=n,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
-    d = function(x,a,b,u){ dtru(x=x,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
-    p = function(q,a,b,u){ ptru(x=q,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
-    c = '#00cc66', l = 'Log-Normal'),
   sbeta = list(
     r = function(n,a,b,u){ rbeta(n=n,  shape1=a,shape2=b) * u },
     d = function(x,a,b,u){ dbeta(x=x/u,shape1=a,shape2=b) / u },
     p = function(q,a,b,u){ pbeta(q=q/u,shape1=a,shape2=b) },
-    c = '#ffcc00', l = 'Scaled Beta'),
+    c = '#00cc66', l = 'Scaled Beta'),
   skumar = list(
     r = function(n,a,b,u){ extraDistr::rkumar(n=n,  a=a,b=b) * u },
     d = function(x,a,b,u){ extraDistr::dkumar(x=x/u,a=a,b=b) / u },
     p = function(q,a,b,u){ extraDistr::pkumar(q=q/u,a=a,b=b) },
-    c = '#ff6600', l = 'Scaled Kumar'))
+    c = '#ffcc00', l = 'Scaled Kumar'),
+  lnorm = list(
+    r = function(n,a,b,u){ rtru(n=n,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
+    d = function(x,a,b,u){ dtru(x=x,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
+    p = function(q,a,b,u){ ptru(x=q,spec='lnorm',meanlog=a,sdlog=b,a=0,b=u) },
+    c = '#ff6600', l = 'Log-Normal'))
 
 fit.distr = function(dfun,m,cv,u,tol=1e-7,eps=1e-7,strict=FALSE){
   if (is.character(dfun)){ dfun = distrs[[dfun]]$d }

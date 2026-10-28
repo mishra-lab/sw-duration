@@ -19,7 +19,7 @@ G = list( # source pop total duration
   n    = 1e5,           # source pop size
   mx   = 5,             # E[x]
   cvx  = c(.5,1,1.5),   # CV[x]
-  fam  = names(distrs)) # x ~ family
+  fam  = names(distrs)[-6]) # x ~ family
 
 xmax = 50
 bbs = list(c(0,1),c(1,5),c(5,9)) # prop bounds

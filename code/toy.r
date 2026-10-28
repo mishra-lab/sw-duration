@@ -101,7 +101,7 @@ clean.toy = function(S){
   return(S)
 }
 
-plot.toy.distr = function(f=2:6){
+plot.toy.distr = function(f=2:5){
   G = ulist(G0,cv=c(.5,1,1.5),fam=names(fl$fam)[f])
   S = clean.toy(grid.apply(G,toy.math,pdf=1))
   S$leg = paste('p(',S$data,')')
@@ -124,7 +124,7 @@ plot.toy.distr = function(f=2:6){
       'toy',str('toy.distr.s',s),size=c(4,4)) }
 }
 
-plot.toy.est = function(f=2:6){
+plot.toy.est = function(f=2:5){
   G = ulist(G0,cv=seq(0,2,.1),fam=names(fl$fam)[f],zm=2)
   S = clean.toy(grid.apply(G,toy.math))
   S = subset(S,data!=fl$data$xa)
