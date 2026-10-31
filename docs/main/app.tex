@@ -47,10 +47,27 @@ For a given set of empirical data
 --- \ie aggregate estimate(s) of $\sE_i[z|s;N_i]$ and/or $\sP_i[\azb|s;N_i]$ ---
 we fit the model separately under each candidate family,
 and then selected the best-fitting family (highest total likelihood).
+% SW: The estimates vary substantially across distribution families (Figure A.15).
+%     Could selecting only the best-fitting family underestimate uncertainty,
+%     particularly given the identifiability concerns?
+% JK: That's a good point, though I think it is common enough
+%     to keep only the best-fitting family when doing model selection.
+%     In future, we could do resampling from all family posteriors, weighted by likelihood.
 We retained 1000 consecutive samples after 500 warm-up iterations from 7 chains,
 confirming convergence visually through parameter trace plots
 (\eg Figure~\ref{fig:demo.trace}).%
 \footnote{We manually removed 3 chains that did not converge.}
+% SW: What caused the nonconvergence of these three chains,
+%     and could excluding them affect the posterior estimates?
+% JK: I will email some figues illustrating the issues,
+%     but I think it is a more accurate reflection of the model inference
+%     to exclude them rather than include them.
+%     I think it is due to bad random initialization,
+%     so the MCMC sampling never escapes a low-likelihood region.
+%     3 possible solutions: adjust 1) priors, 2) initialization, 3) sampling algorithm:
+%     trying 1) constrained the posteriors for some data (regions) too much;
+%     trying 2) still resulted in different nonconvergent chains;
+%     and I don't really know enough about sampling algorithms to try 3).
 This approach yielded 7000 posterior parameter samples, from which we computed
 the distribution of total durations among the source population $f(x;\aa,\bb)$,
 and characteristics thereof, \eg the mean $\E[x;\aa,\bb]$,
@@ -63,7 +80,7 @@ each with uncertainty.
 %     the key findings can get lost.
 %     Maybe somewhere in methods have the The process clearly mentioned as steps. Sth like:
 %     1) First - convert available aggregated data into compatible format
-%     2) Fit Baysian model using a variety to family : evaluate and identify the best fit family
+%     2) Fit Bayesian model using a variety to family : evaluate and identify the best fit family
 %     3) Using the best family posterior: estimate
 %     the true/total duration selling sex among source population
 % JK: I've added this above, integrating existing details about implementation in Stan, etc.
@@ -160,6 +177,14 @@ using the same aggregate data and region definitions as \citet{Fazito2012},
 and compared our pooled estimates to theirs.%
 \footnote{We acknowledge that region definitions in \cite{Fazito2012} are now outdated,
   \eg combining all of Africa.}
+% SW: Does the regional analysis account for differences between studies,
+%     such as population characteristics and sampling methods?
+% JK: No, for 2 reasons:
+%     1) reporting of study population characteristics was very inconsistent
+%        in the source data (Fazito2012 Table S2)
+%     2) the Bayesian model currently has no place to put covariates;
+%        I mention this indirectly in the future work section,
+%        when discussing a hazard-rate approach
 We manually extracted aggregate data
 for female sex workers from Table~S2 in \cite{Fazito2012}
 on duration means $\sE[z|s;N_i]$ and interval proportions $\sP[\azb|s;N_i]$,

@@ -66,7 +66,6 @@ the shape and parameters of the assumed sampling model \eqref{eq:f(s|z)}.
 \end{figure}
 \begin{figure}
   \centering\includegraphics[scale=.7]{toy.est}
-  % TODO: investigate truncation issues @ CV->2
   \caption{Performance of $\E[x]$ estimators considered in \cite{Fazito2012}
     across a range of $\CV[x]$ and distribution families}
   \label{fig:toy.est}
@@ -186,7 +185,7 @@ Before synthesizing the extracted data via the Bayesian model,
 we also adjusted the effective sample sizes for each study $N_i$
 to reduce the influence of very large studies via:
 \begin{equation}
-  N_i^* = \frac{1}{\frac{1}{N_0}+\frac{1}{N_i}}
+  N_i{\textnormal\textquotesingle} = \frac{1}{\frac{1}{N_0}+\frac{1}{N_i}}
   ,\qquad N_0 = 1000
   \label{eq:n.adj}
 \end{equation}
@@ -194,7 +193,7 @@ This adjustment loosely approximates a random effects approach
 by weighting each study more equally.
 % ------------------------------------------------------------------------------
 \paragraph{Results}
-Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorthAm} illustrate
+Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorAm} illustrate
 the posterior distributions of model parameters, summary statistics,
 and cumulative/density duration distributions and means versus the data
 for female sex workers reviewed in \cite{Fazito2012}.
@@ -203,7 +202,6 @@ mean total duration in sex work among the source population $\E[x]$
 obtained via the Bayesian model versus those reported in \cite{Fazito2012},
 across all distribution families considered.
 \clearpage
-% TODO: add best-fitting family indicator (*) to these
 \foreach \slug/\region in \regions{
   \begin{figure}[h]
     \begin{subfigure}{\textwidth}
