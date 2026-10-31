@@ -6,16 +6,18 @@ source('utils.r')
 l = list() # labels
 l$qty = 'Duration'
 l$pop = 'Population'
-l$poq = 'Population (data)'
+l$poq = 'Duration: Population'
 fl = list() # factor labels
 fl$data = list(xo='x',xa='x|a',za='z|a',zs='z|s')
-fl$qty = list(x='total',z='censored')
+fl$qty = list(x='total (x)',z='censored (z)')
 fl$pop = list(o='source',a='active',s='sampled')
-fl$poq = list(o='source (total)',a='active (2 x censored)',s='sampled (2 x censored)')
+fl$poq = list(o='total: source',
+              a='2 × censored: active',
+              s='2 × censored: sampled')
 fl$fam = lapply(distrs,`[[`,'l')
 
 map = list() # aes maps
-map$est = c(mean='solid',median='31',turnover='11')
+map$est = c('M3: mean'='solid','M3: median'='31','M2: 1/P[z < 1]'='11')
 map$qty = c(x='solid',z='21');           names(map$qty) = fl$qty[names(map$qty)]
 map$pop = c(o='#000',a='#099',s='#f90'); names(map$pop) = fl$pop[names(map$pop)]
 map$poq = c(o='#000',a='#099',s='#f90'); names(map$poq) = fl$poq[names(map$poq)]
@@ -41,21 +43,21 @@ toy.math = function(fam,m,cv,dmax,sp0,st95,dd=1e-3,zm=1,pdf=0){
   pza = sum1(1 - distr.call(dfam$p,args,q=d)) # censored durs among active
   pzs = sum1(pza * p.sam(d,sp0,st95))         # censored durs among sampled
   S = rbind(
-    df(est='mean',    data='xo',d=NA,value=xp.mean(d,pxo)),
-    df(est='mean',    data='xa',d=NA,value=xp.mean(d,pxa)),
-    df(est='mean',    data='za',d=NA,value=xp.mean(d,pza)*zm),
-    df(est='mean',    data='zs',d=NA,value=xp.mean(d,pzs)*zm),
-    df(est='median',  data='xo',d=NA,value=xp.q(d,pxo,.50)),
-    df(est='median',  data='xa',d=NA,value=xp.q(d,pxa,.50)),
-    df(est='median',  data='za',d=NA,value=xp.q(d,pza,.50)*zm),
-    df(est='median',  data='zs',d=NA,value=xp.q(d,pzs,.50)*zm),
-    df(est='turnover',data='za',d=NA,value=1/sum(pza[d<1])),
-    df(est='turnover',data='zs',d=NA,value=1/sum(pzs[d<1])))
+    df(est='M3: mean',    data='xo',d=NA,value=xp.mean(d,pxo)),
+    df(est='M3: mean',    data='xa',d=NA,value=xp.mean(d,pxa)),
+    df(est='M3: mean',    data='za',d=NA,value=xp.mean(d,pza)*zm),
+    df(est='M3: mean',    data='zs',d=NA,value=xp.mean(d,pzs)*zm),
+    df(est='M3: median',  data='xo',d=NA,value=xp.q(d,pxo,.50)),
+    df(est='M3: median',  data='xa',d=NA,value=xp.q(d,pxa,.50)),
+    df(est='M3: median',  data='za',d=NA,value=xp.q(d,pza,.50)*zm),
+    df(est='M3: median',  data='zs',d=NA,value=xp.q(d,pzs,.50)*zm),
+    df(est='M2: 1/P[z < 1]',data='za',d=NA,value=1/sum(pza[d<1])),
+    df(est='M2: 1/P[z < 1]',data='zs',d=NA,value=1/sum(pzs[d<1])))
   if (pdf){ S = rbind(S,
-    df(est='pdf',     data='xo',d=d, value=pxo/dd),
-    df(est='pdf',     data='xa',d=d, value=pxa/dd),
-    df(est='pdf',     data='za',d=d, value=pza/dd),
-    df(est='pdf',     data='zs',d=d, value=pzs/dd) )}
+    df(est='pdf',data='xo',d=d, value=pxo/dd),
+    df(est='pdf',data='xa',d=d, value=pxa/dd),
+    df(est='pdf',data='za',d=d, value=pza/dd),
+    df(est='pdf',data='zs',d=d, value=pzs/dd) )}
   return(S)
 }
 
@@ -71,21 +73,21 @@ toy.stoc = function(fam,m,cv,dmax,sp0,st95,n=1e6,zm=1,pdf=0){
   d = seq(0,dmax,.2) # helper for pdf
   pfun = function(x){ h = hist(x,c(d,dmax+1)); list(d=h$mids,value=h$dens) }
   S = rbind(
-    df(est='mean',    data='xo',d=NA,value=mean(xo)),
-    df(est='mean',    data='xa',d=NA,value=mean(xa)),
-    df(est='mean',    data='za',d=NA,value=mean(za)*zm),
-    df(est='mean',    data='zs',d=NA,value=mean(zs)*zm),
-    df(est='median',  data='xo',d=NA,value=median(xo)),
-    df(est='median',  data='xa',d=NA,value=median(xa)),
-    df(est='median',  data='za',d=NA,value=median(za)*zm),
-    df(est='median',  data='zs',d=NA,value=median(zs)*zm),
-    df(est='turnover',data='za',d=NA,value=1/mean(za<1)),
-    df(est='turnover',data='zs',d=NA,value=1/mean(zs<1)))
+    df(est='M3: mean',      data='xo',d=NA,value=mean(xo)),
+    df(est='M3: mean',      data='xa',d=NA,value=mean(xa)),
+    df(est='M3: mean',      data='za',d=NA,value=mean(za)*zm),
+    df(est='M3: mean',      data='zs',d=NA,value=mean(zs)*zm),
+    df(est='M3: median',    data='xo',d=NA,value=median(xo)),
+    df(est='M3: median',    data='xa',d=NA,value=median(xa)),
+    df(est='M3: median',    data='za',d=NA,value=median(za)*zm),
+    df(est='M3: median',    data='zs',d=NA,value=median(zs)*zm),
+    df(est='M2: 1/P[z < 1]',data='za',d=NA,value=1/mean(za<1)),
+    df(est='M2: 1/P[z < 1]',data='zs',d=NA,value=1/mean(zs<1)))
   if (pdf){ S = rbind(S,
-    df(est='pdf',     data='xo',pfun(xo)),
-    df(est='pdf',     data='xa',pfun(xa)),
-    df(est='pdf',     data='za',pfun(za)),
-    df(est='pdf',     data='zs',pfun(zs)) )}
+    df(est='pdf',data='xo',pfun(xo)),
+    df(est='pdf',data='xa',pfun(xa)),
+    df(est='pdf',data='za',pfun(za)),
+    df(est='pdf',data='zs',pfun(zs)) )}
   return(S)
 }
 
@@ -108,17 +110,17 @@ plot.toy.distr = function(f=2:5){
   g = ggplot(S,aes(x=d,y=value,color=pop,lty=qty,shape=qty)) +
     facet_grid('fam ~ CV') +
     geom_line() +
-    geom_point(data=~subset(.x,est=='mean'),aes(y=0,x=value)) +
+    geom_point(data=~subset(.x,est=='M3: mean'),aes(y=0,x=value)) +
     coord_cartesian(xlim=c(0,25),ylim=c(0,.3)) +
     scale_shape_manual   (values=c(1,4)) +
     scale_color_manual   (values=map$pop) +
     scale_linetype_manual(values=map$qty) +
     labs(x='Duration (years)',y='Density',
       color=l$pop,lty=l$qty,shape=l$qty)
-  gl = inner_legend(g,subset(S,est=='mean' & fam==fl$fam$weib & cv==1.5))
+  gl = inner_legend(g,subset(S,est=='M3: mean' & fam==fl$fam$weib & cv==1.5))
   plot.save(gl,'toy','toy.distr')
   plot.save(gl + subset(S,fam==fl$fam$weib),'toy','toy.distr.1')
-  b = S$fam==fl$fam$weib & S$est!='median'
+  b = S$fam==fl$fam$weib & S$est!='M3: median'
   for (s in unique(S$di)){
     plot.save(g + subset(S, b & di<=s) + facet_grid('CV'),
       'toy',str('toy.distr.s',s),size=c(4,4)) }
@@ -126,7 +128,7 @@ plot.toy.distr = function(f=2:5){
 
 plot.toy.est = function(f=2:5){
   G = ulist(G0,cv=seq(0,2,.1),fam=names(fl$fam)[f],zm=2)
-  S = clean.toy(grid.apply(G,toy.math))
+  S = clean.toy(grid.apply(G,toy.stoc))
   S = subset(S,data!=fl$data$xa)
   g = ggplot(S,aes(x=cv,y=value,color=poq,lty=est)) +
     facet_wrap('fam',nrow=2) +
@@ -134,7 +136,7 @@ plot.toy.est = function(f=2:5){
     coord_cartesian(ylim=c(0,20),xlim=c(0,2)) +
     scale_color_manual   (values=map$poq) +
     scale_linetype_manual(values=map$est) +
-    labs(x='CV[x]',y='Ê[x]',lty='Estimate',color=l$poq)
+    labs(x='CV[x]',y='Ê[x]',lty='Method',color=l$poq)
   plot.save(g,'toy','toy.est')
   plot.save(g + subset(S,fam==fl$fam$weib),'toy','toy.est.1')
 }
