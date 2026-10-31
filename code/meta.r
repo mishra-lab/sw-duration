@@ -10,7 +10,7 @@ l$fam = 'Family'
 fl = list()
 fl$fam = lapply(distrs,`[[`,'l')
 fl$region = c(Africa='Africa',Asia='Asia',Europe='Europe',LatAm='Latin\nAm',NorAm='North\nAm')
-fl$method = c('Complete','Turnover','2 × Med/Mean')
+fl$method = c('Method 1','Method 2','Method 3')
 fl$data = list(x='Total among source (x)',za='Censored among sampled (z|s)')
 fl$par = list(
   Ex  = 'E[x]',   CVx  = 'CV[x]',
@@ -21,7 +21,6 @@ fl$par = list(
 
 cmap = list()
 cmap$fam = unlist(lapply(distrs,`[[`,'c'))
-names(cmap$fam) = fl$fam
 
 gen.makevars = function(opt){ cat(file='~/.R/Makevars',sep='',
   '\nCXX17=g++',
@@ -115,11 +114,11 @@ get.sample = function(Y,fam,reg,...,do='load',gps=0){
       plot.save(g,path,'trace',root='')
   }}
   S = expand.grid(i=1:(args$iter-args$warm),chain=factor(1:args$chains))
-  S = cbind(S,g=1:nrow(S),fam=fam,reg=reg,as.data.frame(fit))
+  S = cbind(S,g=1:nrow(S),fam=fam,region=reg,as.data.frame(fit))
   S = subset(S,!( # HACK
-    (reg=='Asia'   & fam=='skumar'  & chain==5) |
-    (reg=='Europe' & fam=='weibull' & chain==3) |
-    (reg=='Europe' & fam=='skumar'  & chain==1) |
+    (region=='Asia'   & fam=='skumar'  & chain==5) |
+    (region=='Europe' & fam=='weibull' & chain==3) |
+    (region=='Europe' & fam=='skumar'  & chain==1) |
     # TODO: reg=='Europe' & fam=='lnorm' ?
   0 ))
 }
@@ -132,15 +131,21 @@ run.stan = function(args){
   fit = do.call(rstan::sampling,args)
 }
 
+add.bf = function(S){
+  f <<- names(which.max(tapply(S$lp__,S$fam,mean))) # HACK
+  S = cbind(S,bf=ifelse(S$fam==f,'*',''))
+}
+
 plot.par = function(S,...){
   fl$par$lp__ = 'log(L)'
   S = melt(S,id=c('i','chain','fam'),var='par',m=names(fl$par))
   # print(t(sapply(split(S$value,S[c('fam','par')]),mci))) # NUM
+  fl$fam[[f]] = str(fl$fam[[f]],' *') # HACK
   S$par = factor(S$par,names(fl$par),fl$par)
   S$fam = factor(S$fam,names(fl$fam),fl$fam)
   g = ggplot(S,aes(x='',y=value,color=fam,fill=fam)) +
     facet_wrap('par',scales='free',ncol=4) +
-    scale_colorfill(v=cmap$fam) +
+    scale_colorfill(v=setNames(cmap$fam,fl$fam)) +
     geom_viola() +
     axis_blank('x') +
     labs(x='Parameter',y='Value',color=l$fam,fill=l$fam)
@@ -191,33 +196,15 @@ plot.demo = function(S,Y,sub=10,dd=.01){
 main.demo = function(do='load'){
   Y = prop.ci(load.csv('data','Baral2014'))
   Y = subset(Y,ref=='rds')
-  S = rbind.lapply(fams,get.sample,Y=Y,reg='demo',do=do,gps=1,.par=do=='load')
+  S = add.bf(rbind.lapply(fams,get.sample,Y=Y,reg='demo',do=do,gps=1,.par=do=='load'))
   g = plot.par(S); plot.save(g,'stan','demo.pars',size=c(7,4))
-  S = subset(S,fam=='gamma') # best fit
+  S = subset(S,fam==f) # best fit
   prop.demo(S,Y)
   g = plot.demo(S,Y); plot.save(g,'stan','demo.props',size=c(7,3))
 }
 
 # ==============================================================================
 # meta
-
-boot.mci = function(x,w=NULL,nb=1e5,seed=666){
-  if (len(x)==0){ return(list(value=NA,lo=NA,hi=NA)) }
-  set.seed(seed)
-  xb = unlist(par.lapply(1:nb,function(i){ mean(sample(x,rep=1,p=w)) }))
-  mci = list(value=mean(xb),lo=quantile(xb,.025,names=0),hi=quantile(xb,.975,names=0))
-}
-
-meta.classic = function(Y){ # UNUSED
-  Yt = subset(Y,F12=='turnover')
-  Ym = subset(Y,F12=='median'|F12=='mean')
-  # print(ulen(str(Ym$id,Ym$n))/nrow(Ym)) # DEBUG == 1
-  M = rbind(
-    df(ns=nrow(Yt),method='turnover',meta='raw.avg',boot.mci(1/Yt$p)),
-    df(ns=nrow(Yt),method='turnover',meta='wtd.avg',boot.mci(1/Yt$p,Yt$n)),
-    df(ns=nrow(Ym),method='2 × m',   meta='raw.avg',boot.mci(2*Ym$value)),
-    df(ns=nrow(Ym),method='2 × m',   meta='wtd.avg',boot.mci(2*Ym$value,Ym$n)))
-}
 
 plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
   d = d.vec(dd)
@@ -244,6 +231,7 @@ plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
     data=cbind(subset(Y,meas==m),type=type,data=data),
     inherit.aes=0,shape=16,alpha=.2,...) }
   fl$fam$data = 'Data'
+  fl$fam[[f]] = str(fl$fam[[f]],' *') # HACK
   types = factor(c('CDF','PDF','mean'))
   D$type = factor(D$type,levels=types)
   D$fam = factor(D$fam,names(fl$fam),fl$fam)
@@ -256,21 +244,19 @@ plot.distr = function(S,Y,sub=10,dd=.1,zoom=15){
     geom_data('q',   types[1],fl$data$za,map=aes(x=value,y=p,size=n.adj(n))) +
     geom_data('mean',types[3],fl$data$za,map=aes(y='',x=value,size=n.adj(n))) +
     scale_size_area(limits=c(10,1000),breaks=c(30,100,300,1000)) +
-    scale_colorfill(v=cmap$fam) +
+    scale_colorfill(v=setNames(cmap$fam,fl$fam[-6])) +
     scale_x_continuous(lim=c(0,zoom),breaks=seq(0,zoom,2)) +
     ggh4x::scale_y_facet(type=='PDF',lim=0:1) +
     ggh4x::scale_y_facet(type=='mean',type='discrete') +
     ggh4x::force_panelsizes(rows=c(3,3,2)) +
-    labs(x=l$dur,y='Density',color=l$fam,fill=l$fam,size='Data N*')
+    labs(x=l$dur,y='Density',color=l$fam,fill=l$fam,size='Data N\'')
 }
 
 meta.forest = function(S0,pop='fsw'){
-  L = aggregate(lp__~fam+region,S0,mean)
-  L = merge(L,cbind(bf='*',aggregate(lp__~region,L,max)),all=1)
   T = subset(load.csv('data','Fazito2012'),kp==pop)
-  S = dfu(aggregate(cbind(value=Ex)~kp+region+ns+fam,S0,mci,type=c))
-  X = rbind(cbind(S,src='Model',method=''),cbind(T,src='Fazito 2012',fam=T$method))
-  X = merge(X,L,all=1)
+  S = dfu(aggregate(cbind(value=Ex)~kp+region+ns+fam+bf,S0,mci,type=c))
+  X = rbind(cbind(S,src='Model',method=''),
+            cbind(T,src='Fazito 2012',fam=T$method,bf=NA))
   X$fam = factor(X$fam,c(1:3,names(fl$fam)),c(fl$method,fl$fam))
   X$region = factor(X$region,names(fl$region),fl$region)
   num.str = function(...){ gsub('NA','    •    ',sprintf(...)) }
@@ -296,7 +282,7 @@ meta.forest = function(S0,pop='fsw'){
     theme(panel.spacing=unit(4,'pt')) +
     labs(x=l$dur,y='')
   plot.save('stan','meta.forest.all',size=c(5,6),g = g +
-    aes(color=fam) + scale_colorfill(v=cmap$fam,guide='none',na.value='#999') +
+    aes(color=fam) + scale_colorfill(v=setNames(cmap$fam,fl$fam),guide='none',na.value='#999') +
     add_info(hjust=0,'BF',list(x=20.5,label=quote(bf))))
   plot.save('stan','meta.forest.bf',size=c(5,3),g = g +
     aes(color=src) + scale_colorfill(v=c('#999','#000'),guide='none') +
@@ -308,10 +294,10 @@ main.meta = function(do='load',pop='fsw'){
   Y0 = prop.ci(load.csv('data','Fazito2012x'))
   for (reg in names(fl$region)){
     Y = subset(Y0,kp==pop & region==reg & K26==1)
-    S = rbind.lapply(fams,get.sample,Y=Y,reg=reg,do=do,.par=do=='load')
+    S = add.bf(rbind.lapply(fams,get.sample,Y=Y,reg=reg,do=do,.par=do=='load'))
     g = plot.par(S);     plot.save(g,'stan',str('meta.pars.',  reg),size=c(7,4))
     g = plot.distr(S,Y); plot.save(g,'stan',str('meta.distrs.',reg),size=c(7,4))
-    S0 = rbind(S0,cbind(S,kp=pop,region=reg,ns=ulen(Y$id)))
+    S0 = rbind(S0,cbind(S,kp=pop,ns=ulen(Y$id)))
   }
   meta.forest(S0)
 }
