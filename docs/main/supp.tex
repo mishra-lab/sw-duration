@@ -146,6 +146,7 @@ showing convergence of 7 sampling chains during 500 warm-up iterations.
   \caption{Posterior distributions of model parameters and summary statistics
     when fitting to the RDS-adjusted Eswatini data (Table~\ref{tab:data.demo})}
   \label{fig:demo.pars}
+  \floatfoot{* denotes the best-fitting distribution family}
 \end{figure}
 \begin{figure}[b]
   \includegraphics[width=\textwidth]{demo.trace}
@@ -185,7 +186,7 @@ Before synthesizing the extracted data via the Bayesian model,
 we also adjusted the effective sample sizes for each study $N_i$
 to reduce the influence of very large studies via:
 \begin{equation}
-  N_i{\textnormal\textquotesingle} = \frac{1}{\frac{1}{N_0}+\frac{1}{N_i}}
+  \Ni = \frac{1}{\frac{1}{N_0}+\frac{1}{N_i}}
   ,\qquad N_0 = 1000
   \label{eq:n.adj}
 \end{equation}
@@ -215,11 +216,15 @@ across all distribution families considered.
         versus empirical data}
       \label{fig:distrs.\slug}
     \end{subfigure}
-    \caption{Model posteriors when fitting to
-    empirical aggregate female sex worker duration data
-    reviewed in \cite{Fazito2012} for \textbf{\region}}
+    \caption{Bayesian model posteriors when fitting to
+      empirical aggregate female sex worker duration data
+      reviewed by \citet{Fazito2012} for \textbf{\region}}
     \label{fig:meta.\slug}
-    \floatfoot{\distrfoot}
+    \floatfoot{Coloured lines \& shaded ribbons denote mean \& \CI distribution values;
+      gray circles denote aggregate empirical estimates;
+      * denotes the best-fitting distribution family per region;
+      see Table~\ref{tab:fams} for family definitions;
+      see \eqref{eq:n.adj} for definition of $\Ni$.}
   \end{figure}}
 \begin{figure}
   \includegraphics[width=\textwidth]{meta.forest.all}

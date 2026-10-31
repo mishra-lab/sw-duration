@@ -1,18 +1,14 @@
 \section{Discussion}\label{disc}
-% SM: Discussion section is terrific! 2 small things to consider adding:
-%     1) implications of shorter mean duration and more rapid turnover
-%        on impact of programs (e.g. could add to para-3) and
-%        on design of FSW programs (e.g. focused efforts to reach women earlier
-%        after self-identifying as an FSW)
-%     2) something about generalizing/generalizability beyond sex work?
 \par % summary of findings
-In this paper, we have clarified several concepts relevant to
+In this paper, we have clarified several concepts and challenges relevant to
 % SM: I like this opening. wondering if could be more "punchy" with an N instead of several,
 %     and challenges instead of concepts or both? e.g.:
 %     "In this paper, we clarify N concepts and challenges relevant to
 %     characterizing the distribution of durations in sex work from cross-sectional data..."
-characterizing the distribution of durations in sex work.
-% SM: add "from cross-sectional data"
+% JK: I like adding "and challenges" here, but I opted to keep "several"
+%     since I feel we really discuss more than just "two"
+%     but since we have "First," and "Second," here, it seems like we need to write "two".
+characterizing the distribution of durations in sex work from cross-sectional data.
 First, we distinguished between "source" and "active" populations,
 with the active population being a length-biased subset of the source population,
 where the probability of being active is proportional to total duration in sex work.
@@ -43,28 +39,21 @@ Applying this model to data from a previous global systematic review \cite{Fazit
 we inferred significantly shorter mean durations across multiple regions.
 % LW: and the Eswatini study?
 % JK: I was not going to mention it here, as it is mainly a simple demonstration
-% SM: excellent opening para for a discussion section
-%     beautifully synthesized the results and clear
 \par % implications for HIV incidence
 Our estimates of mean duration in sex work were
 significantly less than those reported by \citet{Fazito2012}.
 This was expected, as we showed how both methods 2 and 3 can overestimate mean duration,
 especially if surveys undersample individuals in early sex work.
-Shorter durations means that that HIV incidence in sex work
-% SM: could we also talk about STI?
+Shorter durations means that that incidence of HIV and other STI in sex work
 could be higher than previously estimated via transmission models,
 since there is less time for infections to accumulate
-to match observed HIV prevalence in sex work \cite{Knight2020,Anderegg2024}.
-% SM: nice!
+to match observed HIV/STI prevalence in sex work \cite{Knight2020,Anderegg2024}.
 However, existing model-based estimates of HIV incidence
 among female sex workers in Sub-Saharan Africa
 already exceed empirical estimates (mainly from cohorts and trials)
-\cite{Jones2024,Stevens2024inc};
-this might be partly explained by recruitment of
-relatively lower-risk female sex workers and
-relatively higher-risk wider population women
-for empirical HIV incidence studies \cite{Jones2024}.
+\cite{Jones2024,Stevens2024inc}.
 % SM: to chat with JK: what do we want to say here? I wasn't 100% clear...
+% JK: TODO
 \par % implications for prioritization
 Shorter durations, and thus more rapid sex work turnover, could also suggest that
 a greater proportion of women in the wider population might have previously sold sex.
@@ -79,6 +68,11 @@ additionally considering unique vulnerabilities of early sex work \cite{Cheuk202
 We reiterate that such brief periods in sex work are
 especially difficult to observe in cross-sectional studies
 due to length-biased sampling \cite{Ross2003}.
+Taken together, these findings underscore
+the need to rapidly identify and reach women during early sex work
+with relevant programs and services, \eg through place-based strategies,
+to efficiently reduce population-level HIV/STI burden
+\cite{Cheuk2020,Neufeld2023,Bhattacharjee2023,McClarty2026}.
 \par % implications for modelling
 We also inferred that distributions of total durations in sex work overall
 are likely "heavy-tailed", such that
@@ -86,33 +80,26 @@ rates of exit decline with longer duration in sex work.
 This declining exit rate could reflect
 selection effects acting on fixed between-person heterogeneity in
 a propensity to remain in sex work \cite{Balan2020},
-and/or within-person changes that make it easier to remain in sex work,
+and/or within-person changes that make it easier to remain in sex work.
 % SM: separate into another sentence ...
+% JK: Sorry, opting to leave as-is since we are already over word-count
 including self-identification as a sex worker, and
 changing social ties with family, friends, and clients,
 \cite{Neufeld2023,Bhattacharjee2023,Ingabire2012,Bowen2011,Lora2025}.
 While individual-based simulation models could specify
 such heterogeneity or declining exit rates directly,
 compartmental simulation models would need
-two or more sex work states to reproduce this pattern --- \eg
-% SM: which pattern? the heavy-tail?
+two or more sex work states to reproduce this heavy-tail --- \eg
 separate short and long duration sex work trajectories, and/or
 separate early and late sex work periods.
 Indeed, such states would also be useful to capture
 unique risks associated with early sex work
 \cite{Neufeld2023,Bhattacharjee2023}.
 \par % empirical data
-Regarding empirical data sources,
-we focused on cross-sectional studies,
-which are generally simpler, less expensive,
-and consequently more common than cohort studies \cite{Fazito2012}.
-% SM: maybe say other way around? e.g.
-%     "We focused on cross-sectional studies because they have been
-%     the cornerstone of HIV/STI and sexual health data across countries (DHS, IBBS),
-%     and are thus the most common source of data on duration in sex work.
-%     This is because cross-sectional studies are simpler and less expensive."
-%     However, a cohort design does not necessarily....
-We also note that a cohort design
+We focused on cross-sectional studies,
+which have been the cornerstone of sexual health epidemiology globally \cite{WHO2017bbs,DHS},
+since they are generally simpler and less expensive than cohort studies \cite{Fazito2012}.
+However, a cohort design
 does not necessarily simplify estimation of "true" sex work durations,
 as sampling can still be length-biased
 (depending on how participants are recruited)
@@ -142,7 +129,6 @@ as entry into sex work is likely a memorable life-course event
 \cite{Sandy2025,Cimino2017,Ingabire2012,Bowen2011,Lora2025},
 and self-identified active sex workers do not, to our knowledge, have
 obvious motivations for under-reporting durations.
-% SM: nice
 We additionally assumed that sex work turnover is stable over time,
 despite empirical evidence of changing sex work dynamics in several contexts
 \cite{Anderegg2024,Anderson2026}.
@@ -150,9 +136,6 @@ Finally, our re-analysis of duration data from \cite{Fazito2012}
 did not include more recent or individual-level data,
 since our motivation was mainly to compare
 results using the Bayesian model versus prior estimation methods.
-Additionally, in forthcoming work we will synthesize
-individual-level data from 183 studies \cite{Anderson2026}.
-% SM: I feel like this sentence is not needed for current paper?
 % ------------------------------------------------------------------------------
 \paragraph{Future work}
 Our Bayesian model could be extended in several ways.
@@ -184,3 +167,6 @@ actually overestimates rather than underestimates the "true" mean duration.
 Methods herein also support inference of
 the complete distribution of "true" durations,
 given a complete distribution of reported durations.
+Notably, these methods can be applied to characterize
+the distribution of durations beyond sex work, such as for
+transient health states, or periods of exposure to risk/protective factors.

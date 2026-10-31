@@ -27,6 +27,7 @@
 \newcommand{\CI}[1][95]{#1\%~CI\xspace}
 \newcommand{\lzu}[3][z]{#2\sp{<}#1\sp{<}#3}
 \newcommand{\azb}[1][z]{\lzu[#1]{a}{b}}
+\newcommand{\Ni}{N_i{\textnormal\textquotesingle}}
 \newcommand{\sref}[1]{\S\,\ref{#1}}
 \renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
 \newcommand{\eqrefr}[2]{Eqs.~(\ref{#1}--\ref{#2})}
@@ -40,9 +41,6 @@
 \renewcommand{\tt}{\tau_{95}}
 \newcommand{\hreftt}[2][https://]{\href{#1#2}{\texttt{#2}}}
 \def\regions{Africa/Africa,Asia/Asia,Europe/Europe,LatAm/Latin~America,NorAm/North~America}
-\def\distrfoot{Coloured lines \& shaded ribbons denote
-  mean \& \CI distribution values;
-  gray circles denote aggregate empirical estimates}
 % paths
 \def\projroot{../../}
 \graphicspath{
@@ -54,6 +52,7 @@
 % bib & dwhyperref
 \RequirePackage[natbib=true]{biblatex}
 \renewcommand{\bibfont}{\footnotesize}
+\AtBeginBibliography{\setlength{\itemsep}{.67ex}}
 \addbibresource{/home/jesse/refs/library.bib}
 \RequirePackage[
   colorlinks,
