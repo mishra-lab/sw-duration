@@ -1,0 +1,7 @@
+region,country,ref,design,kp,n,yi,mi,tx,mx,meas,value,p,method
+Africa,Eswatini,raw,xs,fsw,313,2011,8,2011,10,q,3,0.288,direct
+Africa,Eswatini,raw,xs,fsw,313,2011,8,2011,10,q,6,0.601,direct
+Africa,Eswatini,raw,xs,fsw,313,2011,8,2011,10,q,11,0.863,direct
+Africa,Eswatini,rds,xs,fsw,77,2011,8,2011,10,q,3,0.383,direct
+Africa,Eswatini,rds,xs,fsw,113,2011,8,2011,10,q,6,0.704,direct
+Africa,Eswatini,rds,xs,fsw,129,2011,8,2011,10,q,11,0.906,direct

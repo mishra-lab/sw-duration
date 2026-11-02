@@ -1,0 +1,296 @@
+id,region,country,kp,design,n,year.fr,mo.fr,year.to,mo.to,meas,value,p,F12,K26,kp.def.F12,notes
+Goldenberg2010,LatAm,Mexico,cli,xs,394,2008,NA,2008,NA,q,2,0.25,drop.q,1,paid / traded for sex p4m; 18+,NA
+Goldenberg2010,LatAm,Mexico,cli,xs,394,2008,NA,2008,NA,q,7,0.5,median,1,paid / traded for sex p4m; 18+,NA
+Goldenberg2010,LatAm,Mexico,cli,xs,394,2008,NA,2008,NA,q,17,0.75,drop.q,1,paid / traded for sex p4m; 18+,NA
+Patterson2009,LatAm,Mexico,cli,xs,343,2008,NA,2008,NA,mean,10.8,NA,mean,1,paid / traded for sex p4m; 18+,NA
+Couture2008,CenAm,Haiti,cli,xs,378,2006,12,2007,1,mean,6.3,NA,mean,1,paid / traded for sex p3m; at venue,NA
+Couture2008,CenAm,Haiti,cli,xs,378,2006,12,2007,1,q,4,0.36,drop.q,1,paid / traded for sex p3m; at venue,NA
+Jin2010,Asia,China,cli,xs,315,2008,NA,2008,NA,q,30,0.5,median,0,NA,aggr age diff
+Subramanian2008,Asia,India,cli,xs,4821,2006,10,2007,6,q,9,0.5,median,0,paid for sex p1m; 18-60,aggr age diff
+Xantidis2000,Oceania,Australia,cli,xs,60,NA,NA,NA,NA,mean,9.74,NA,median,0,NA,aggr age diff
+Lowndes2000,Africa,Benin,cli,xs,330,1998,NA,1998,NA,mean,4,NA,drop.m,1,paid for sex p?m; at venue,NA
+Lowndes2000,Africa,Benin,cli,xs,330,1998,NA,1998,NA,q,0,0,drop.q,0,paid for sex p?m; at venue,NA
+Lowndes2000,Africa,Benin,cli,xs,330,1998,NA,1998,NA,q,1,0.219,turnover,1,paid for sex p?m; at venue,NA
+Lowndes2000,Africa,Benin,cli,xs,330,1998,NA,1998,NA,q,2,0.5,median,1,paid for sex p?m; at venue,NA
+Lowndes2000,Africa,Benin,cli,xs,330,1998,NA,1998,NA,q,29,1,drop.q,1,paid for sex p?m; at venue,NA
+Voeten2002,Africa,Kenya,cli,xs,64,1999,NA,1999,NA,q,7,0.5,median,0,NA,aggr age diff
+Alary2002,Africa,Benin,fsw,xs,365,1995,NA,1996,NA,mean,2.4,NA,mean,1,attend STI clinic for FSW,NA
+Alary2002,Africa,Benin,fsw,xs,591,1998,NA,1999,NA,mean,2.6,NA,mean,1,attend STI clinic for FSW,NA
+Asamoah-Adu2001,Africa,Ghana,fsw,xs,1013,1997,3,1999,2,q,0.02,0,drop.q,0,FSW,NA
+Asamoah-Adu2001,Africa,Ghana,fsw,xs,1013,1997,3,1999,2,q,2,0.5,median,1,FSW,NA
+Asamoah-Adu2001,Africa,Ghana,fsw,xs,1013,1997,3,1999,2,q,30,1,drop.q,1,FSW,NA
+Dada1998,Africa,Nigeria,fsw,xs,84,1990,NA,1991,NA,mean,3.267,NA,mean,1,lower-class FSW,NA
+Dada1998,Africa,Nigeria,fsw,xs,624,1990,NA,1991,NA,mean,2.942,NA,mean,1,middle-class FSW,NA
+Dada1998,Africa,Nigeria,fsw,xs,88,1990,NA,1991,NA,mean,3.595,NA,mean,1,upper-class FSW,NA
+Delaporte1995,Africa,DRC,fsw,xs,1183,1988,5,1988,8,q,1,0.168,turnover,1,NA,NA
+Delaporte1995,Africa,DRC,fsw,xs,1183,1988,5,1988,8,q,5,0.653,drop.q,1,NA,NA
+Delaporte1995,Africa,DRC,fsw,xs,1183,1988,5,1988,8,q,10,0.883,drop.q,1,NA,NA
+Fowke1996,Africa,Kenya,fsw,coh,424,1985,NA,1994,NA,q,3,0.4,drop.q,1,HIV-negative FSW,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,329,1991,NA,1991,NA,q,1,0.25,turnover,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,329,1991,NA,1991,NA,q,2,0.5,median,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,329,1991,NA,1991,NA,q,4,0.75,drop.q,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,602,1993,NA,1993,NA,q,2,0.25,drop.q,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,602,1993,NA,1993,NA,q,3,0.5,median,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,602,1993,NA,1993,NA,q,5,0.75,drop.q,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,850,1995,NA,1995,NA,q,1,0.25,turnover,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,850,1995,NA,1995,NA,q,3,0.5,median,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,850,1995,NA,1995,NA,q,5,0.75,drop.q,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,500,1997,NA,1997,NA,q,0.7,0.25,drop.q,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,500,1997,NA,1997,NA,q,2,0.5,median,1,attend STI clinic for FSW; join CBS,NA
+Ghys2002,Africa,Cote d'Ivoire,fsw,xs,500,1997,NA,1997,NA,q,4,0.75,drop.q,1,attend STI clinic for FSW; join CBS,NA
+Jennes2003,Africa,Cote d'Ivoire,fsw,srv,65,2000,5,2001,10,q,0.5,0.25,drop.q,1,NA,NA
+Jennes2003,Africa,Cote d'Ivoire,fsw,srv,65,2000,5,2001,10,q,1.167,0.5,median,1,NA,NA
+Jennes2003,Africa,Cote d'Ivoire,fsw,srv,65,2000,5,2001,10,q,3,0.75,drop.q,1,NA,NA
+Jennes2004,Africa,Cote d'Ivoire,fsw,xs,27,1999,11,2000,5,q,0.5,0.48,median,1,HIV-negative FSW,assume F12 median
+Jennes2004,Africa,Cote d'Ivoire,fsw,xs,27,1999,11,2000,5,q,3,0.89,drop.q,1,HIV-negative FSW,NA
+Jennes2004,Africa,Cote d'Ivoire,fsw,xs,27,1999,11,2000,5,q,10,1,drop.q,1,HIV-negative FSW,NA
+Kaul1997,Africa,Kenya,fsw,coh,157,1991,NA,NA,NA,mean,5.4,NA,mean,1,NA,NA
+Kaul1997,Africa,Kenya,fsw,coh,157,1991,NA,NA,NA,sd,5.4,NA,drop.sd,0,NA,NA
+Kaul1997,Africa,Kenya,fsw,coh,145,1991,NA,NA,NA,mean,6,NA,mean,1,NA,NA
+Kaul1997,Africa,Kenya,fsw,coh,145,1991,NA,NA,NA,sd,4.4,NA,drop.sd,0,NA,NA
+Lavreys2004,Africa,Kenya,fsw,coh,242,1993,2,2003,1,q,2,0.25,drop.q,1,HIV-negative FSW attend STI clinic,NA
+Lavreys2004,Africa,Kenya,fsw,coh,242,1993,2,2003,1,q,4,0.5,median,1,HIV-negative FSW attend STI clinic,NA
+Lavreys2004,Africa,Kenya,fsw,coh,242,1993,2,2003,1,q,6,0.75,drop.q,1,HIV-negative FSW attend STI clinic,NA
+Mulanga-Kabeya1999,Africa,Mali,fsw,xs,284,1997,6,1997,6,mean,4.2,NA,mean,1,NA,NA
+Nagot2002,Africa,Burkina Faso,fsw,o-coh,447,1998,10,2000,6,q,1,0.27,turnover,1,FSW in 6 categories,NA
+Nagot2002,Africa,Burkina Faso,fsw,o-coh,447,1998,10,2000,6,q,5,0.71,drop.q,1,FSW in 6 categories,NA
+Nagot2002,Africa,Burkina Faso,fsw,o-coh,447,1998,10,2000,6,q,10,0.88,drop.q,1,FSW in 6 categories,NA
+Phillipon1997,Africa,Ethiopia,fsw,xs,243,1995,5,1995,8,mean,0.7,NA,drop.m,1,FSW who attended STI clinic p4m,NA
+Phillipon1997,Africa,Ethiopia,fsw,xs,243,1995,5,1995,8,q,0,0,drop.q,0,FSW who attended STI clinic p4m,NA
+Phillipon1997,Africa,Ethiopia,fsw,xs,243,1995,5,1995,8,q,0.25,0.5,median,1,FSW who attended STI clinic p4m,NA
+Phillipon1997,Africa,Ethiopia,fsw,xs,243,1995,5,1995,8,q,10,1,drop.q,1,FSW who attended STI clinic p4m,NA
+Ramjee2005,Africa,South Africa,fsw,trial,187,NA,NA,NA,NA,mean,2.5,NA,mean,1,FSW at truck stops,NA
+Cameron1991,Africa,Kenya,fsw,xs,119,1987,NA,1988,NA,mean,4.5,NA,mean,1,FSW who attended maternal clinic,NA
+Cameron1991,Africa,Kenya,fsw,xs,119,1987,NA,1988,NA,sd,3,NA,drop.sd,0,FSW who attended maternal clinic,NA
+Cameron1991,Africa,Kenya,fsw,xs,250,1987,NA,1988,NA,mean,5.1,NA,mean,1,FSW who attended maternal clinic,NA
+Cameron1991,Africa,Kenya,fsw,xs,250,1987,NA,1988,NA,sd,4.1,NA,drop.sd,0,FSW who attended maternal clinic,NA
+Kayembe2008,Africa,DRC,fsw,xs,2638,2005,1,2006,3,q,1,0.139,turnover,1,NA,NA
+Kayembe2008,Africa,DRC,fsw,xs,2638,2005,1,2006,3,q,2,0.282,drop.q,1,NA,NA
+Kayembe2008,Africa,DRC,fsw,xs,2638,2005,1,2006,3,q,5,0.76,drop.q,1,NA,NA
+Langley1996,Africa,Senegal,fsw,xs,619,1990,2,1993,3,mean,2.3,NA,mean,1,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,619,1990,2,1993,3,sd,3.2,NA,drop.sd,0,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,68,1990,2,1993,3,mean,2.9,NA,mean,1,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,68,1990,2,1993,3,sd,4.3,NA,drop.sd,0,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,58,1990,2,1993,3,mean,3.2,NA,mean,1,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,58,1990,2,1993,3,sd,4.3,NA,drop.sd,0,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,14,1990,2,1993,3,mean,1.3,NA,mean,1,FSW who attended DST clinic,NA
+Langley1996,Africa,Senegal,fsw,xs,14,1990,2,1993,3,sd,1.8,NA,drop.sd,0,FSW who attended DST clinic,NA
+Mann1998,Africa,DRC,fsw,xs,377,1985,NA,1985,NA,mean,3.2,NA,drop.m,1,FSW who charged specific rates,NA
+Mann1998,Africa,DRC,fsw,xs,377,1985,NA,1985,NA,q,0.04,0,drop.q,0,FSW who charged specific rates,NA
+Mann1998,Africa,DRC,fsw,xs,377,1985,NA,1985,NA,q,2,0.5,median,1,FSW who charged specific rates,NA
+Mann1998,Africa,DRC,fsw,xs,377,1985,NA,1985,NA,q,18,1,drop.q,1,FSW who charged specific rates,NA
+Ngugi1988,Africa,Kenya,fsw,coh,91,1985,NA,1985,NA,mean,3.75,NA,mean,1,FSW,NA
+Ngugi1988,Africa,Kenya,fsw,coh,91,1985,NA,1985,NA,sd,1.9,NA,drop.sd,0,FSW,NA
+Ngugi1988,Africa,Kenya,fsw,coh,67,1985,NA,1985,NA,mean,2.942,NA,mean,1,FSW,NA
+Ngugi1988,Africa,Kenya,fsw,coh,67,1985,NA,1985,NA,sd,1.767,NA,drop.sd,0,FSW,NA
+Ngugi1988,Africa,Kenya,fsw,coh,205,1985,NA,1985,NA,mean,2.817,NA,mean,1,FSW,NA
+Ngugi1988,Africa,Kenya,fsw,coh,205,1985,NA,1985,NA,sd,2.208,NA,drop.sd,0,FSW,NA
+Nzila1991,Africa,DRC,fsw,xs,448,1988,NA,1989,NA,mean,3.492,NA,mean,1,FSW in 3 categories,NA
+Nzila1991,Africa,DRC,fsw,xs,448,1988,NA,1989,NA,sd,3.833,NA,drop.sd,0,FSW in 3 categories,NA
+Nzila1991,Africa,DRC,fsw,xs,693,1988,NA,1989,NA,mean,6.05,NA,mean,1,FSW in 3 categories,NA
+Nzila1991,Africa,DRC,fsw,xs,85,1988,NA,1989,NA,mean,4.683,NA,mean,1,FSW in 3 categories,NA
+Nzila1991,Africa,DRC,fsw,xs,85,1988,NA,1989,NA,sd,9,NA,drop.sd,0,FSW in 3 categories,NA
+Pepin1991,Africa,Gambia,fsw,xs,346,1988,4,1989,1,q,1,0.197,turnover,1,NA,NA
+Pepin1991,Africa,Gambia,fsw,xs,346,1988,4,1989,1,q,2,0.385,drop.q,1,NA,NA
+Pepin1991,Africa,Gambia,fsw,xs,346,1988,4,1989,1,q,3,0.532,median,1,NA,assume F12 median
+Pepin1991,Africa,Gambia,fsw,xs,346,1988,4,1989,1,q,4,0.699,drop.q,1,NA,NA
+Anzala1995,Africa,Kenya,fsw,coh,160,1985,NA,1991,NA,mean,4.7,NA,drop.m,0,FSW in cohort who seroconverted,duration at HIV infection
+Anzala1995,Africa,Kenya,fsw,coh,160,1985,NA,1991,NA,sd,4.9,NA,drop.sd,0,FSW in cohort who seroconverted,duration at HIV infection
+Kanki1992,Africa,Senegal,fsw,coh,1275,1985,NA,1985,NA,q,10,0.705,drop.q,1,registered FSW who attended clinic,NA
+Kanki1992,Africa,Senegal,fsw,coh,1275,1985,NA,1985,NA,q,20,0.98,drop.q,1,registered FSW who attended clinic,NA
+Baeten2000,Africa,Kenya,fsw,coh,788,1993,NA,1997,NA,q,0,0,drop.q,0,FSW in cohort,NA
+Baeten2000,Africa,Kenya,fsw,coh,788,1993,NA,1997,NA,q,1.5,0.5,median,1,FSW in cohort,NA
+Baeten2000,Africa,Kenya,fsw,coh,788,1993,NA,1997,NA,q,24,1,drop.q,1,FSW in cohort,NA
+Baeten2000,Africa,Kenya,fsw,coh,165,1993,NA,1997,NA,q,0.75,0.5,median,1,FSW in cohort,NA
+Kanki1992,Africa,Senegal,fsw,coh,278,1987,NA,1987,NA,q,10,1,drop.q,1,registered FSW who attended clinic,NA
+Kanki1992,Africa,Senegal,fsw,coh,157,1987,NA,1987,NA,q,10,0.675,drop.q,1,registered FSW who attended clinic,NA
+Kanki1992,Africa,Senegal,fsw,coh,157,1987,NA,1987,NA,q,20,1,drop.q,1,registered FSW who attended clinic,NA
+Simonsen1990,Africa,Kenya,fsw,coh,418,1985,NA,1985,NA,mean,2.758,NA,mean,1,FSW living in a slum,NA
+Simonsen1990,Africa,Kenya,fsw,coh,418,1985,NA,1985,NA,sd,3.992,NA,drop.sd,1,FSW living in a slum,NA
+Willerford1993,Africa,Kenya,fsw,coh,56,1985,NA,1985,NA,mean,6,NA,mean,1,HIV-negative FSW in cohort,NA
+Baars2009,Europe,Netherlands,fsw,xs,259,2004,9,2006,2,mean,5.573,NA,mean,1,women having sex for money,NA
+Baars2009,Europe,Netherlands,fsw,xs,259,2004,9,2006,2,sd,5.894,NA,drop.sd,0,women having sex for money,NA
+Vioque1998,Europe,Spain,fsw,coh,657,1986,NA,1996,NA,q,0.083,0,drop.q,0,HIV-negative FSW who later returned to clinic,NA
+Vioque1998,Europe,Spain,fsw,coh,657,1986,NA,1996,NA,q,0.333,0.25,drop.q,1,HIV-negative FSW who later returned to clinic,NA
+Vioque1998,Europe,Spain,fsw,coh,657,1986,NA,1996,NA,q,1.5,0.5,median,1,HIV-negative FSW who later returned to clinic,NA
+Vioque1998,Europe,Spain,fsw,coh,657,1986,NA,1996,NA,q,5,0.75,drop.q,1,HIV-negative FSW who later returned to clinic,NA
+Vioque1998,Europe,Spain,fsw,coh,657,1986,NA,1996,NA,q,35,1,drop.q,1,HIV-negative FSW who later returned to clinic,NA
+Ward1993,Europe,UK,fsw,xs,280,1989,4,1991,8,q,4,0.5,median,1,FSW,NA
+Ward1993,Europe,UK,fsw,xs,280,1989,4,1991,8,q,34,1,drop.q,1,FSW,NA
+Ward2006,Europe,UK,fsw,coh,124,1986,NA,2000,NA,mean,13.6,NA,drop.m,-1,self-identified FSW who retired & were f/u,re-extracted; among retired
+Ward2006,Europe,UK,fsw,coh,130,1986,NA,2000,NA,q,0.083,0,drop.q,0,self-ID FSW who worked in p3m; f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,130,1986,NA,2000,NA,q,1.25,0.25,drop.q,1,self-ID FSW who worked in p3m; f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,130,1986,NA,2000,NA,q,3,0.5,median,1,self-ID FSW who worked in p3m; f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,130,1986,NA,2000,NA,q,6,0.75,drop.q,1,self-ID FSW who worked in p3m; f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,130,1986,NA,2000,NA,q,18,1,drop.q,1,self-ID FSW who worked in p3m; f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,255,1986,NA,2000,NA,q,0.083,0,drop.q,0,self-ID FSW who worked in p3m; not f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,255,1986,NA,2000,NA,q,0.667,0.25,drop.miss,1,self-ID FSW who worked in p3m; not f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,255,1986,NA,2000,NA,q,1.75,0.5,drop.miss,1,self-ID FSW who worked in p3m; not f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,255,1986,NA,2000,NA,q,4.333,0.75,drop.miss,1,self-ID FSW who worked in p3m; not f/u in 1993,re-extracted
+Ward2006,Europe,UK,fsw,coh,255,1986,NA,2000,NA,q,27,1,drop.miss,1,self-ID FSW who worked in p3m; not f/u in 1993,re-extracted
+Bratos1993,Europe,Spain,fsw,xs,368,NA,NA,NA,NA,q,2,0.326,drop.q,1,FSW who attended clinic,funky cutoffs
+Bratos1993,Europe,Spain,fsw,xs,368,NA,NA,NA,NA,q,4,0.628,drop.q,1,FSW who attended clinic,funky cutoffs
+Bratos1993,Europe,Spain,fsw,xs,368,NA,NA,NA,NA,q,6,0.813,drop.q,1,FSW who attended clinic,funky cutoffs
+Bratos1993,Europe,Spain,fsw,xs,368,NA,NA,NA,NA,q,8,0.92,drop.q,1,FSW who attended clinic,funky cutoffs
+Fennema1995,Europe,Netherlands,fsw,coh,212,1985,NA,1985,NA,q,5,0.45,median,1,HIV-positive PWID FSW at methadone,assume F12 median
+Fennema1995,Europe,Netherlands,fsw,coh,212,1985,NA,1985,NA,q,10,0.78,drop.q,1,HIV-positive PWID FSW at methadone,NA
+Orduna1992,Europe,Spain,fsw,xs,227,NA,NA,NA,NA,q,2,0.387,drop.q,1,non-PWID; 20+ partners / mo,funky cutoffs
+Orduna1992,Europe,Spain,fsw,xs,227,NA,NA,NA,NA,q,4,0.7,drop.q,1,non-PWID; 20+ partners / mo,funky cutoffs
+Orduna1992,Europe,Spain,fsw,xs,227,NA,NA,NA,NA,q,6,0.828,drop.q,1,non-PWID; 20+ partners / mo,funky cutoffs
+Orduna1992,Europe,Spain,fsw,xs,227,NA,NA,NA,NA,q,8,0.921,drop.q,1,non-PWID; 20+ partners / mo,funky cutoffs
+Papaevangelou1998,Europe,Greece,fsw,coh,902,1985,NA,1988,NA,q,0.083,0,median,0,FSW in 3 cohorts,NA
+Papaevangelou1998,Europe,Greece,fsw,coh,902,1985,NA,1988,NA,q,12,0.5,median,1,FSW in 3 cohorts,TODO: investigate extreme median
+Papaevangelou1998,Europe,Greece,fsw,coh,902,1985,NA,1988,NA,q,30,1,drop.q,1,FSW in 3 cohorts,NA
+Pineda1992,Europe,Spain,fsw,xs,519,1989,5,1990,12,mean,4.167,NA,mean,1,non-PWID FSW at hospital; min 2 mo working,NA
+Pineda1992,Europe,Spain,fsw,xs,519,1989,5,1990,12,sd,5,NA,drop.sd,0,non-PWID FSW at hospital; min 2 mo working,NA
+Pineda1992,Europe,Spain,fsw,xs,519,1989,5,1990,12,q,35,1,drop.q,0,non-PWID FSW at hospital; min 2 mo working,NA
+Pineda1995,Europe,Spain,fsw,xs,294,1990,NA,1990,NA,q,24,0.45,median,0,non-PWID FSW at hospital; min 21 mo working in estab,assume F12 median; F12 include?
+Uuskula2008,Europe,Estonia,fsw,xs,227,2005,10,2006,5,mean,8.3,NA,drop.m,1,"traded money, drugs, goods in p3m",NA
+Uuskula2008,Europe,Estonia,fsw,xs,227,2005,10,2006,5,q,0,0,drop.q,0,"traded money, drugs, goods in p3m",NA
+Uuskula2008,Europe,Estonia,fsw,xs,227,2005,10,2006,5,q,6.2,0.5,median,1,"traded money, drugs, goods in p3m",NA
+Uuskula2008,Europe,Estonia,fsw,xs,227,2005,10,2006,5,q,30,1,drop.q,1,"traded money, drugs, goods in p3m",NA
+McKeganey1992,Europe,Scotland,fsw,xs,68,1991,NA,1991,NA,q,0.02,0,drop.q,0,street-based FSW in red light area,NA
+McKeganey1992,Europe,Scotland,fsw,xs,68,1991,NA,1991,NA,q,2,0.5,median,1,street-based FSW in red light area,NA
+McKeganey1992,Europe,Scotland,fsw,xs,68,1991,NA,1991,NA,q,30,1,drop.q,1,street-based FSW in red light area,NA
+Loza2010,LatAm,Mexico,fsw,xs,914,2004,NA,2006,NA,q,2,0.25,drop.q,1,HIV-negative self-ID FSW aged 18+; unprotected sex w cli in p2m,NA
+Loza2010,LatAm,Mexico,fsw,xs,914,2004,NA,2006,NA,q,4,0.5,median,1,HIV-negative self-ID FSW aged 18+; unprotected sex w cli in p2m,NA
+Loza2010,LatAm,Mexico,fsw,xs,914,2004,NA,2006,NA,q,10,0.75,drop.q,1,HIV-negative self-ID FSW aged 18+; unprotected sex w cli in p2m,NA
+Strathdee2008,LatAm,Mexico,fsw,trial,914,2004,1,2005,3,q,4,0.5,drop.dup,0,HIV-negative self-ID FSW aged 18+; unprotected sex w cli in p2m,duplicate
+Bucardo2004,LatAm,Mexico,fsw,xs,25,NA,NA,NA,NA,mean,5,NA,mean,1,FSW recruited at clinic,quali study
+Bucardo2004,LatAm,Mexico,fsw,xs,25,NA,NA,NA,NA,q,0.25,0,drop.q,0,FSW recruited at clinic,quali study
+Bucardo2004,LatAm,Mexico,fsw,xs,25,NA,NA,NA,NA,q,14,1,drop.q,1,FSW recruited at clinic,quali study
+Szwarcwald2009,LatAm,Brazil,fsw,xs,2500,2009,NA,2009,NA,mean,8.6,NA,drop.m,1,NA,NA
+Szwarcwald2009,LatAm,Brazil,fsw,xs,2500,2009,NA,2009,NA,q,5.72,0.5,median,1,NA,NA
+Trevisol2005,LatAm,Brazil,fsw,xs,84,2003,12,2004,2,q,2.5,0.476,median,1,FSW aged 18+,assume F12 median
+Hyams1993,LatAm,Peru,fsw,coh,966,1987,NA,1990,NA,mean,6.2,NA,drop.m,1,FSW registered at clinic,NA
+Hyams1993,LatAm,Peru,fsw,coh,966,1987,NA,1990,NA,q,5,0.5,median,1,FSW registered at clinic,NA
+Hyams1993,LatAm,Peru,fsw,coh,966,1987,NA,1990,NA,q,30,1,drop.q,1,FSW registered at clinic,NA
+Sanchez1998,LatAm,Peru,fsw,xs,400,1991,10,1992,4,mean,3.475,NA,mean,1,FSW attending a clinic,NA
+Sanchez1998,LatAm,Peru,fsw,xs,400,1991,10,1992,4,sd,4.025,NA,drop.sd,1,FSW attending a clinic,NA
+Sanchez1998,LatAm,Peru,fsw,xs,400,1991,10,1992,4,q,0.083,0,drop.q,0,FSW attending a clinic,NA
+Sanchez1998,LatAm,Peru,fsw,xs,400,1991,10,1992,4,q,22,1,drop.q,1,FSW attending a clinic,NA
+Wignall1992,LatAm,Peru,fsw,xs,467,1987,7,1988,5,mean,8.8,NA,mean,1,FSW attending a clinic,NA
+Wignall1992,LatAm,Peru,fsw,xs,467,1987,7,1988,5,sd,6.7,NA,drop.sd,1,FSW attending a clinic,NA
+Wignall1992,LatAm,Peru,fsw,xs,467,1987,7,1988,5,q,39,1,drop.q,1,FSW attending a clinic,NA
+Gotuzzo1994,LatAm,Peru,fsw,xs,396,1991,10,1992,4,q,3,0.568,drop.q,1,FSW attending a clinic,NA
+Gotuzzo1994,LatAm,Peru,fsw,xs,396,1991,10,1992,4,q,6,0.841,drop.q,1,FSW attending a clinic,NA
+Paris1999,LatAm,Peru,fsw,xs,100,NA,NA,NA,NA,q,5,0.72,drop.q,1,street & brothel FSW,NA
+Potterat1990,NorAm,USA,fsw,coh,361,1970,NA,1988,NA,mean,5,NA,drop.m,1,women trading sex for money,b/w first & last clinic visit
+Potterat1990,NorAm,USA,fsw,coh,361,1970,NA,1988,NA,q,4,0.5,drop.m,1,women trading sex for money,b/w first & last clinic visit
+Seidlin1988,NorAm,USA,fsw,xs,78,1986,1,1987,12,mean,5.1,NA,mean,1,"women trading sex for money, but not street-based",NA
+Seidlin1988,NorAm,USA,fsw,xs,78,1986,1,1987,12,q,0.4,0,drop.q,0,"women trading sex for money, but not street-based",NA
+Seidlin1988,NorAm,USA,fsw,xs,78,1986,1,1987,12,q,18,1,drop.q,1,"women trading sex for money, but not street-based",NA
+Casabona1990,NorAm,USA,fsw,xs,71,NA,NA,NA,NA,mean,6.421,NA,drop.m,1,NA,NA
+Casabona1990,NorAm,USA,fsw,xs,71,NA,NA,NA,NA,sd,5.522,NA,drop.sd,0,NA,NA
+Casabona1990,NorAm,USA,fsw,xs,71,NA,NA,NA,NA,q,5.111,0.5,median,1,NA,NA
+KHMMOH1997,Asia,Cambodia,fsw,xs,245,1997,NA,1997,NA,mean,1.8,NA,mean,1,brothel-based FSW,re-extracted
+KHMMOH1997,Asia,Cambodia,fsw,xs,245,1997,NA,1997,NA,q,NA,0.5,TODO,0,brothel-based FSW,value = less than a year
+KHMMOH1998,Asia,Cambodia,fsw,xs,804,1998,NA,1998,NA,mean,1,NA,mean,1,brothel-based FSW,NA
+KHMMOH1998,Asia,Cambodia,fsw,xs,804,1998,NA,1998,NA,q,NA,0.5,TODO,0,brothel-based FSW,value = less than a year
+KHMMOH1999,Asia,Cambodia,fsw,xs,792,1999,NA,1999,NA,mean,1.2,NA,mean,1,brothel-based FSW,NA
+KHMMOH1999,Asia,Cambodia,fsw,xs,792,1999,NA,1999,NA,q,1,0.5,TODO,0,brothel-based FSW,value = less than a year
+KHMMOH2001,Asia,Cambodia,fsw,xs,570,2001,12,2002,1,mean,1.7,NA,mean,1,brothel-based FSW,NA
+KHMMOH2001,Asia,Cambodia,fsw,xs,570,2001,12,2002,1,q,1,0.5,turnover,1,brothel-based FSW,NA
+KHMMOH2003,Asia,Cambodia,fsw,xs,1308,2003,NA,2003,NA,q,1,0.5,turnover,1,brothel-based FSW,NA
+KHMMOH2003,Asia,Cambodia,fsw,xs,1308,2003,NA,2003,NA,q,5,0.31,drop.q,1,brothel-based FSW,assume max 20 years
+KHMMOH2003,Asia,Cambodia,fsw,xs,1308,2003,NA,2003,NA,mean,1.775,NA,drop.m,1,brothel-based FSW,NA
+KHMMOH2003,Asia,Cambodia,fsw,xs,474,2003,NA,2003,NA,mean,0.592,NA,drop.m,0,karaoke workers,drop pop
+KHMMOH2003,Asia,Cambodia,fsw,xs,474,2003,NA,2003,NA,q,0.333,0.5,median,0,karaoke workers,drop pop
+KHMMOH2003,Asia,Cambodia,fsw,xs,600,2003,NA,2003,NA,mean,1.175,NA,drop.m,0,beer promoters,drop pop
+KHMMOH2003,Asia,Cambodia,fsw,xs,600,2003,NA,2003,NA,q,0.5,0.5,median,0,beer promoters,drop pop
+KHMMOH2007,Asia,Cambodia,fsw,xs,592,2007,NA,2007,NA,q,12,0.5,median,1,brothel-based FSW aged 15+,NA
+KHMMOH2007,Asia,Cambodia,fsw,xs,399,2007,NA,2007,NA,q,0.5,0.5,median,0,karaoke workers aged 15+,drop pop
+KHMMOH2007,Asia,Cambodia,fsw,xs,395,2007,NA,2007,NA,q,1,0.5,turnover,0,beer promoters aged 15+,drop pop
+KHMMOH2007,Asia,Cambodia,fsw,xs,299,2007,NA,2007,NA,q,0.417,0.5,median,0,beer garden staff aged 15+,drop pop
+Celentano1994,Asia,Thailand,fsw,xs,273,1993,5,1992,6,q,1,0.297,turnover,1,"FSW in brothel, restaurant, bar, motel",NA
+Celentano1994,Asia,Thailand,fsw,xs,273,1993,5,1992,6,q,2,0.528,median,1,"FSW in brothel, restaurant, bar, motel",NA
+Celentano1994,Asia,Thailand,fsw,xs,273,1993,5,1992,6,q,4,0.777,drop.q,1,"FSW in brothel, restaurant, bar, motel",NA
+Celentano1994,Asia,Thailand,fsw,xs,273,1993,5,1992,6,q,16,1,drop.q,1,"FSW in brothel, restaurant, bar, motel",NA
+Gu2009,Asia,China,fsw,xs,216,2005,8,2006,4,q,3,0.505,median,0,FSW in p6m aged 18+ who inject drugs,drop pop
+Kao1997,Asia,Taiwan,fsw,xs,129,NA,NA,NA,NA,mean,4.5,NA,mean,1,HIV-negative FSW attend STI clinic,NA
+Kao1997,Asia,Taiwan,fsw,xs,129,NA,NA,NA,NA,mean,2.8,NA,drop.sd,0,HIV-negative FSW attend STI clinic,NA
+Kao1997,Asia,Taiwan,fsw,xs,16,NA,NA,NA,NA,mean,6.5,NA,mean,1,HIV-negative FSW attend STI clinic,NA
+Kao1997,Asia,Taiwan,fsw,xs,16,NA,NA,NA,NA,mean,3.6,NA,drop.sd,0,HIV-negative FSW attend STI clinic,NA
+Lau2007,Asia,China,fsw,xs,15277,2002,NA,2004,NA,q,1,0.29,turnover,1,NA,NA
+Lau2007,Asia,China,fsw,xs,15277,2002,NA,2004,NA,q,2,0.613,drop.q,1,NA,NA
+Lau2007,Asia,China,fsw,xs,15277,2002,NA,2004,NA,q,4,0.879,drop.q,1,NA,NA
+Majid2010,Asia,Indonesia,fsw,xs,2436,2007,8,2007,10,q,1.583,0.5,median,1,"direct FSW (brothel, street)",re-extracted
+Majid2010,Asia,Indonesia,fsw,xs,2436,2007,8,2007,10,q,27.333,1,drop.q,1,"direct FSW (brothel, street)",re-extracted
+Majid2010,Asia,Indonesia,fsw,xs,1888,2007,8,2007,10,q,1.417,0.5,median,1,indirect FSW (entertainment venues),re-extracted
+Majid2010,Asia,Indonesia,fsw,xs,1888,2007,8,2007,10,q,26.5,1,drop.q,1,indirect FSW (entertainment venues),re-extracted
+Mishra2009,Asia,India,fsw,xs,2208,2004,NA,2006,NA,q,3,0.387,drop.q,1,NA,NA
+Nhurod2010,Asia,Thailand,fsw,xs,83,2004,5,2006,6,q,5,0.5,median,1,street-based FSW,NA
+Nhurod2010,Asia,Thailand,fsw,xs,83,2004,5,2006,6,q,30,1,drop.q,1,street-based FSW,NA
+Nhurod2010,Asia,Thailand,fsw,xs,236,2004,5,2006,6,q,0.5,0.5,median,1,non-street-based FSW,NA
+Nhurod2010,Asia,Thailand,fsw,xs,236,2004,5,2006,6,q,20,1,drop.q,1,non-street-based FSW,median = 0
+Ohshige2000a,Asia,Cambodia,fsw,xs,202,NA,NA,NA,NA,q,1,0.619,drop.q,1,brothel-based FSW,NA
+Ohshige2000a,Asia,Cambodia,fsw,xs,202,NA,NA,NA,NA,q,2,0.857,drop.q,1,brothel-based FSW,NA
+Ohshige2000b,Asia,Cambodia,fsw,xs,143,1997,12,1998,1,q,1,0.622,drop.q,1,direct FSW,NA
+Ohshige2000b,Asia,Cambodia,fsw,xs,94,1997,12,1998,1,q,1,0.309,drop.q,1,indirect FSW,NA
+Reza-Paul2008,Asia,India,fsw,xs,429,2004,NA,2004,NA,q,0,0,drop.q,0,NA,more data in paper
+Reza-Paul2008,Asia,India,fsw,xs,429,2004,NA,2004,NA,q,1,0.25,turnover,1,NA,more data in paper
+Reza-Paul2008,Asia,India,fsw,xs,429,2004,NA,2004,NA,q,3,0.5,median,1,NA,more data in paper
+Reza-Paul2008,Asia,India,fsw,xs,429,2004,NA,2004,NA,q,5,0.75,drop.q,1,NA,more data in paper
+Reza-Paul2008,Asia,India,fsw,xs,429,2004,NA,2004,NA,q,38,1,drop.q,1,NA,more data in paper
+Reza-Paul2008,Asia,India,fsw,xs,425,2004,NA,2004,NA,q,0,0,drop.q,0,NA,more data in paper; follow-up
+Reza-Paul2008,Asia,India,fsw,xs,425,2004,NA,2004,NA,q,2,0.25,drop.q,1,NA,more data in paper; follow-up
+Reza-Paul2008,Asia,India,fsw,xs,425,2004,NA,2004,NA,q,5,0.5,median,1,NA,more data in paper; follow-up
+Reza-Paul2008,Asia,India,fsw,xs,425,2004,NA,2004,NA,q,10,0.75,drop.q,1,NA,more data in paper; follow-up
+Reza-Paul2008,Asia,India,fsw,xs,425,2004,NA,2004,NA,q,30,1,drop.q,1,NA,more data in paper; follow-up
+Ruan2006,Asia,China,fsw,xs,343,2004,12,2005,1,q,1,0.5,turnover,1,"female, sold sex p6m, plan to stay here 12m",NA
+Rugpao1993,Asia,Thailand,fsw,xs,326,1992,8,1992,10,q,0.027,0,drop.q,0,brothel-based FSW,NA
+Rugpao1993,Asia,Thailand,fsw,xs,326,1992,8,1992,10,q,1.083,0.5,median,1,brothel-based FSW,NA
+Rugpao1993,Asia,Thailand,fsw,xs,326,1992,8,1992,10,q,14,1,drop.q,1,brothel-based FSW,NA
+Sarkar2006,Asia,India,fsw,xs,2076,NA,NA,NA,NA,q,1,0.18,turnover,1,brothel-based FSW,NA
+Sarkar2006,Asia,India,fsw,xs,2076,NA,NA,NA,NA,q,3,0.294,drop.q,1,brothel-based FSW,NA
+Sarkar2006,Asia,India,fsw,xs,2076,NA,NA,NA,NA,q,5,0.51,median,1,brothel-based FSW,NA
+Sarkar2008,Asia,India,fsw,xs,226,NA,NA,NA,NA,q,2,0.168,drop.q,1,brothel-based FSW,NA
+Sarkar2008,Asia,India,fsw,xs,226,NA,NA,NA,NA,q,6,0.544,median,1,brothel-based FSW,NA
+Sarkar2008,Asia,India,fsw,xs,226,NA,NA,NA,NA,q,11,0.743,drop.q,1,brothel-based FSW,NA
+Sarkar2008,Asia,India,fsw,xs,226,NA,NA,NA,NA,q,40,1,drop.q,1,brothel-based FSW,NA
+Sawayama1999,Asia,Japan,fsw,xs,134,1993,1,1996,6,q,2,0.373,drop.q,1,non-PWID FSW at clinic,re-extracted
+Sawayama1999,Asia,Japan,fsw,xs,134,1993,1,1996,6,q,5,0.724,drop.q,1,non-PWID FSW at clinic,re-extracted
+Silverman2006,Asia,India,fsw,rrr,175,2002,12,2005,7,mean,1.317,NA,mean,0,trafficked into sex work,pop drop
+Silverman2006,Asia,India,fsw,rrr,175,2002,12,2005,7,q,1,0.693,turnover,0,trafficked into sex work,pop drop
+Silverman2006,Asia,India,fsw,rrr,175,2002,12,2005,7,q,0.5,0.409,drop.q,0,trafficked into sex work,pop drop
+Silverman2007,Asia,Nepal,fsw,rrr,287,1997,1,2005,12,mean,2.15,NA,drop.m,0,trafficked into sex work,pop drop
+Silverman2007,Asia,Nepal,fsw,rrr,287,1997,1,2005,12,q,1,0.5,turnover,0,trafficked into sex work,pop drop
+Sopheab2003,Asia,Cambodia,fsw,xs,71,2000,NA,2000,NA,mean,2,NA,mean,1,"FSW in brothel, karaoke bars",NA
+Sopheab2008,Asia,Cambodia,fsw,xs,1079,2005,3,2005,5,q,1,0.6,turnover,1,mainly brothel-based FSW,NA
+Sopheab2008,Asia,Cambodia,fsw,xs,1079,2005,3,2005,5,q,0.083,0,drop.q,0,mainly brothel-based FSW,NA
+Sopheab2008,Asia,Cambodia,fsw,xs,1079,2005,3,2005,5,q,12,1,drop.q,1,mainly brothel-based FSW,NA
+Taneepanichskul1997,Asia,Thailand,fsw,cc,118,1993,10,1994,12,q,1,0.042,turnover,1,HIV-negative FSW,NA
+Taneepanichskul1997,Asia,Thailand,fsw,cc,118,1993,10,1994,12,q,3,0.356,drop.q,1,HIV-negative FSW,NA
+Taneepanichskul1997,Asia,Thailand,fsw,cc,118,1993,10,1994,12,q,5,0.627,drop.q,1,HIV-negative FSW,NA
+Taneepanichskul1997,Asia,Thailand,fsw,cc,118,1993,10,1994,12,q,1,0.115,turnover,1,HIV-negative FSW,NA
+Taneepanichskul1997,Asia,Thailand,fsw,cc,118,1993,10,1994,12,q,3,0.425,drop.q,1,HIV-negative FSW,NA
+Taneepanichskul1997,Asia,Thailand,fsw,cc,118,1993,10,1994,12,q,5,0.658,drop.q,1,HIV-negative FSW,NA
+Theng2006,Asia,Singapore,fsw,xs,300,2003,10,2004,3,q,5,0.323,drop.q,1,brothel-based FSW visit clinic,NA
+Theng2006,Asia,Singapore,fsw,xs,300,2003,10,2004,3,q,10,0.603,drop.q,1,brothel-based FSW visit clinic,NA
+Thuy1998,Asia,Vietnam,fsw,xs,968,1995,8,1996,10,mean,1.667,NA,mean,1,FSW enrolling in edu prog,NA
+Thuy1998,Asia,Vietnam,fsw,xs,968,1995,8,1996,10,sd,2.2,NA,drop.sd,1,FSW enrolling in edu prog,NA
+Thuy1998,Asia,Vietnam,fsw,xs,968,1995,8,1996,10,q,0.083,0,drop.q,0,FSW enrolling in edu prog,NA
+Thuy1998,Asia,Vietnam,fsw,xs,968,1995,8,1996,10,q,10,1,drop.q,1,FSW enrolling in edu prog,NA
+Todd2010,Asia,Afghanistan,fsw,xs,520,2006,9,2008,1,q,5,0.5,median,1,FSW p6m aged 18+,NA
+Tran2005,Asia,Vietnam,fsw,xs,400,2002,6,2002,9,q,2.3,0.5,median,1,FSW p1m,NA
+Tran2005,Asia,Vietnam,fsw,xs,400,2002,6,2002,9,q,0.083,0,drop.q,0,FSW p1m,NA
+Tran2005,Asia,Vietnam,fsw,xs,400,2002,6,2002,9,q,21,1,drop.q,1,FSW p1m,NA
+vandenHoek2001,Asia,China,fsw,xs,966,1998,3,1999,10,q,1,0.5,turnover,1,FSW attending an edu prog,NA
+Wang2005,Asia,China,fsw,xs,454,2004,NA,2004,NA,mean,1.017,NA,mean,1,"FSW in restaurants, barbershops, etc",NA
+Wang2009,Asia,China,fsw,xs,737,2006,3,2006,5,q,1.617,0.5,median,1,FSW p3m aged 16+,NA
+Wang2009,Asia,China,fsw,xs,737,2006,3,2006,5,q,1,0.338,turnover,1,FSW p3m aged 16+,NA
+Wang2009,Asia,China,fsw,xs,737,2006,3,2006,5,q,3,0.722,drop.q,1,FSW p3m aged 16+,NA
+Wang2009,Asia,China,fsw,xs,737,2006,3,2006,5,q,5,0.854,drop.q,1,FSW p3m aged 16+,NA
+Wong2000,Asia,Singapore,fsw,xs,219,1997,5,1997,12,q,0.5,0.167,median,1,brothel-based FSW attend edu prog,NA
+Wong2000,Asia,Singapore,fsw,xs,219,1997,5,1997,12,q,0,0.083,drop.q,1,brothel-based FSW attend edu prog,NA
+Wong2000,Asia,Singapore,fsw,xs,219,1997,5,1997,12,q,3.5,1,drop.q,1,brothel-based FSW attend edu prog,NA
+Thuong2005,Asia,Vietnam,fsw,xs,911,2002,12,2003,2,q,0.5,0.197,drop.q,1,NA,NA
+Tran2008,Asia,Vietnam,fsw,xs,192,2005,NA,2005,NA,mean,5.4,NA,drop.m,1,NA,NA
+Tran2008,Asia,Vietnam,fsw,xs,192,2005,NA,2005,NA,q,5,0.5,median,1,NA,NA
+Tran2008,Asia,Vietnam,fsw,xs,192,2005,NA,2005,NA,q,0.083,0,drop.q,0,NA,NA
+Tran2008,Asia,Vietnam,fsw,xs,192,2005,NA,2005,NA,q,22,1,drop.q,1,NA,NA
+Nakashima1992,Asia,Japan,fsw,xs,282,1989,NA,1989,NA,q,1,0.259,turnover,1,NA,NA
+Simoes1993,Asia,India,fsw,xs,412,1986,NA,1986,NA,q,2,0.083,drop.q,0,incarcerated for FSW,drop pop
+Simoes1993,Asia,India,fsw,xs,412,1986,NA,1986,NA,q,3,0.306,drop.q,0,incarcerated for FSW,drop pop
+Simoes1993,Asia,India,fsw,xs,412,1986,NA,1986,NA,q,4,0.495,median,0,incarcerated for FSW,drop pop
+Simoes1993,Asia,India,fsw,xs,412,1986,NA,1986,NA,q,5,0.653,drop.q,0,incarcerated for FSW,drop pop

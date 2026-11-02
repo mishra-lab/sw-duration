@@ -1,0 +1,12 @@
+kp,region,method,ns,value.m,value.lo,value.hi
+fsw,Africa,2,4,5.5,NA,NA
+fsw,Africa,3,43,5.5,NA,NA
+fsw,Asia,2,12,2.9,NA,NA
+fsw,Asia,3,31,NA,2.8,4
+fsw,Europe,3,10,NA,8.4,10
+fsw,LatAm,3,6,NA,11.2,12
+fsw,NorAm,3,3,NA,10.2,11
+cli,Africa,2,1,4.6,NA,NA
+cli,Africa,3,2,5.5,NA,NA
+cli,Asia,3,3,32.4,NA,NA
+cli,NorAm,3,3,16.2,NA,NA
