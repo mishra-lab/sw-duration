@@ -9,6 +9,10 @@ duration means $\sE[z|s]$, and
 proportions of durations within a given interval $[a,b]$, denoted $\sP[\azb|s]$
 --- \eg if 33\% of durations were between 2 and 5 years, then $\sP[\lzu25|s] = 0.33$ ---
 which can also encompass estimated medians, quartiles, etc. with $a=0$.
+% JK: oops, just noticed that "a" is used twice:
+%     1) denoting the active population;
+%     2) denoting the lower bound of [a < z < b] like this.
+%     Since it hasn't caused confusion yet, I may leave as-is.
 % ==============================================================================
 \subsection{Bayesian Model}
 The model assumes a parametric distribution for
@@ -23,7 +27,8 @@ so the interpretation of and priors for each parameter depend on the family.
 We modelled the probability of
 being sampled for survey participation among the active population as
 increasing exponentially from $\pp \in [0.5,1]$ initially
-to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically:%
+to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically
+(Figure~\ref{fig:diag.psz}):%
 \footnote{Thus, if either $\pp = 1$ or $\tt = 0$,
   then sampling will be modelled as representative of the active population:
   $f(s|z) = 1$ and so $f(z|s) = f(z|a)$.}
@@ -32,13 +37,13 @@ to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically:%
     e^{\bigg(\frac{z}{\tt}\log\bigg(\frac{0.05}{1-\pp}\bigg)\bigg)}
   \label{eq:f(s|z)}
 \end{equation}
-For reference, Figure~\ref{fig:diag.psz} illustrates this sampling model graphically.
 We then defined the distribution of censored durations among the sampled population
 $f(z|s;\aa,\bb,\pp,\tt)$ via \eqref{eq:f(z|s)}.
 Finally, \eqrefa{eq:lE}{eq:lP} define the likelihood functions for
 estimates $\sE_i[z|s;N_i]$ and $\sP_i[\azb|s;N_i]$
 from empirical data with sample size $N_i$.
 Similar functions could be specified for individual-level data.
+\clearpage % TEMP
 % ------------------------------------------------------------------------------
 \paragraph{Implementation}
 We implemented the model using Stan~\cite{Stan2024},
@@ -130,7 +135,7 @@ whereas posteriors for $\E[x]$ and $\CV[x]$ varied even further across families
 (Figure~\ref{fig:demo.pars}).
 \par\clearpage % TEMP
 This identifiability issue likely arose because
-the available data aggregated the first 0--3 years into one stratum.
+the data aggregated the first 0--3 years into one stratum.
 This especially limited our ability to infer
 parameters of the early sex work sampling model: $\pp,\tt$,
 % LW: i feel even though u had defined earlier
@@ -143,7 +148,7 @@ parameters of the early sex work sampling model: $\pp,\tt$,
 %     I found re-stating them here disrupted the flow of this sentence too much
 %     I added "early sex work" before "sampling model"
 %     to hopefully help the reader recall what they aim to capture.
-whose posterior distributions are effectively indistinguishable from their priors
+whose posterior distributions were effectively indistinguishable from their priors
 (Figure~\ref{fig:demo.pars}).
 Nevertheless, we interpret our inference regarding the "true" duration distribution $f(x)$
 as conservatively realistic regarding remaining uncertainty,
@@ -192,7 +197,7 @@ on duration means $\sE[z|s;N_i]$ and interval proportions $\sP[\azb|s;N_i]$,
 %     since the uncertainty around such estimates (from finite samples) depends on N_i,
 %     but this is different than the uncertainty around the true values of E & P.
 including survey region, sample size $N_i$, and other meta-data
-(see \sref{supp.app.meta} for additional details).
+(see \sref{supp.app.meta} for details).
 We then fit our model separately for each region with data,
 retaining the best-fitting family per region.
 Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorAm} illustrate

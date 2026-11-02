@@ -47,21 +47,20 @@ Thus, the distribution of total durations among the active population is
 % JK: there is not really anything to derive I would say -
 %     just multiply the two proportional terms together and normalize
 \begin{equation}
-  f(x|a) = \frac{1}{K} ~ x ~ f(x)
+  \begin{aligned}
+    f(x|a) &= \frac{x ~ f(x)}{\int_0^\infty x ~ f(x)} \\
+           &= \frac{x ~ f(x)}{\E[x]}
+  \end{aligned}
   \label{eq:f(x|a)}
 \end{equation}
-% JK: I use "K" here rather than E[x]
-%     to simplify / highlight the proportionality with x & f(x)
-%     but I've gone back and forth about just using E[x] in the equation(s) directly
-where $K$ is a normalizing constant equal to
-the mean total duration among the source population $\E[x]$.
+where $\E[x]$ is the mean total duration among the source population.
 These total durations among the active population $x|a$ are typically unobserved,
 except in cohort studies which follow participants until they exit sex work.
 From \eqref{eq:f(x|a)} we can show that
 the mean total duration among the active population $\E[x|a]$
 is always larger than the mean among the source population $\E[x]$
 (Figure~\ref{fig:toy.distr}, green vs black circles);
-specifically, we have \cite{Zelen1969}:
+specifically \cite{Zelen1969}:
 \begin{equation}
   \E[x|a] = \E[x] (1 + \CV^2[x])
   \label{eq:E[x|a]}
@@ -85,19 +84,19 @@ For reference, we expect that $\CV[x] \in (1,2)$ in this context, for three reas
 First, heavy-tailed distributions having $\CV[x] > 1$ can arise via selection effects
 in a population with heterogeneous exit rates \cite{Balan2020}.
 Second, most parametric distributions with $\CV[x] < 1$
-have $f(x\sp\rarr0)\sp\rarr0$ (Figure~\ref{fig:toy.distr}), which effectively implies
+have $f(x\sp\rarr0)\sp\rarr0$ (Figure~\ref{fig:toy.distr}), which implies
 that few people exit sex work shortly after starting, or
 that most people stay in sex work for a "minimum" period,
 which seems unrealistic.
-Finally, aging naturally constrains maximum durations via a competing risk of death,
+Finally, aging naturally constrains maximum durations,
 which in turn constrains duration variance,
 such that usually $\CV[x] < 2$.
 \par
 Returning to \eqref{eq:f(x|a)},
 we also note that the probability of observing
-active individuals with very short total durations is inherently very small
+active individuals with short total durations is inherently small
 (Figure~\ref{fig:toy.distr.1}, green solid line).
-A related insight is that the \emph{inactive} population (denoted $\bar{a}$),
+Relatedly, the \emph{inactive} population (denoted $\bar{a}$),
 includes many future or former sex workers with short total durations
 (Figure~\ref{fig:diag}, gray),
 and thus has smaller mean total duration than the source or active populations:
@@ -106,7 +105,7 @@ $\E[x|\bar{a}] < \E[x] < \E[x|a]$.
 %     who is/not counted in this population - \eg children? only living?
 % ------------------------------------------------------------------------------
 \paragraph{Censoring}
-Next we consider a hypothetical survey among the active population.
+Next, we consider a hypothetical survey among the active population.
 If timing of the survey is effectively random, then
 observed durations at survey time ($z$) will be right-censored
 and uniformly distributed between 0 and the total duration ($x$):
@@ -127,8 +126,7 @@ the mean total duration among the active population
   \label{eq:E[z|a]}
 \end{equation}
 This idea appears to be well-known, and likely motivates
-doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 of \cite{Fazito2012}
---- \ie to "undo" halving the mean due to censoring.
+doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 of \cite{Fazito2012}.
 However, method~3 does not account for length-biased sampling,
 and thus actually estimates the mean total duration among the active population $\E[x|a]$,
 which we know to be greater than among the source population $\E[x]$ per \eqref{eq:E[x|a]}.%
@@ -151,8 +149,7 @@ the mean censored duration among the active population $\E[z|s]$:
 \end{equation}
 However, this is not immediately useful unless $\CV[x]$ is known.
 Alternatively, by combining \eqrefa{eq:f(x|a)}{eq:f(z|x)}, we can relate
-the complete distribution of total durations among the source population $f(x)$ to
-the distribution of censored durations among the active population $f(z|a)$
+the complete distributions $f(x)$ and $f(z|a)$
 --- \eqref{eq:f(z|a).full} gives a complete derivation \cite{Tufto2017}:
 % LW: I know u have the notations embedded while talk about each equations as they come up.
 %     but i wonder if somewhere early on: the terminilogy and notiation can be
@@ -229,7 +226,8 @@ due to delays in self-identification as a sex worker \cite{Cheuk2020} ---
 this probability of being sampled will be a function of
 current observed/censored duration ($z$) not true/total duration ($x$),
 so we denote it $f(s|z)$.
-Many parameterizations of $f(s|z)$ are possible; \eg \eqref{eq:f(s|z)} below.
+Many parameterizations of $f(s|z)$ are possible;
+\eg \eqref{eq:f(s|z)} below in \sref{appl}.
 To incorporate this further sampling bias, we update
 the distribution of observed durations among survey participants
 from \eqref{eq:f(z|a)} as:
@@ -270,7 +268,7 @@ For all method~3 estimates, undersampling of early sex work
 (here assuming $\pp = 0.5, \tt = 1$ year)
 predictably biases estimates slightly higher;
 this bias is also larger for smaller $\E[x]$ (not shown).
-Finally, turnover-based estimates (method~2) tends to be most consistent,
+Finally, method~2 tends to be most consistent,
 only slightly overestimating $\E[x]$ as $\CV[x]$ increases.
 However, this method is especially sensitive to
 undersampling of early sex work, which biases estimates upwards.
