@@ -10,11 +10,12 @@ igs = [
 envs = [
   re.compile('\\s*?\\\\begin\\{'+env+'\\}(.*?)\\\\end\\{'+env+'\\}',re.DOTALL)
   for env in ['table','figure','equation','alignat']
-] + [re.compile('\\s*?\\\\footnote\\{.*?\\}',re.DOTALL)]
+] + [re.compile('\\s*?\\\\footnote\\{.*?\\}\\n',re.DOTALL)]
 reps = [
   ('~', ' '),
   ('(``|\'\')', '"'),
   ('\\$(.*?)\\$', '\\1'),
+  ('\\s+(\\=|\\<|\\>|\\-|\\+)\\s+','\\1'),
   ('\\n\\\\par\\n','\n\n'),
   ('\\\\times', 'x'),
   ('\\\\emph\\{(.*?)\\}', '\\1'),
