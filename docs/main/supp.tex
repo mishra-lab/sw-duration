@@ -11,8 +11,8 @@
 \paragraph{Derivation of $f(z|a)$}
 \eqref{eq:f(z|a).full} gives the complete derivation of \eqref{eq:f(z|a)} --- \ie
 the complete distribution of censored durations among the active population $f(z|a)$
-from the distribution of total durations among the source population $f(x)$
-\cite{Tufto2017}:
+from the distribution of total durations among the source population $f(x)$:
+\cite{Tufto2017}
 \begin{equation}
   \begin{aligned}
     f(z|a) &= \int_0^\infty f(z|x) ~ f(x|a) ~ dx \\
@@ -50,7 +50,7 @@ all having $\E[x] = 5$ and $\CV[x] = \{0.5, 1, 1.5\}$.
 We omit the Exponential family as it is
 a special case of both Gamma and Weibull with $\CV[x] = 1$.
 Figure~\ref{fig:toy.est} further illustrates
-performance of different $\E[x]$ estimators considered in \cite{Fazito2012}
+performance of different $\E[x]$ estimators considered in \citep{Fazito2012}
 across a range of $\CV[x]$ and the same 5 distribution families.
 Finally, Figure~\ref{fig:diag.psz} illustrates
 the shape and parameters of the assumed sampling model \eqref{eq:f(s|z)}.
@@ -66,12 +66,12 @@ the shape and parameters of the assumed sampling model \eqref{eq:f(s|z)}.
 \end{figure}
 \begin{figure}
   \centering\includegraphics[scale=.7]{toy.est}
-  \caption{Performance of $\E[x]$ estimators considered in \cite{Fazito2012}
+  \caption{Performance of $\E[x]$ estimators considered in \citep{Fazito2012}
     across a range of $\CV[x]$ and distribution families}
   \label{fig:toy.est}
   \floatfoot{Note: true $\E[x] = 5$;
     probability of being sampled modelled per \eqref{eq:f(s|z)} with $\pp = 0.5, \tt = 1$;
-    means and medians for censored data ($z$) are doubled per \cite{Fazito2012}.}
+    means and medians for censored data ($z$) are doubled per \citep{Fazito2012}.}
 \end{figure}
 \begin{figure}
   \centering\includegraphics[scale=1]{psz}
@@ -137,7 +137,7 @@ whose durations can fall in the specified interval $[a,b]$.
 \subsection{Aggregate data from a single survey}\label{supp.app.demo}
 Figure~\ref{fig:demo.pars} illustrates the posterior distributions
 inferred by fitting the Bayesian model to
-the RDS-adjusted sex work duration data reported in \cite{Baral2014}.
+the RDS-adjusted sex work duration data reported in \citep{Baral2014}.
 The best-fitting distribution family, based on overall log-likelihood, was Gamma (purple).
 Figure~\ref{fig:demo.trace} also illustrates an example trace plot (Gamma family)
 showing convergence of 7 sampling chains during 500 warm-up iterations.
@@ -159,8 +159,8 @@ showing convergence of 7 sampling chains during 500 warm-up iterations.
 \subsection{Aggregate data from a global review}\label{supp.app.meta}
 % ------------------------------------------------------------------------------
 \paragraph{Data}
-The manually extracted data from Table~S2 in \cite{Fazito2012}
-are provided as supplementary file \texttt{Fazito2012.csv}.
+The manually extracted data from Table~S2 of \citep{Fazito2012}
+are provided as supplementary file \texttt{Fazito2012tS2.csv}.
 We extracted all reported duration means $\E[z|s]$ and
 interval proportions $\sP[\azb|s]$ (including medians and maximum durations),
 but dropped from our analyses for simplicity:
@@ -168,7 +168,7 @@ standard deviations, minimum durations, and durations reported as "greater/less 
 We also dropped estimates from the following 9 sources
 due to the female sex worker (FSW) population definition
 (it's not clear whether these studies were included
- in the quantitative syntheses of \cite{Fazito2012}):
+ in the quantitative syntheses of \citep{Fazito2012}):
 \begin{itemize}[parsep=0pt]
   \item Anzala (1995) Kenya: FSW in a cohort who acquired HIV
   \item Ward (2006) UK: FSW who retired and were followed-up
@@ -196,10 +196,10 @@ by weighting each study more equally.
 Figures \ref{fig:meta.Africa}--\ref{fig:meta.NorAm} illustrate
 the posterior distributions of model parameters, summary statistics,
 and cumulative/density duration distributions and means versus the data
-for female sex workers reviewed in \cite{Fazito2012}.
+for female sex workers reviewed in \citep{Fazito2012}.
 Figure~\ref{fig:meta.forest.all} then summarizes estimates of
 mean total duration in sex work among the source population $\E[x]$
-obtained via the Bayesian model versus those reported in \cite{Fazito2012},
+obtained via the Bayesian model versus those reported in \citep{Fazito2012},
 across all distribution families considered.
 \clearpage
 \foreach \slug/\region in \regions{
@@ -229,9 +229,9 @@ across all distribution families considered.
   \includegraphics[width=\textwidth]{meta.forest.all}
   \caption{Forest plot of Bayesian model-estimated
     mean total duration in sex work $\E[x]$ (all families)
-    versus regional synthesis estimates in \cite{Fazito2012}}
+    versus regional synthesis estimates in \citep{Fazito2012}}
   \label{fig:meta.forest.all}
-  \floatfoot{Synthesis methodology in \cite{Fazito2012} was unclear,
+  \floatfoot{Synthesis methodology in \citep{Fazito2012} was unclear,
     and regional estimates were variably reported as points or ranges;
     see Table~\ref{tab:meth} for method definitions.
     Ns: number of unique surveys contributing to the estimate;

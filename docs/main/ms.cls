@@ -79,6 +79,7 @@
   sorting=none,
   isbn=false,
   date=year,
+  minbibnames=3,% HACK
 ]{biblatex}
 \AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}}}
 % helpers

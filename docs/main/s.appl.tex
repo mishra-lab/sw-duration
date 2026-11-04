@@ -46,8 +46,8 @@ Similar functions could be specified for individual-level data.
 \clearpage % TEMP
 % ------------------------------------------------------------------------------
 \paragraph{Implementation}
-We implemented the model using Stan~\cite{Stan2024},
-with default random parameter initialization and sampling algorithm~\cite{Betancourt2018}.
+We implemented the model using Stan,\cite{Stan2024}
+with default random parameter initialization and sampling algorithm.\cite{Betancourt2018}
 For a given set of empirical data
 --- \ie aggregate estimate(s) of $\sE_i[z|s;N_i]$ and/or $\sP_i[\azb|s;N_i]$ ---
 we fit the model separately under each candidate family,
@@ -91,7 +91,7 @@ each with uncertainty.
 % JK: I've added this above, integrating existing details about implementation in Stan, etc.
 %     Does this help?
 We first demonstrated the model on aggregate data from
-a 2011 cross-sectional survey of 328 female sex workers in Eswatini \cite{Baral2014}.
+a 2011 cross-sectional survey of 328 female sex workers in Eswatini.\cite{Baral2014}
 The authors reported crude and respondent-driven sampling (RDS)-adjusted
 mean (95\%~CI) proportions of respondents who had been in sex work for
 0--3, 3--6, 6--11, and 11+ years (Table~\ref{tab:data.demo})
@@ -162,7 +162,7 @@ based on these empirical data alone.
 % JK: I've added the P[a<z<b|s;Ni] notation to the main caption,
 %     and fixed notation so that P[z|s] is now consistently f(z|s) throughout
   \caption{Posterior estimates from fitting the Bayesian model
-    to RDS-adjusted aggregate censored duration data from \cite{Baral2014}:
+    to RDS-adjusted aggregate censored duration data from \citep{Baral2014}:
     (i) proportions of sampled respondents with durations
     in pre-specified intervals $\P[\azb|s;N_i]$;
     (ii) inferred distributions of:
@@ -191,7 +191,7 @@ and compared our pooled estimates to theirs.%
 %        I mention this indirectly in the future work section,
 %        when discussing a hazard-rate approach
 We manually extracted aggregate data
-for female sex workers from Table~S2 in \cite{Fazito2012}
+for female sex workers from Table~S2 in \citep{Fazito2012}
 on duration means $\sE[z|s;N_i]$ and interval proportions $\sP[\azb|s;N_i]$,
 % JK: I've added N_i notation to all empirical estimates of E & P,
 %     since the uncertainty around such estimates (from finite samples) depends on N_i,
@@ -221,8 +221,8 @@ stratified by region (Figure) and family (colour).
 \par\clearpage % TEMP
 Figure~\ref{fig:meta.forest.bf} then illustrates
 model-estimated mean total durations $\E[x]$ (best-fitting family per region)
-versus those in Table~1 of \cite{Fazito2012}.
-Our estimates are significantly shorter than those of \cite{Fazito2012} for all regions
+versus those in Table~1 of \citep{Fazito2012}.
+Our estimates are significantly shorter than those of \citep{Fazito2012} for all regions
 --- \eg we estimated:
 2.1 (1.8--2.5) versus 5.5 years for Africa (approximately 2.5x shorter),
 % LW: 1.5 shorter reads a bit odd to me. usually we say 1.5 more/longer
@@ -235,7 +235,7 @@ method~3 can overestimate $\E[x]$ by failing to account for length-biased sampli
 method~2 can overestimate $\E[x]$ if early sex work is undersampled.
 Model-estimated distributions of total durations among the source population $f(x)$
 were also consistently heavy-tailed, with $\CV[x] > 1.5$,
-suggesting substantial population heterogeneity \cite{Balan2020}.
+suggesting substantial population heterogeneity.\cite{Balan2020}
 Relatedly, the model estimated that
 over half of all source population women remain in sex work for less than 1 year
 in all regions except North America, which had only 3 studies
@@ -244,9 +244,9 @@ in all regions except North America, which had only 3 studies
   \includegraphics[width=\textwidth]{meta.forest.bf}
   \caption{Forest plot of Bayesian model-estimated
     mean total duration in sex work $\E[x]$ (best-fitting family per region)
-    versus regional synthesis estimates in \cite{Fazito2012}}
+    versus regional synthesis estimates in \citep{Fazito2012}}
   \label{fig:meta.forest.bf}
-  \floatfoot{Synthesis methodology in \cite{Fazito2012} was unclear,
+  \floatfoot{Synthesis methodology in \citep{Fazito2012} was unclear,
     and regional estimates were variably reported as points or ranges;
     see Table~\ref{tab:meth} for method definitions.
     Ns: number of unique surveys contributing to the estimate.}

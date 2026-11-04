@@ -49,11 +49,11 @@
   {\projroot/out/fig/val/}
   {\projroot/out/fig/stan/}
 }
-% bib & dwhyperref
-\RequirePackage[natbib=true]{biblatex}
-\renewcommand{\bibfont}{\footnotesize}
-\AtBeginBibliography{\setlength{\itemsep}{.67ex}}
+% bib & hyperref
 \addbibresource{/home/jesse/refs/library.bib}
+\renewcommand{\bibfont}{\footnotesize}
+\renewcommand{\citet}[1]{\citeauthor{#1}\cite{#1}}
+\let\cite\supercite
 \RequirePackage[
   colorlinks,
   citecolor=violet,

@@ -39,9 +39,9 @@ example distributions for $f(x)$, $f(z|s)$, and intermediates thereof.
 The probability of an individual being active at any given time
 is proportional to their total duration $x$;
 a phenomenon well-described (\eg in cancer epidemiology and renewal theory)
-as "length-biased sampling" or the "renewal paradox" \cite{Kafadar2009,Ross2003}.
-Thus, the distribution of total durations among the active population is
-\cite{Ross2003,Tufto2017}:
+as "length-biased sampling" or the "renewal paradox".\cite{Kafadar2009,Ross2003}
+Thus, the distribution of total durations among the active population is:
+\cite{Ross2003,Tufto2017}
 % LW: is the detailed derivation in this REF?
 %     if so - I would make that clear or show in Appendix if not already in REF.
 % JK: there is not really anything to derive I would say -
@@ -59,8 +59,8 @@ except in cohort studies which follow participants until they exit sex work.
 From \eqref{eq:f(x|a)} we can show that
 the mean total duration among the active population $\E[x|a]$
 is always larger than the mean among the source population $\E[x]$
-(Figure~\ref{fig:toy.distr}, green vs black circles);
-specifically \cite{Zelen1969}:
+(Figure~\ref{fig:toy.distr.1}, green vs black circles);
+specifically:\cite{Zelen1969}
 \begin{equation}
   \E[x|a] = \E[x] (1 + \CV^2[x])
   \label{eq:E[x|a]}
@@ -82,9 +82,9 @@ For reference, we expect that $\CV[x] \in (1,2)$ in this context, for three reas
 %     I also rephrased "we often find that" -> "we expect that"
 %     to clarify this is more an assumption than derived from data.
 First, heavy-tailed distributions having $\CV[x] > 1$ can arise via selection effects
-in a population with heterogeneous exit rates \cite{Balan2020}.
+in a population with heterogeneous exit rates.\cite{Balan2020}
 Second, most parametric distributions with $\CV[x] < 1$
-have $f(x\sp\rarr0)\sp\rarr0$ (Figure~\ref{fig:toy.distr}), which implies
+have $f(x\sp\rarr0)\sp\rarr0$ (Figure~\ref{fig:toy.distr.1}), which implies
 that few people exit sex work shortly after starting, or
 that most people stay in sex work for a "minimum" period,
 which seems unrealistic.
@@ -126,7 +126,7 @@ the mean total duration among the active population
   \label{eq:E[z|a]}
 \end{equation}
 This idea appears to be well-known, and likely motivates
-doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 of \cite{Fazito2012}.
+doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 in \citep{Fazito2012}.
 However, method~3 does not account for length-biased sampling,
 and thus actually estimates the mean total duration among the active population $\E[x|a]$,
 which we know to be greater than among the source population $\E[x]$ per \eqref{eq:E[x|a]}.%
@@ -150,7 +150,7 @@ the mean censored duration among the active population $\E[z|s]$:
 However, this is not immediately useful unless $\CV[x]$ is known.
 Alternatively, by combining \eqrefa{eq:f(x|a)}{eq:f(z|x)}, we can relate
 the complete distributions $f(x)$ and $f(z|a)$
---- \eqref{eq:f(z|a).full} gives a complete derivation \cite{Tufto2017}:
+--- \eqref{eq:f(z|a).full} gives a complete derivation:\cite{Tufto2017}
 % LW: I know u have the notations embedded while talk about each equations as they come up.
 %     but i wonder if somewhere early on: the terminilogy and notiation can be
 %     defined at once and altogether - e.g.,
@@ -184,7 +184,7 @@ we can estimate $\E[x]$ as
 the inverse of the proportion of active sex workers who "just started"
 (Figure~\ref{fig:toy.distr.1}, y-intercept of green dashed lines):%
 \footnote{\eqref{eq:E[x].z0} is essentially
-  a more precise definition of method~2 in \cite{Fazito2012}.}
+  a more precise definition of method~2 in \citep{Fazito2012}.}
 \begin{equation}
   \E[x] = \frac{1}{f(z=0|a)}
   \label{eq:E[x].z0}
@@ -202,7 +202,7 @@ we can still leverage \eqref{eq:f(z|a)} to infer $f(x)$, as we show in \sref{app
 \paragraph{Exponential case}
 A special case arises if durations are exponentially distributed:
 $f(x) = \lambda e^{-\lambda x}$,
-which is often implicitly assumed in compartmental simulation models \cite{Garnett2011}.
+which is often implicitly assumed in compartmental simulation models.\cite{Garnett2011}
 Since $\E[x] = \lambda^{-1}$ and $F_x = 1 - e^{-\lambda x}$,
 we find that: $f(z|a) = f(x)$.
 That is, the distributions of
