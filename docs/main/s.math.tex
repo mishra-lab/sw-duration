@@ -34,6 +34,7 @@ example distributions for $f(x)$, $f(z|s)$, and intermediates thereof.
     (Figure~\ref{fig:toy.distr} illustrates other distribution families);
     probability of being sampled per \eqref{eq:f(s|z)}.}
 \end{figure}
+\pagebreak % TEMP
 % ------------------------------------------------------------------------------
 \paragraph{Length-biased sampling}%
 The probability of an individual being active at any given time
@@ -129,14 +130,7 @@ This idea appears to be well-known, and likely motivates
 doubling the mean $\E[z|a]$ to estimate $\E[x]$ in method~3 in \citep{Fazito2012}.
 However, method~3 does not account for length-biased sampling,
 and thus actually estimates the mean total duration among the active population $\E[x|a]$,
-which we know to be greater than among the source population $\E[x]$ per \eqref{eq:E[x|a]}.%
-\footnote{\citet{Fazito2012} partially acknowledge this issue
-  by opting to use the median over the mean of $z|a$ where possible,
-  since the median is less sensitive to outliers.
-  However, as shown in Figure \ref{fig:toy.est},
-  doubling the median $\M[z|a]$ still overestimates $\E[x]$,
-  just to a lesser degree than doubling the mean $\E[z|a]$,
-  since the median will always be less than the mean for right-skewed distributions.}
+which we know to be greater than among the source population $\E[x]$ per \eqref{eq:E[x|a]}.
 % ------------------------------------------------------------------------------
 \paragraph{Complete distribution}
 To consider both length-biased sampling and censoring simultaneously,
@@ -182,13 +176,12 @@ normalized to have unit area under the curve via $\E[x]$ as in \eqref{eq:f(x|a)}
 Since this cumulative distribution is initially $F_x(z=0) = 0$ by definition,
 we can estimate $\E[x]$ as
 the inverse of the proportion of active sex workers who "just started"
-(Figure~\ref{fig:toy.distr.1}, y-intercept of green dashed lines):%
-\footnote{\eqref{eq:E[x].z0} is essentially
-  a more precise definition of method~2 in \citep{Fazito2012}.}
+(Figure~\ref{fig:toy.distr.1}, y-intercept of green dashed lines):
 \begin{equation}
   \E[x] = \frac{1}{f(z=0|a)}
   \label{eq:E[x].z0}
 \end{equation}
+which is effectively a more precise definition of method~2 in \citep{Fazito2012}.
 We can then recover $f(x)$ by differentiating $f(z|a)$ and multiplying by $\E[x]$:
 \begin{equation}
   f(x) = - ~ \E[x] \frac{d}{dz} f(z|a)
@@ -248,12 +241,12 @@ the three methods applied by \citet{Fazito2012}
 to estimate the "true" mean duration in sex work $\E[x]$ (Table~\ref{tab:meth}).
 Figure~\ref{fig:toy.est} plots:
 the typically unobserved mean and median of total durations (method~1),%
-\footnote{We are being generous to method~1 here by assuming
-  former sex workers are representative of the \emph{source} population,
-  whereas only the \emph{inactive} population is sampled in practice.}
 the reciprocal proportion of censored durations less than 1 year (method~2),
 and \emph{double} the means and medians of censored durations (method~3),
 across a range of $\CV[x]$ and distribution families for $f(x)$ with true $\E[x] = 5$.
+We are being generous to method~1 here by assuming
+former sex workers are representative of the \emph{source} population,
+whereas only the \emph{inactive} population is sampled in practice.
 We see that at low $\CV[x]$, nearly all methods converge on the true $\E[x]$.
 However, as $\CV[x]$ increases,
 length-biased sampling causes stronger selection towards

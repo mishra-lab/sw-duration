@@ -28,10 +28,7 @@ We modelled the probability of
 being sampled for survey participation among the active population as
 increasing exponentially from $\pp \in [0.5,1]$ initially
 to 95\% by year $\tt \in [0,3]$, and 100\% asymptotically
-(Figure~\ref{fig:diag.psz}):%
-\footnote{Thus, if either $\pp = 1$ or $\tt = 0$,
-  then sampling will be modelled as representative of the active population:
-  $f(s|z) = 1$ and so $f(z|s) = f(z|a)$.}
+(Figure~\ref{fig:diag.psz}):
 \begin{equation}
   f(s|z) = 1 + \big(\pp-1\big)
     e^{\bigg(\frac{z}{\tt}\log\bigg(\frac{0.05}{1-\pp}\bigg)\bigg)}
@@ -43,7 +40,6 @@ Finally, \eqrefa{eq:lE}{eq:lP} define the likelihood functions for
 estimates $\sE_i[z|s;N_i]$ and $\sP_i[\azb|s;N_i]$
 from empirical data with sample size $N_i$.
 Similar functions could be specified for individual-level data.
-\clearpage % TEMP
 % ------------------------------------------------------------------------------
 \paragraph{Implementation}
 We implemented the model using Stan,\cite{Stan2024}
@@ -59,9 +55,9 @@ and then selected the best-fitting family (highest total likelihood).
 %     to keep only the best-fitting family when doing model selection.
 %     In future, we could do resampling from all family posteriors, weighted by likelihood.
 We retained 1000 consecutive samples after 500 warm-up iterations from 7 chains,
-confirming convergence visually through parameter trace plots
-(\eg Figure~\ref{fig:demo.trace}).%
-\footnote{We manually removed 3 chains that did not converge.}
+confirming convergence visually through parameter trace plots,
+(\eg Figure~\ref{fig:demo.trace});
+we manually removed 3 chains that did not converge.
 % SW: What caused the nonconvergence of these three chains,
 %     and could excluding them affect the posterior estimates?
 % JK: I will email some figues illustrating the issues,
@@ -77,6 +73,7 @@ This approach yielded 7000 posterior parameter samples, from which we computed
 the distribution of total durations among the source population $f(x;\aa,\bb)$,
 and characteristics thereof, \eg the mean $\E[x;\aa,\bb]$,
 each with uncertainty.
+\pagebreak % TEMP
 % ==============================================================================
 \subsection{Aggregate data from a single survey}
 % LW: in the application using example:
@@ -104,7 +101,7 @@ mean (95\%~CI) proportions of respondents who had been in sex work for
 We converted these 95\%~CI to effective sample sizes per stratum ($N_i$),
 for compatibility with the likelihood function \eqref{eq:lP},
 and fit the model as described above.
-\begin{table}[b]
+\begin{table}
   \centering
   \caption{RDS-adjusted proportions of durations in sex work
     reported by a 2011 sample of female sex workers in Eswatini
@@ -133,7 +130,7 @@ wide for $\E[x]$: 2.30--8.53 and $\CV[x]$: 0.43--1.79
 Posteriors for $\E[z|s]$ and $\CV[z|s]$ also remained similar across families,
 whereas posteriors for $\E[x]$ and $\CV[x]$ varied even further across families
 (Figure~\ref{fig:demo.pars}).
-\par\clearpage % TEMP
+\par
 This identifiability issue likely arose because
 the data aggregated the first 0--3 years into one stratum.
 This especially limited our ability to infer
@@ -174,14 +171,13 @@ based on these empirical data alone.
     (ii) posterior \CI of modelled duration distribution density.
     Points and dashed line ranges denote RDS-adjusted means and \CI for proportion data in (i).}
 \end{figure}
+\pagebreak % TEMP
 % ==============================================================================
 \subsection{Aggregate data from a global review}
 Next, we applied our model to generate
 regionally pooled estimates of mean total duration in sex work
 using the same aggregate data and region definitions as \citet{Fazito2012},
-and compared our pooled estimates to theirs.%
-\footnote{We acknowledge that region definitions in \cite{Fazito2012} are now outdated,
-  \eg combining all of Africa.}
+and compared our pooled estimates to theirs.
 % SW: Does the regional analysis account for differences between studies,
 %     such as population characteristics and sampling methods?
 % JK: No, for 2 reasons:
@@ -218,7 +214,7 @@ stratified by region (Figure) and family (colour).
 %     For example, if we want to discuss families, then we have to
 %     a priori say that in the objectives and applications that we are going to do this.
 %     So I suggest work backwards from the key points/messages, and then structure the para?
-\par\clearpage % TEMP
+\par
 Figure~\ref{fig:meta.forest.bf} then illustrates
 model-estimated mean total durations $\E[x]$ (best-fitting family per region)
 versus those in Table~1 of \citep{Fazito2012}.
@@ -251,4 +247,3 @@ in all regions except North America, which had only 3 studies
     see Table~\ref{tab:meth} for method definitions.
     Ns: number of unique surveys contributing to the estimate.}
 \end{figure}
-\clearpage % TEMP
