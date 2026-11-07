@@ -1,0 +1,51 @@
+\section{Objective~1: Relationships Between Duration Distributions}
+\newcommand{\eq}[1]{\null\hfill\textcolor{cta}{$#1$}}
+\newcommand{\gm}[1]{{\includegraphics[scale=3]{#1}}}
+\newcommand{\gmm}[2]{\gm{m#1}\,$\rightarrow$\,\gm{m#2}}
+\vspace{-\sep}
+\mp[b]{.525}{\null\begin{figure}
+  \includegraphics[width=\tw]{diag.leg}
+  \caption{Illustration of periods in sex work
+    for an open population of future, active, \& former sex workers at equilibrium}
+  \label{fig:diag}
+  \end{figure}}
+\wp[b]{.475}{\null\begin{figure}
+  \includegraphics[width=\tw]{toy.distr.p}
+  \caption{Illustrative total and censored duration distributions (lines) and means (shapes) among different populations}
+  \label{fig:toy}
+  \end{figure}}
+\paragraph{Approach:} First walk step-by-step from $f(x)$ to $f(z|s)$
+\paragraph{Step 1: Length-Biased Sampling} \gmm{xo}{xa}
+\begin{itemize}
+  \item Probability of being active ($a$) is proportional to total duration:
+        \eq{f(x|a) \propto x ~ f(x)}
+  \item Longer durations dominate, increasing the mean
+  \item Aside: we observe few individuals with short total durations
+\end{itemize}
+\paragraph{Step 2: Random Censoring} \gmm{xa}{za}
+\begin{itemize}
+  \item Observed durations ($z$) are randomly censored at survey:
+        \eq{f(z|x) \sim \txn{Unif}(0,x)}
+  \item The mean is exactly halved
+\end{itemize}
+\paragraph{Step 3: Undersampling Early Sex Work} \gmm{za}{zs}
+\begin{itemize}
+  \item Sampling ($s$) can miss sex workers who recently started:\cite{Cheuk2020}
+        \eq{\txn{e.g.~} f(s|z) = 1-e^{-\lambda z}}
+  \item Missing short durations increases the mean slightly
+\end{itemize}
+\paragraph{Working Backwards} \gmm{zs}{xo}
+\unsep
+\mp{.7}{
+\begin{itemize}
+  \item Combining the equations above, we find that the
+   \par total duration survival function $S_x$ links $f(z|a)$ and $f(x)$:
+  \item So we can estimate mean total duration overall:
+  \item Must model undersampling early sex work separately:
+\end{itemize}}
+\mp{.3}{\unsep\eq{\begin{aligned}
+  S_x(z) &= 1-\textstyle\int_0^z f(x)~dx\\
+  f(z|a) &= S_x(z)~/~\E[x]\\
+  \E[x]  &= 1~/~f(z=0|a)\\
+  f(z|s) &= f(s|z)~f(z|a)
+\end{aligned}}}

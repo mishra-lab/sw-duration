@@ -1,0 +1,52 @@
+\documentclass[
+  cbg=eeeeee,
+  cfg=006666,
+  cln=990066,
+  height=36in,
+  width=32in,
+  fs=12mm,
+  sep=6mm,
+  ncol=2,
+]{poster}
+% paths
+\def\projroot{../../../../}
+\def\figroot{\projroot/out/fig/}
+\graphicspath{
+  {fig/}
+  {\figroot/tikz/}
+  {\figroot/toy/}
+  {\figroot/stan/}
+  {~/sci/info/logos/}
+}
+% bib
+\addbibresource{~/refs/library.bib}
+\ExecuteBibliographyOptions{maxnames=1,giveninits=true}
+\AtEveryBibitem{\clearfield{title}}
+\DeclareFieldFormat{pages}{#1}
+\renewbibmacro{in:}{}
+\setlength{\bibitemsep}{0pt}
+% fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxsf,cmbright}
+\usepackage[sfdefault,tabular,osf]{AlegreyaSans}
+\usepackage[italic]{mathastext}
+\usepackage[scale=.8]{FiraMono}
+\AtBeginDocument{\fontdimen2\font=.2em}
+\renewcommand{\titlefont}{\huge\color{cfg}}
+\renewcommand{\parfont}[1]{\separ\bfseries\scshape\MakeLowercase{#1}}
+% misc
+\let\tw\textwidth
+\let\txn\textnormal
+\hyphenpenalty=10000
+\newcommand\separ{\vskip.5\sep}
+\newcommand{\unsep}{\vskip-\sep}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{\texttt{#1}}}
+\def\textbullet{$\bullet$}
+\def\E{\mathbb{E}}
+\definecolor{cta}{HTML}{666666}
+\colorlet{ctb}{cfg!20}
+% tables
+\usepackage{tabularray}
+\NewTableCommand\clr{\SetRow{ctb}}
+\NewTblrTheme{ap}{\SetTblrInner{row{1}={font=\bfseries\scshape}}}
+\newcommand\tabullet[1]{\textbullet\hskip1ex#1\par}
