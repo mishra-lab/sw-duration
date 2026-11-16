@@ -3,20 +3,21 @@
 \paragraph{Approach}
 \begin{itemize}
   \item Coded equations in Stan, with 5 candidate $f(x)$
-   \par distribution families, uniform parameter priors
-  \item Fit model to aggregate sex work duration data
-   \par from review\cite{Fazito2012}, keeping best family per region
+   \par families, log-uniform parameter priors
+  \item Fit model to aggregate duration data in review \cite{Fazito2012}
+   \par reflecting 58,249 female sex workers in 5 regions
+  \item Resampled posteriors across families per region
 \end{itemize}
 \paragraph{Model Results}
 \begin{itemize}
-  \item >~2$\times$ shorter mean durations vs review (Table~\ref{tab:appl})
-   \par as review ignored length-biased sampling
+  \item Inferred >~2$\times$ shorter mean durations vs review
+   \par (Table~\ref{tab:appl}) as review methods ignored Steps 1~\&~3
   \item Posterior durations: precise for observed $f(z|s)$
    \par but less precise for target $f(x)$ (Figure~\ref{fig:meta})
-  \item >~50\% women sell sex for <~1 year in most regions
-   \par (Figure~\ref{fig:meta})
+  \item Inferred >~50\% women sell sex for <~1 year
+   \par in most regions (Figure~\ref{fig:meta})
 \end{itemize}}
-\wp{.36}{\input{tab.appl}}
+\wp{.36}{\input{tab.appl}}\unsep
 \begin{figure}
   \includegraphics[width=\tw]{meta.distrs.p}\unsep
   \caption{Bayesian model posteriors
