@@ -106,13 +106,13 @@ clean.toy = function(S){
 plot.toy.distr = function(f=2:5){
   G = ulist(G0,cv=c(.5,1,1.5),fam=names(fl$fam)[f])
   S = clean.toy(grid.apply(G,toy.math,pdf=1))
-  S$leg = paste('p(',S$data,')')
+  S$leg = paste('f(',S$data,')')
   g = ggplot(S,aes(x=d,y=value,color=pop,lty=qty,shape=qty)) +
     facet_grid('fam ~ CV') +
     geom_line() +
     geom_point(data=~subset(.x,est=='M3: mean'),aes(y=0,x=value)) +
     coord_cartesian(xlim=c(0,25),ylim=c(0,.3)) +
-    scale_shape_manual   (values=c(1,4)) +
+    scale_shape_manual   (values=c(5,2)) +
     scale_color_manual   (values=map$pop) +
     scale_linetype_manual(values=map$qty) +
     labs(x='Duration (years)',y='Density',
@@ -120,10 +120,11 @@ plot.toy.distr = function(f=2:5){
   gl = inner_legend(g,subset(S,est=='M3: mean' & fam==fl$fam$weib & cv==1.5))
   plot.save(gl,'toy','toy.distr')
   plot.save(gl + subset(S,fam==fl$fam$weib),'toy','toy.distr.1')
+  plot.save(gl + subset(S,fam==fl$fam$weib & cv==1.5),'toy','toy.distr.p')
   b = S$fam==fl$fam$weib & S$est!='M3: median'
   for (s in unique(S$di)){
     plot.save(g + subset(S, b & di<=s) + facet_grid('CV'),
-      'toy',str('toy.distr.s',s),size=c(4,4)) }
+      'toy',str('toy.distr.s',s1),size=c(4,4.5)) }
 }
 
 plot.toy.est = function(f=2:5){
