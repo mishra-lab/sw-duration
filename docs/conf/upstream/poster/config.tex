@@ -5,19 +5,18 @@
   height=36in,
   width=32in,
   fs=12mm,
-  sep=6mm,
+  sep=5mm,
   ncol=2,
 ]{poster}
 % paths
 \def\projroot{../../../../}
 \def\figroot{\projroot/out/fig/}
 \graphicspath{
-  {fig/}
   {\figroot/tikz/}
   {\figroot/toy/}
   {\figroot/stan/}
   {~/sci/info/logos/}
-}
+  {fig/}}
 % bib
 \addbibresource{~/refs/library.bib}
 \ExecuteBibliographyOptions{maxnames=1,giveninits=true}
@@ -30,13 +29,15 @@
 \usepackage{newtxsf,cmbright}
 \usepackage[sfdefault,tabular,osf]{AlegreyaSans}
 \usepackage[italic]{mathastext}
+\usepackage[letterspace=50]{microtype}
 \usepackage[scale=.8]{FiraMono}
 \AtBeginDocument{\fontdimen2\font=.2em}
-\renewcommand{\titlefont}{\huge\color{cfg}}
+\renewcommand{\titlefont}{\Huge\color{cfg}}
 \renewcommand{\parfont}[1]{\separ\bfseries\scshape\MakeLowercase{#1}}
 % misc
 \let\tw\textwidth
 \let\txn\textnormal
+\let\tsb\textsubscript
 \hyphenpenalty=10000
 \newcommand\separ{\vskip.5\sep}
 \newcommand{\unsep}{\vskip-\sep}

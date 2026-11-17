@@ -87,11 +87,16 @@
 \RequirePackage{authblk}
 \setlength{\affilsep}{0pt}
 \renewcommand\AB@affilsepx{\hsep}
-\renewcommand{\maketitle}{
+\renewcommand{\maketitle}[1][t]{
   \tcolorbox
-  {\titlefont{\@title}}\vskip\sep{\@author}\par
+  \mp[#1]{\w@tbl+0}{\@tbl}
+  \mp[#1]{-\w@tbl-\w@tbr+1}{{\titlefont{\@title}}\vskip\sep{\@author}}
+  \mp[#1]{\w@tbr+0}{\@tbr}
   \endtcolorbox
   \begin{multicols*}{\ap@ncol}}
+\newlength{\w@tbl}\newlength{\w@tbr}
+\newcommand{\tbl}[1]{\settowidth\w@tbl{#1}\def\@tbl{#1}}\tbl{}
+\newcommand{\tbr}[1]{\settowidth\w@tbr{#1}\def\@tbr{#1}}\tbr{}
 % floats
 \RequirePackage{float,subcaption}
 \captionsetup{
