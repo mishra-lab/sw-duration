@@ -1,0 +1,98 @@
+\documentclass[
+  % handout,
+  compress,
+  fleqn,
+  color=990033,
+  stretch=1.1,
+  aspectratio=169,
+]{slides}
+% meta -----------------------------------------------------
+\title[Estimating duration in sex work from cross-sectional studies]
+      {Estimating duration in sex work from cross-sectional studies:\\
+       Bayesian global synthesis suggests shorter durations}
+\author{Jesse Knight, Siyi Wang, Linwei Wang, Sharmistha Mishra}
+\institute{MAP Centre for Urban Health Solutions, St. Michael's Hospital Research Institute}
+\date{Data Science Rounds, BC CDC\\[1ex]2026 November 20}
+% config ---------------------------------------------------
+% fonts
+\usepackage[T1]{fontenc}
+\usepackage{newtxsf,cmbright}
+\usepackage[sfdefault,osf,tabular]{AlegreyaSans}
+\usepackage[italic]{mathastext}
+\usepackage[scale=.8]{FiraMono}
+\let\onormalsize\normalsize
+\def\normalsize{\onormalsize%
+  \abovedisplayskip=8pt%
+  \belowdisplayskip=8pt}
+% misc
+\usepackage{xspace,csquotes}
+\let\tw\textwidth
+\let\txn\textnormal
+\let\ss\textsuperscript
+\newcommand{\E}{{\mathbb{E}}}
+\newcommand{\CV}{{\mathbb{CV}}}
+\renewcommand{\P}{{\mathbb{P}}}
+\newcommand{\azb}{a\,{<}\,z\,{<}\,b}
+\def\textbullet{$\bullet$}
+\def\aa{\alpha}\def\bb{\beta}
+\def\pp{\rho_s}\def\tt{\tau_{95}}
+\def\eg{e.g.\xspace}
+\def\CI{95\%~CI\xspace}
+\def\z{\hphantom{0}}
+\newcommand{\rarr}{\ensuremath{\rightarrow}\xspace}
+\newcommand{\pbox}[3][]{\parbox[#1]{#2\tw}{#3}\ignorespaces}
+\newcommand{\pari}[1]{\pause\par\textbf{#1}\hskip1ex}
+% colors
+\definecolor{cx}{HTML}{000000} % overall
+\definecolor{ci}{HTML}{cccccc} % inactive
+\definecolor{ca}{HTML}{009999} % active
+\definecolor{cs}{HTML}{ff9900} % survey
+\definecolor{cr}{HTML}{990033} % param
+\definecolor{cd}{HTML}{330099} % data
+\newcommand{\clr}[2][slides]{\textcolor{#1}{\textbf{#2}}}
+% graphics
+\usepackage{graphicx,tikz}
+\usepackage[absolute,overlay]{textpos}\TPGrid11
+\def\figpath{../../../out/fig/}
+\graphicspath{
+  {\figpath/tikz/}
+  {\figpath/toy/m/}
+  {\figpath/toy/s/}
+  {\figpath/stan/s/}
+  {~/sci/info/logos/}}
+\newcommand{\itergraphics}[4][]{% [options],base,handout,list
+  \foreach \i in {#4}%
+  {\only<\i|handout:0>{\includegraphics[#1]{#2\i}}}%
+   \only<0|handout:1>{\includegraphics[#1]{#2#3}}}
+% tables
+\usepackage{tabularray}
+\NewTblrTheme{slides}{\SetTblrInner{
+  row{1}={font=\bfseries},
+  row{odd}={bg=block}}}
+\newcommand{\tb}[1]{\textbullet\hskip1ex#1\par}
+\let\otblr\tblr\let\oendtblr\endtblr
+\renewenvironment{tblr}
+  {\begingroup\centering\footnotesize\otblr}
+  {\oendtblr\par\endgroup}
+% bib & links
+\usepackage[natbib=true,style=numeric,sorting=none]{biblatex}
+\addbibresource{~/refs/library.bib}
+\ExecuteBibliographyOptions{maxnames=1,giveninits=true}
+\AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}}}
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry note}{fg=black}
+\DeclareFieldFormat{pages}{#1}
+\setlength{\bibitemsep}{0pt}
+\renewbibmacro{in:}{}
+\let\cite\supercite
+\def\bibfont{\scriptsize}
+\let\oprintbibliography\printbibliography
+\def\printbibliography{
+  \begin{frame}{References}
+    \oprintbibliography[heading=none]
+  \end{frame}}
+\hypersetup{
+  colorlinks=true,
+  citecolor=slides,
+  urlcolor=slides,
+  linkcolor=.}

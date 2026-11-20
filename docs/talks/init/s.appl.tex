@@ -1,0 +1,96 @@
+%===============================================================================
+\section{Objective~2: Application}
+%-------------------------------------------------------------------------------
+\begin{frame}{Bayesian model}
+  \pbox{.75}{
+  \begin{itemize}
+    \item Implemented $f(z|s)$ equation in Stan
+    \item Consider 5 candidate families for true $f(x)$:
+       \\ \emph{Exponential, Gamma, Weibull, Scaled Beta, Scaled Kumaraswamy}
+       \\ with log-uniform priors on parameters (\textcolor{cr}{$\aa,\bb,\pp,\tt$})
+    \item Fit to 2 types of aggregate data:
+    \begin{itemize}
+      \item \textcolor{cd}{$\hat\E[z|s;N_i]$}: mean durations
+      \item \textcolor{cd}{$\hat\P[\azb|s;N_i]$}: interval proportions (includes medians, quantiles, etc.)
+    \end{itemize}
+    where $N_i$ denotes the study sample size
+    \item Keep 1000 samples after 500 burn-in iterations from 7 chains per family
+    \item Final posterior: importance resample across all families
+  \end{itemize}}
+  \pbox{.25}{\centering\includegraphics[scale=1]{model}}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Data sources}
+  \pbox[t]{.5}{\paragraph{1.~Proof-of-concept}
+    Aggregate data (RDS-adjusted) from\\
+    313 female sex workers in Eswatini:\cite{Baral2014}
+    \pause\par\bigskip\input{tab.demo}}
+  \pbox[t]{.5}{\paragraph{2.~Regional synthesis}
+     Aggregate data from\\
+     58,249 female sex workers globally:
+     \begin{itemize}
+       \item 47 means
+       \item 39 medians
+       \item 126 quantiles
+     \end{itemize}
+     \pause
+     representing 212 estimates from 82 studies\\
+     reviewed by \citet{Fazito2012}}
+     % 14 -- 15,277 respondents
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Proof-of-concept: fit vs data}
+  \itergraphics[width=\tw]{demo.props.s}{4}{1,2,3,4}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Proof-of-concept: parameter posteriors}
+  \centering\includegraphics[width=.8\tw]{demo.pars.s}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Regional synthesis: fit vs data}
+  \centering\itergraphics[width=.9\tw]{meta.distr.s}{9}{1,2,3,4,5,6,7,8,9}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Regional synthesis: infer shorter mean durations $\E[x]$ for all regions}
+  \centering\includegraphics[width=.5\tw]{meta.forest.s}
+  % Why: review methods ignored length-biased sampling \& undersampling of early sex work
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Shorter mean durations $\E[x]$: implications}
+  \begin{itemize}
+    \item \textbf{Turnover}: shorter durations means faster turnover
+    \item \textbf{STI/HIV Incidence}: shorter durations means less time for infections to accumulate
+       \\ \eg 10\% STI/HIV prevalence in sex work:
+    \begin{itemize}
+      \item with \z1-year mean duration \rarr high incidence
+      \item with  10-year mean duration \rarr lower incidence
+    \end{itemize}
+    % \item \textbf{Onward transmission}: shorter durations mean less time for onward transmission via sex work
+    \item \textbf{Lifetime exposure}: faster turnover means more women ever sold sex?
+       \\ (well-known under-reporting \cite{Behanzin2013})
+    \item \textbf{Program coverage}: faster turnover means constant influx of new sex workers to reach
+       \\ especially for vulnerable early period\cite{Cheuk2020}
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Regional synthesis: heavy-tail duration distributions}
+  \hfill\includegraphics[width=.67\tw]{meta.distr.x}\hfill\null
+  \par\rarr Infer 50+\% women sell sex for <~1~year in most regions
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Heavy-tail duration distributions: implications}
+  \begin{itemize}
+    \item \textbf{Exit rates}: decline with longer duration \rarr heavy-tail distribution
+    \item \textbf{Population Heterogeneity}: could explain this
+    \begin{itemize}
+      \item within-person heterogeneity e.g. changes in self-identification / social context
+      \item between-person heterogeneity e.g. selection effects (frailties)
+    \end{itemize}
+    \item \textbf{Modelling} this heterogeneity, need:
+    \begin{itemize}
+      \item early vs late sex work periods, and/or
+      \item short vs long duration trajectories
+    \end{itemize}
+    \item \textbf{Programs}: critical to reach early sex work period
+  \end{itemize}
+\end{frame}

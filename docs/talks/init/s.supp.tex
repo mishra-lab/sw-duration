@@ -1,0 +1,34 @@
+%===============================================================================
+\section{Supplement}
+%-------------------------------------------------------------------------------
+\begin{frame}{Family definitions}
+  \input{tab.fams}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Likelihood functions}
+  What is the probability of observing
+  aggregate estimates $\hat\E[z|s],\hat\P[\azb|s]$ in a sample of size $N_i$
+  \\ given true values for $\E[z|s],\CV[z|s],\P[\azb|s]$?
+  \begin{alignat*}1
+    \hat\E_i[z|s;N_i] &\sim \txn{Gamma} \bigg(
+      \aa = \frac{N_i}{\CV_i^2[z|s]},~~
+      \bb = \frac{N_i}{\CV_i^2[z|s]~\E[z|s]} \bigg) \\
+    \hat\P_i[\azb|s;N_i] &\sim \txn{Beta} \bigg(
+      \aa = N_i~   \P_i[\azb|s],~~
+      \bb = N_i~(1-\P_i[\azb|s]) \bigg)
+  \end{alignat*}
+  \rarr Gamma-approximation of Normal \& Beta-approximation of Binomial
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Sampling model equation}
+  \pbox[m]{.5}{Probability of being sampled:
+  \[ f(s|z) = 1 + \big(\pp-1\big) e^{\bigg(
+                  \frac{z}{\tt}\log\bigg(\frac{0.05}{1-\pp}\bigg)
+  \bigg)} \]
+  2 parameters:
+  \begin{itemize}
+    \item $\pp \sim [0.5,1]$: fraction initially sampled
+    \item $\tt \sim [0,3]$: time to 95\% sampled
+  \end{itemize}}
+  \pbox[m]{.5}{\centering\includegraphics[width=.4\tw]{psz}}
+\end{frame}

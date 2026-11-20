@@ -1,0 +1,14 @@
+\newcommand{\dd}[4]{#1 & {$\displaystyle#4$} & $#2$ & $#3$\\}
+\begin{tblr}[theme=slides,expand+=\dd]{colspec={llcc}}
+  Family & Definition $f(x)$ & $\aa$ log-prior* & $\bb$ log-prior* \\
+  \dd{Exponential\ss\dag}        {   -   }{[-1,~3]}{\frac{1}{\bb}~e^{-\frac{x}{\bb} }}
+  \dd{Gamma\ss\dag}              {[-2,~2]}{[-3,~3]}{\frac{\bb^\aa}{\Gamma(\aa)}~x^{\aa-1}e^{-\bb x}}
+  \dd{Weibull\ss\dag}            {[-1,~2]}{[-1,~2]}{\frac{\aa}{\bb}~{\left(\frac{x}{\bb}\right)}^{\aa-1}e^{-{(x/\bb)}^\aa}}
+  \dd{Scaled Beta\ss\ddag}       {[-3,~3]}{[~0,~3]}{\frac{x^{\aa-1}{(1-x^\aa)}^{\bb-1}}{B(\aa,\bb)}}
+  \dd{Scaled Kumaraswamy\ss\ddag}{[-3,~3]}{[~0,~3]}{\aa~\bb~x^{\aa-1}{(1-x^\aa)}^{\bb-1}}
+\end{tblr}
+\vfill\footnotesize
+\par* Priors for $\aa,\bb$ were defined as uniform on the log-scale;
+  \eg $[-1,~3]$ corresponds to $[e^{-1},~e^{3}] \approx [0.37,~20]$.
+\par\ss\dag  Distributions spanning $[0,\infty)$ were truncated to $[0,50]$ years.
+\par\ss\ddag Distributions spanning $[0,1]$ were scaled to span $[0,50]$ years.

@@ -1,0 +1,67 @@
+%-------------------------------------------------------------------------------
+\begin{frame}{Disclosures}
+  \begin{itemize}
+    \item No conflicts
+    \item No AI
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Overview}
+  \begin{itemize}
+    \item Introduction: motivation \& objectives
+    \item Theory: conceptual model \& math
+    \item Application: Bayesian model \& implications
+    \item Conclusion: summary \& future work
+  \end{itemize}
+\end{frame}
+%===============================================================================
+\section{Introduction}
+%-------------------------------------------------------------------------------
+\begin{frame}{Background: duration in sex work}\let\emph\textbf
+  \begin{itemize}
+    \item Sex work: transient period with \emph{higher risk for STI/HIV} transmission \cite{Scorgie2012}
+    \item Mean duration in sex work: key epidemiological quantity and input to STI/HIV models \cite{Garnett2011}
+       \\ \eg typically define \emph{rate of exit} from sex work as: \emph{1 / mean duration}
+    \item At equilibrium: exiting sex workers replaced by entering sex workers \rarr \emph{"turnover"}
+       \\[1ex] {\centering\includegraphics[scale=1]{turnover}\par}
+    \item Many other durations similarly important
+       \\ \eg transient health states, exposure to risk/protective factors
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Estimating mean duration in sex work: prior global review}
+  \pbox[t]{.6}{\paragraph{What are typical durations?}
+    \begin{itemize}
+      \item \citet{Fazito2012} conducted global scoping review
+      \item Regionally pooled estimates \rarr Table
+      \item Applied 3 estimation methods:
+      \begin{enumerate}
+        \item \emph{Former SW}
+        \item \emph{Turnover}
+        \item \emph{Double-M}
+      \end{enumerate}
+    \end{itemize}}
+  \pbox[t]{.4}{\null\input{tab.ests}}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Estimating mean sex work duration: methods from \citep{Fazito2012}}
+  \input{tab.meth}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Estimating mean sex work duration: uncertainty remains \dots}
+  \centering\pbox{.54}{\emph{"%
+    We multiply the lower bound by 0.5 and upper bound by 2
+    because of uncertainty in how overall duration of sex work
+    relates to current duration of sex work"}\par\hfill--- \citet{Stone2021}}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Objectives}\let\emph\textbf
+  \begin{enumerate}
+    \item Derive the \emph{exact relationship} between:
+       \\ total durations in sex work overall and
+       \\ right-censored durations observed in cross-sectional studies
+    \item Develop and apply a \emph{Bayesian model} of this relationship
+       \\ to aggregate data from a global scoping review, and
+       \\ \emph{compare mean duration estimates} from the \emph{model vs review}
+  \end{enumerate}
+\end{frame}

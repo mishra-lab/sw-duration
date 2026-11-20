@@ -1,0 +1,124 @@
+%===============================================================================
+\section{Objective~1: Theory}
+\newcommand{\diag}[1]{\includegraphics[scale=1.3]{diag.#1}\par}
+\newcommand{\toy}[2][]{\begin{textblock}{.3}[1,0](.98,.167)
+  \includegraphics[width=\tw]{toy.distr.s#2}\par\footnotesize#1\end{textblock}}
+\newcommand{\simf}[2]{\hfill\pbox{.15}{\clr[#1]{$\sim f(#2)$}}}
+\newcommand{\pop}[5]{\pbox{.42}{\textit{#1}: #2}\rarr~~\pbox{.35}{#3}\simf{#4}{#5}}
+\newcommand{\mm}[2]{\includegraphics[scale=1]{#1}~\rarr~\includegraphics[scale=1]{#2}}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Step 0: Conceptual model}
+  \diag{0.leg}
+  \paragraph{Assumptions}
+  \begin{itemize}
+    \item Precisely defined periods of "sex work"
+    \item Perfect recall \& reporting
+    \item Population at equilibrium
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Step 1: Who are we talking about?}
+  \diag{1.leg}
+  \paragraph{Populations}
+  \begin{itemize}
+    \item \pop{Active}  {women currently selling sex}    {tends to include longer durations} {ca}{x|a}
+    \item \pop{Inactive}{women not currently selling sex}{tends to include shorter durations}{ci}{x|\bar{a}}
+    \item \pop{Source}  {active + inactive}              {target population}                 {cx}{x}
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Step 2: What durations are observable?}
+  \diag{2.leg}
+  \paragraph{Censoring}
+  \begin{itemize}
+    \item Women don't stop selling sex right after the survey!
+    \item Survey timing is effectively random
+    \item Only observe a random fraction of durations among the active population \simf{ca}{z|a}
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Step 3: Who is actually sampled?}
+  \diag{3.leg}
+  \paragraph{Undersampling early sex work}
+  \begin{itemize}
+    \item Women may not initially identify as sex workers \cite{Cheuk2020}
+    \item Sampling probability depends on current duration $z$, not total duration $x$
+    \item Only observe censored durations among sampled women \simf{cs}{z|s}
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Let's get mathy}
+  \diag{0}\toy[Illustrative duration distributions\\with {$\CV[x] = \{0.5,1.0,1.5\}$}]{0}
+  \paragraph{Notation}
+  \begin{itemize}
+    \item $x$: total durations among source population
+    \item $f(x)$: distribution of $x$
+    \item $\E[x]$: mean of $x$
+    \item $\CV[x]$: coefficient of variation of $x$ = $\mathbb{SD}[x]~/~\E[x]$
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Math 1: Length-biased sampling}
+  \diag{1}\toy{1}
+  \begin{itemize}
+    \item Probability of being active is proportional to total duration $x$, so:
+          \[ f(x|a) = \frac{x~f(x)}{\int x~f(x)} = \frac{x~f(x)}{\E[x]} \]
+    \item Longer total durations dominate, increasing the mean (\mm{mxo}{mxa}): \;$\E[x|a] = \E[x] (1 + \CV^2[x])$
+    \item Almost never observe very short total durations
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Math 2: Universal random censoring}
+  \diag{2}\toy{2}
+  \begin{itemize}
+    \item Censored durations $z$ are randomly distributed between $0$ and $x$:
+          \[ f(z|a) = \txn{Unif}(0,x) = \frac1x,\; 0 \le z \le x \]
+    \item The mean is exactly halved (\mm{mxa}{mza}): \;$\E[z|a] = \frac12\E[x|a]$ \quad\rarr \emph{Double-M method}
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Math 2: Complete duration distribution (perfect sampling)}
+  \toy{2}
+  \begin{itemize}
+    \item So, distribution of censored durations among active:
+    \begin{alignat}1
+      f(z|a) &= \int_0^\infty f(z|x) ~ f(x|a) ~ dx \\
+             &= \int_z^\infty \frac1x ~ \frac{x~f(x)}{\E[x]} \\
+             &= \frac{S_x(z)}{\E[x]}
+    \end{alignat}
+    \dots~is the survival function of $x$, normalized to sum to 1!
+    \item We can thus estimate $\E[x] = 1~/~f(z=0|a)$ \quad\rarr \emph{Turnover method}
+    \item Exponential special case: $f(x) = \lambda e^{-\lambda x} = f(z|a)$
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[t]{Math 3: Undersampling early sex work}
+  \diag{3}\toy{3}
+  \paragraph{Assumed undersampling model: $f(s|z)$}
+  \smallskip
+  \pbox[m]{.26}{\includegraphics[width=.26\tw]{psz}}~
+  \pbox[m]{.5}{\pause2 parameters:
+  \begin{itemize}
+    \item $\pp \sim [0.5,1]$: fraction initially sampled
+    \item $\tt \sim [0,3]$: time to 95\% sampled
+  \end{itemize}
+  \pause The mean increases slightly (\mm{mza}{mzs})}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Math: summary}
+  \paragraph{Means}
+  Observed $\E[z|s]$ typically \emph{overestimates} true $\E[x]$ by \;$\frac12(1 + \CV^2[x]) \;\approx\; 1{-}2.5\times$
+  \bigskip
+  \paragraph{Complete distribution}
+  Observed $f(z|s)$ relate to true $f(x)$ via:
+  \[ f(z|s) = f(s|z)~\frac{S_x(z)}{K} \label{eq:1} \]
+  \begin{itemize}\vspace{-\baselineskip}
+    \item $f(s|z)$: sampling probability given current duration $z$
+    \item $S_x(z)$: total durations $x$ survival function at evaluated at current duration $z$
+    \item $K$: a normalizing constant $\approx \E[x]$
+  \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{Estimating mean sex work duration: methods from \citep{Fazito2012} revisited}
+  \centering\itergraphics[width=.8\tw]{toy.est.s}{6}{1,2,3,4,5,6}
+\end{frame}
